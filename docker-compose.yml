@@ -1,0 +1,56 @@
+version: '3'
+services:
+  app-next:
+    build:
+      context: .
+       # パス要確認
+      dockerfile: ./app-next/Dockerfile
+    container_name: app-next
+    tty: true 
+    stdin_open: true
+    env_file:
+      - ./app-next/.env
+    volumes:
+      - ./app-next:/usr/src/app
+    # app-nextに移動してからrun
+    command: sh -c "cd next && npm run dev"
+    environment:
+    # tsでホットリロードを効かせる
+      - WATCHPACK_POLLING=true
+    ports:
+      - 3000:3000
+  api-go:
+    build: 
+      context: .
+      dockerfile: ./api-go/Dockerfile
+    container_name: api-go
+    # コンテナの永続化
+    tty: true
+    env_file:
+      - ./api-go/.env
+     # ローカルパス要確認
+    volumes:
+      - ./api-go:/go/src/api
+    ports:
+      - 8080:8080
+  mysql-db:
+    build: 
+      context: .
+      dockerfile: ./mysql-db/Dockerfile
+    # platformはosがぞれぞれ違うから必要(M1に必要)
+    platform: linux/x86_64 
+    container_name: mysql-db
+    # Dockerfileに書くものは省く?
+    environment:
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'pass'
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: aikon_db
+      TZ: "Asia/Tokyo"
+    volumes:
+      - mysql-db:/var/lib/mysql
+    ports:
+      - 3306
+      
+volumes:
+  mysql-db:
