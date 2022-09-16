@@ -7,7 +7,7 @@
 ## 開発者用Dockre関係の注意事項
 ### git clone してきたら最初に打つコマンド
 ```docker-compose
-docker-compose run -w /usr/src/app/nextjs --rm next npm install
+docker-compose run -w /usr/src/app/next --rm app-next npm install
 ```
 その後に
 ```docker-compose
