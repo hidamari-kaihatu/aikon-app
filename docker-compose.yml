@@ -50,7 +50,7 @@ services:
     volumes:
       - mysql-db:/var/lib/mysql
     ports:
-      - 3306
+      - 3306:3306
       
 volumes:
   mysql-db:
