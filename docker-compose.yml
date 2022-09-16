@@ -2,18 +2,18 @@ version: '3'
 services:
   app-next:
     build:
-      context: .
+      context: ./app-next/next
        # パス要確認
-      dockerfile: ./app-next/Dockerfile
+      dockerfile: Dockerfile
     container_name: app-next
     tty: true 
     stdin_open: true
     env_file:
       - ./app-next/.env
     volumes:
-      - ./app-next:/usr/src/app
+      - ./app-next/next:/usr/src/app
     # app-nextに移動してからrun
-    command: sh -c "cd next && npm run dev"
+    # command: sh -c "npm run dev"
     environment:
     # tsでホットリロードを効かせる
       - WATCHPACK_POLLING=true
@@ -50,7 +50,7 @@ services:
     volumes:
       - mysql-db:/var/lib/mysql
     ports:
-      - 3306
+      - 3306:3306
       
 volumes:
   mysql-db:
