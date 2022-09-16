@@ -1,4 +1,4 @@
-#　aikon-app
+# aikon-app
 
 ## 学童連絡帳アプリ　あいこん
 
