@@ -6,6 +6,7 @@ import (
 	"encoding/json"
     "log"
     "database/sql"
+    "io/ioutil"
 
     _ "github.com/go-sql-driver/mysql"
 )
@@ -66,11 +67,29 @@ func getCenter(w http.ResponseWriter, r *http.Request) {
 }
 
 func postCenter(w http.ResponseWriter, r *http.Request) {
-    db := connectionDB()
-    var center Centers
-    _, err = db.Exec("INSERT INTO center (id, name) VALUES (?, ?)", )
-    // json.NewDecoder(r.Body).Decode(&center)
-    fmt.Println("register center")
+    dsn := "user:pass@tcp(mysql-db:3306)/aikon_db"
+    db, err := sql.Open("mysql", dsn)
+    if err != nil {
+        fmt.Println("Err1")
+    }
+    defer db.Close()
+    // request bodyの読み取り
+    b, err := ioutil.ReadAll(r.Body)
+    if err != nil {
+        fmt.Println("io error")
+        return
+    }
+
+    // jsonのdecode
+    jsonBytes := ([]byte)(b)
+    data := new(Centers)
+    if err := json.Unmarshal(jsonBytes, data); err != nil {
+        fmt.Println("JSON Unmarshal error:", err)
+        return
+    }
+     _, err = db.Exec("INSERT INTO center (id, name) VALUES (?, ?)", data.Id, data.Name)
+     //TODO ここにどうやってCORS対策を入れられるか？？
+
 }
 
 func main() {
