@@ -11,5 +11,6 @@ COPY ./api-go /go/src/api-go
 # ADD ./api-go /go/src/api-go
 VOLUME /go/src/api-go
 EXPOSE 8080
+RUN go mod tidy
 # GoApp起動
 CMD ["go","run","main.go"]
