@@ -2,8 +2,23 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import axios from "axios";
 
-const Home: NextPage = () => {
+
+export async function getServerSideProps() {
+  const res = await axios.get(`${process.env.API}:8080`, {
+  });
+  const data = await res.data;
+
+  return { 
+      props: {
+          data: data 
+      }
+  };
+}
+
+const Home: NextPage = ({data}:any) => {
+  console.log(data)
   return (
     <div className={styles.container}>
       <Head>
@@ -13,6 +28,9 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
+      
+        {data}
+        
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
