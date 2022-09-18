@@ -30,7 +30,7 @@ services:
       - ./api-go/.env
      # ローカルパス要確認
     volumes:
-      - ./api-go:/go/src/api
+      - ./api-go:/go/src/api-go
     ports:
       - 8080:8080
   mysql-db:
