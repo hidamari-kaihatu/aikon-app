@@ -1,6 +1,6 @@
 FROM golang:1.18-alpine
 # アップデートとgitとvimのインストール
-RUN apk update && apk add git && apk add vim
+RUN apk update && apk add git && apk add vim && apk --no-cache add make gcc g++ musl-dev binutils autoconf automake libtool pkgconfig check-dev file patch
 # appディレクトリの作成
 RUN mkdir /go/src/api-go
 # ワーキングディレクトリの設定
@@ -11,6 +11,6 @@ COPY . .
 
 VOLUME /go/src/api-go
 EXPOSE 8080
-RUN go mod tidy
+# RUN go mod tidy
 # GoApp起動
 CMD ["go","run","main.go"]
