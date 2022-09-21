@@ -356,14 +356,14 @@ type Centers struct {
 }
 
 
-func connectionDB() *sql.DB { //dbと接続
-    dsn := "user:pass@tcp(mysql-db:3306)/aikon_db"
-    db, err := sql.Open("mysql", dsn)
-    if err != nil {
-        fmt.Println("Err1")
-    }
-    return db
-}
+// func connectionDB() *sql.DB { //dbと接続
+//     dsn := "user:pass@tcp(mysql-db:3306)/aikon_db"
+//     db, err := sql.Open("mysql", dsn)
+//     if err != nil {
+//         fmt.Println("Err1")
+//     }
+//     return db
+// }
 
 func getRows(db *sql.DB) *sql.Rows { //mysqlからcenterの情報取得
     rows, err := db.Query("SELECT * FROM centers")
@@ -722,5 +722,5 @@ func main() {
     http.HandleFunc("/staStatustPut", putStaStatus)
     // fmt.Println("Server Start")
     http.ListenAndServe(":8080", nil)
-    // fmt.Println("Hello, World!!")
+    fmt.Println("Hello, World!!")
 }
