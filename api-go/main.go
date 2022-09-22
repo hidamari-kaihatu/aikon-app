@@ -8,6 +8,7 @@ import (
     "database/sql"
     "io/ioutil"
 
+    "github.com/rs/cors"
     _ "github.com/go-sql-driver/mysql"
 )
 func helloHandler(w http.ResponseWriter, r *http.Request) {
@@ -699,6 +700,20 @@ func putStaStatus(w http.ResponseWriter, r *http.Request) {
 
 
 func main() {
+    mux := http.NewServeMux() //登録されたパターンのリストと各受信リクエストのURLをマッチさせ、URLに最も理解パターンのハンドラを呼び出す
+    mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+        w.Header().Set("Content-Type", "application/json") //ヘッダーの設定
+        w.Write([]byte("{\"hello\": \"world\"}"))
+    })
+    handler := cors.Default().Handler(mux)
+    c := cors.New(cors.Options{
+        AllowedOrigins: []string{"http://localhost:3000", "http://app-next:3000"},
+        AllowCredentials: true,
+        // Enable Debugging for testing, consider disabling in production
+        Debug: true,
+    })
+    // Insert the middleware
+    handler = c.Handler(handler)
     http.HandleFunc("/", helloHandler)
     http.HandleFunc("/dailyReportGet", getDailyReport)
     http.HandleFunc("/dailyReportPost", postDailyReport)
@@ -721,6 +736,7 @@ func main() {
     http.HandleFunc("/staffPost", postStaff)
     http.HandleFunc("/staStatustPut", putStaStatus)
     // fmt.Println("Server Start")
-    http.ListenAndServe(":8080", nil)
+    http.ListenAndServe(":8080", handler)
+    //http.ListenAndServe(":8080", nil)
     fmt.Println("Hello, World!!")
 }
