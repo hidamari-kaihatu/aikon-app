@@ -36,6 +36,8 @@ export default function dailyReportPost() {
             <h1>Daily Report</h1>
             <br></br>
             <div>
+            <h2>ここに今日の日付と曜日がでるはず</h2>
+            <h2>ここに生徒の名前が来るはず</h2>
             <label>出欠: </label>
             <select value={attend} onChange={(e) => setattend(e.target.value)}>
                 <option value="A">出欠</option>
