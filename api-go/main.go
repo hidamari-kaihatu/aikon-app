@@ -8,7 +8,7 @@ import (
     "database/sql"
     "io/ioutil"
 
-    "github.com/rs/cors"
+    // "github.com/rs/cors"
     _ "github.com/go-sql-driver/mysql"
 )
 func helloHandler(w http.ResponseWriter, r *http.Request) {
@@ -27,20 +27,6 @@ type DailyReports struct {
 	Message *string `json:message`
 }
 
-type Events struct {
-    Id int `json:id`
-    Name string `json:name`
-    Date string `json:date`
-    Message *string `json:message`
-    Center_id int `json:center_id`
-}
-
-type ShareBoard struct {
-    Id int `json:id`
-    Date string `json:date`
-    Context string `json:context`
-    Center_id int `json:center_id`
-}
 type Middle struct {
     Id int `json:id`
     Staff_id int `json:staff_id`
@@ -51,9 +37,11 @@ type Middle struct {
 type TeacherMessage struct {
     Id int `json:id`
     Staff_id int `json:staff_id`
-    Message string `json:message`
+    Message *string `json:message`
     Datetime string `json:datetime`
     Student_id int `json:student_id`
+    Voice string `json:voice`
+    //音声データ追加
 }
 
 //データベースに接続する部分
@@ -123,118 +111,7 @@ func postDailyReport(w http.ResponseWriter, r *http.Request) {
         fmt.Println("JSON Unmarshal error:", err)
         return
     }
-    _, err = db.Exec("INSERT INTO dailyReports (id, date, student_id, attend, temperature, someoneToPickUp, timeToPickUp, message) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", data.Id, data.Date,data.Student_id, data.Attend, data.Temperature, data.SomeoneToPickUp, data.TimeToPickUp, data.Message)
-}
-
-func getEventsRows(db *sql.DB) *sql.Rows {
-    rows, err := db.Query("SELECT * FROM events")
-    if err != nil {
-        fmt.Println("Err2")
-        panic(err.Error())
-    }
-    return rows
-}
-func getEvent(w http.ResponseWriter, r *http.Request) {
-    db := connectionDB()
-    defer db.Close()
-    rows := getEventsRows(db) // 行データ取得
-    events := Events{}
-    var resultEvent [] Events
-    for rows.Next() {
-        error := rows.Scan(&events.Id, &events.Name, &events.Date, &events.Message, &events.Center_id)
-        if error != nil {
-            fmt.Println("scan error")
-        } else {
-            resultEvent = append(resultEvent, events)
-        }
-    }
-    var buf bytes.Buffer //バッファを作成　TODO調べる
-    enc := json.NewEncoder(&buf)
-    if err := enc.Encode(&resultEvent);/*jsonにエンコード*/ err != nil {
-        log.Fatal(err)
-    }
-    fmt.Println(buf.String())
-
-    _, err := fmt.Fprint(w, buf.String()) // json を返却
-    if err != nil {
-        return
-    }
-}
-
-func postEvent (w http.ResponseWriter, r *http.Request) {
-    dsn := "user:pass@tcp(mysql-db:3306)/aikon_db"
-    db, err := sql.Open("mysql", dsn)
-    if err != nil {
-        fmt.Println("Err1")
-    }
-    defer db.Close()
-    b, err := ioutil.ReadAll(r.Body)
-    if err != nil {
-        fmt.Println("io error")
-        return
-    }
-    jsonBytes := ([]byte)(b)
-    data := new(Events)
-    if err := json.Unmarshal(jsonBytes, data); err != nil {
-        fmt.Println("JSON Unmarshal error:", err)
-        return
-    }
-    _, err = db.Exec("INSERT INTO events (id, name, date, message, center_id) VALUES (?, ?, ?, ?, ?)", data.Id, data.Name, data.Date, data.Message, data.Center_id)
-}
-
-func getShareBoardRows(db *sql.DB) *sql.Rows {
-    rows, err := db.Query("SELECT * FROM shareBoard")
-    if err != nil {
-        fmt.Println("Err2")
-        panic(err.Error())
-    }
-    return rows
-}
-func getShareBoard(w http.ResponseWriter, r *http.Request) {
-    db := connectionDB()
-    defer db.Close()
-    rows := getShareBoardRows(db) // 行データ取得
-    shareBoard := ShareBoard{}
-    var resultShareBoard [] ShareBoard
-    for rows.Next() {
-        error := rows.Scan(&shareBoard.Id, &shareBoard.Date, &shareBoard.Context, &shareBoard.Center_id)
-        if error != nil {
-            fmt.Println("scan error")
-        } else {
-            resultShareBoard = append(resultShareBoard, shareBoard)
-        }
-    }
-    var buf bytes.Buffer //バッファを作成　TODO調べる
-    enc := json.NewEncoder(&buf) //書き込み先を指定するのですから、 &buf のように必ずポインタを渡すことに注意
-    if err := enc.Encode(&resultShareBoard);/*jsonにエンコード*/ err != nil {
-        log.Fatal(err)
-    }
-    fmt.Println(buf.String())
-
-    _, err := fmt.Fprint(w, buf.String()) // json を返却
-    if err != nil {
-        return
-    }
-}
-func postShareBoard (w http.ResponseWriter, r *http.Request) {
-    dsn := "user:pass@tcp(mysql-db:3306)/aikon_db"
-    db, err := sql.Open("mysql", dsn)
-    if err != nil {
-        fmt.Println("Err1")
-    }
-    defer db.Close()
-    b, err := ioutil.ReadAll(r.Body)
-    if err != nil {
-        fmt.Println("io error")
-        return
-    }
-    jsonBytes := ([]byte)(b)
-    data := new(ShareBoard)
-    if err := json.Unmarshal(jsonBytes, data); err != nil {
-        fmt.Println("JSON Unmarshal error:", err)
-        return
-    }
-    _, err = db.Exec("INSERT INTO shareBoard (id, date, context, center_id) VALUES (?, ?, ?, ?)", data.Id, data.Date, data.Context, data.Center_id)
+    _, err = db.Exec("INSERT INTO dailyReports (date, student_id, attend, temperature, someoneToPickUp, timeToPickUp, message) VALUES (?, ?, ?, ?, ?, ?, ?)", data.Date, data.Student_id, data.Attend, data.Temperature, data.SomeoneToPickUp, data.TimeToPickUp, data.Message)
 }
 
 func getMiddleRows(db *sql.DB) *sql.Rows {
@@ -291,7 +168,7 @@ func postMiddle (w http.ResponseWriter, r *http.Request) {
         fmt.Println("JSON Unmarshal error:", err)
         return
     }
-    _, err = db.Exec("INSERT INTO middle (id, staff_id, center_id, role_id) VALUES (?, ?, ?, ?)", data.Id, data.Staff_id, data.Center_id, data.Role_id)
+    _, err = db.Exec("INSERT INTO middle (staff_id, center_id, role_id) VALUES (?, ?, ?)", data.Staff_id, data.Center_id, data.Role_id)
 }
 
 func getTeacherMessageRows(db *sql.DB) *sql.Rows {
@@ -310,7 +187,7 @@ func getTeacherMessage(w http.ResponseWriter, r *http.Request) {
     teacherMessage := TeacherMessage{}
     var resultTeacherMessage [] TeacherMessage
     for rows.Next() {
-        error := rows.Scan(&teacherMessage.Id, &teacherMessage.Staff_id, &teacherMessage.Message, &teacherMessage.Datetime, &teacherMessage.Student_id)
+        error := rows.Scan(&teacherMessage.Id, &teacherMessage.Staff_id, &teacherMessage.Message, &teacherMessage.Datetime, &teacherMessage.Student_id, &teacherMessage.Voice)
         if error != nil {
             fmt.Println("scan error")
         } else {
@@ -348,23 +225,13 @@ func postTeacherMessage (w http.ResponseWriter, r *http.Request) {
         fmt.Println("JSON Unmarshal error:", err)
         return
     }
-    _, err = db.Exec("INSERT INTO teacherMessage (id, staff_id, message, datetime, student_id) VALUES (?, ?, ?, ?, ?)", data.Id, data.Staff_id, data.Message, data.Datetime, data.Student_id)
+    _, err = db.Exec("INSERT INTO teacherMessage (staff_id, message, datetime, student_id, voice) VALUES (?, ?, ?, ?, ?)", data.Staff_id, data.Message, data.Datetime, data.Student_id, data.Voice)
 }
 
 type Centers struct {
     Id int `json:id`
     Name string`json:name`
 }
-
-
-// func connectionDB() *sql.DB { //dbと接続
-//     dsn := "user:pass@tcp(mysql-db:3306)/aikon_db"
-//     db, err := sql.Open("mysql", dsn)
-//     if err != nil {
-//         fmt.Println("Err1")
-//     }
-//     return db
-// }
 
 func getRows(db *sql.DB) *sql.Rows { //mysqlからcenterの情報取得
     rows, err := db.Query("SELECT * FROM centers")
@@ -504,11 +371,11 @@ type Students struct {
     Id int `json:id`
     Center_id int `json:center_id`
     Name string`json:name`
-    // UID int `json:UID`
-    ContactTell string `json:contactTell`
+    ContactTell *string `json:contactTell`
     Grade int `json:grade`
-    Email string `json:email`
+    Email *string `json:email`
     Status bool `json:status`
+    Rfid string `json:rfid`
 }
 func getRowsStu(db *sql.DB) *sql.Rows { //mysqlからcenterの情報取得
     rows, err := db.Query("SELECT * FROM students")
@@ -525,7 +392,7 @@ func getStudents(w http.ResponseWriter, r *http.Request) {
     students := Students{}
     var resultStudents [] Students
     for rows.Next() {
-        error := rows.Scan(&students.Id, &students.Center_id, &students.Name, &students.ContactTell, &students.Grade, &students.Email, &students.Status)
+        error := rows.Scan(&students.Id, &students.Center_id, &students.Name, &students.ContactTell, &students.Grade, &students.Email, &students.Status, &students.Rfid)
         if error != nil {
             fmt.Println("scan error")
         } else {
@@ -566,7 +433,7 @@ func postStudent(w http.ResponseWriter, r *http.Request) {
         fmt.Println("JSON Unmarshal error:", err)
         return
     }
-    _, err = db.Exec("INSERT INTO students (center_id, name, contactTell, grade, email, status) VALUES (?, ?, ?, ?, ?, ?)", data.Center_id, data.Name, data.ContactTell, data.Grade, data.Email, data.Status)
+    _, err = db.Exec("INSERT INTO students (center_id, name, contactTell, grade, email, status, rfid) VALUES (?, ?, ?, ?, ?, ?, ?)", data.Center_id, data.Name, data.ContactTell, data.Grade, data.Email, data.Status, data.Rfid)
     if err != nil {
         fmt.Println("insert error!")
     }
@@ -604,10 +471,10 @@ type Staffs struct {
     Id int `json:id`
     Center_id int `json:center_id`
     Name string`json:name`
-    // UID int `json:UID`
     Email string `json:email`
     RoleId int `json:roleId`
     Status *bool `json:status`
+    Rfid string `json:rfid`
 }
 func getRowsSta(db *sql.DB) *sql.Rows { //mysqlからcenterの情報取得
     rows, err := db.Query("SELECT * FROM staffs")
@@ -624,7 +491,7 @@ func getStaffs(w http.ResponseWriter, r *http.Request) {
     staffs := Staffs{}
     var resultStaffs [] Staffs
     for rows.Next() {
-        error := rows.Scan(&staffs.Id, &staffs.Center_id, &staffs.Name, &staffs.Email, &staffs.RoleId, &staffs.Status)
+        error := rows.Scan(&staffs.Id, &staffs.Center_id, &staffs.Name, &staffs.Email, &staffs.RoleId, &staffs.Status, &staffs.Rfid)
         if error != nil {
             fmt.Println("scan error")
         } else {
@@ -665,7 +532,7 @@ func postStaff(w http.ResponseWriter, r *http.Request) {
         fmt.Println("JSON Unmarshal error:", err)
         return
     }
-    _, err = db.Exec("INSERT INTO staffs (center_id, name, email, roleId) VALUES (?, ?, ?, ?)", data.Center_id, data.Name, data.Email, data.RoleId)
+    _, err = db.Exec("INSERT INTO staffs (center_id, name, email, roleId, status, rfid) VALUES (?, ?, ?, ?, ?, ?)", data.Center_id, data.Name, data.Email, data.RoleId, data.Status, data.Rfid)
     if err != nil {
         fmt.Println("insert error!")
     }
@@ -698,29 +565,160 @@ func putStaStatus(w http.ResponseWriter, r *http.Request) {
     }
 }
 
+type Sensors struct {
+    Id int `json:id`
+    Place string`json:place`
+    SerialNumber string `json:serialNumber`
+    Center_id int `json:center_id`
+}
+func getRowsSensors(db *sql.DB) *sql.Rows {
+    rows, err := db.Query("SELECT * FROM sensors")
+    if err != nil {
+        fmt.Println("Err2")
+        panic(err.Error())
+    }
+    return rows
+}
+func getSensors(w http.ResponseWriter, r *http.Request) {
+    db := connectionDB()
+    defer db.Close()
+    rows := getRowsSensors(db) // 行データ取得
+    sensors := Sensors{}
+    var resultSensors [] Sensors
+    for rows.Next() {
+        error := rows.Scan(&sensors.Id, &sensors.Place, &sensors.SerialNumber, &sensors.Center_id)
+        if error != nil {
+            fmt.Println("scan error")
+        } else {
+            resultSensors = append(resultSensors, sensors)
+        }
+    }
+    var buf bytes.Buffer //バッファを作成　TODO調べる
+    enc := json.NewEncoder(&buf) //書き込み先を指定するのですから、 &buf のように必ずポインタを渡すことに注意
+    if err := enc.Encode(&resultSensors); err != nil {
+        log.Fatal(err)
+    }
+    fmt.Println(buf.String())
+
+    _, err := fmt.Fprint(w, buf.String()) // json を返却
+    if err != nil {
+        return
+    }
+}
+
+func postSensor(w http.ResponseWriter, r *http.Request) {
+    dsn := "user:pass@tcp(mysql-db:3306)/aikon_db"
+    db, err := sql.Open("mysql", dsn)
+    if err != nil {
+        fmt.Println("db connect error!")
+    }
+    defer db.Close()
+    // request bodyの読み取り
+    b, err := ioutil.ReadAll(r.Body)
+    if err != nil {
+        fmt.Println("io error")
+        return
+    }
+
+    // jsonのdecode
+    jsonBytes := ([]byte)(b)
+    data := new(Sensors)
+    if err := json.Unmarshal(jsonBytes, data); err != nil {
+        fmt.Println("JSON Unmarshal error:", err)
+        return
+    }
+    _, err = db.Exec("INSERT INTO sensors (place, serialNumber, center_id) VALUES (?, ?, ?)", data.Place, data.SerialNumber, data.Center_id)
+    if err != nil {
+        fmt.Println("insert error!")
+    }
+}
+
+type InAndOut struct {
+    Id int `json:id`
+    Rfid string`json:rfid`
+    Sensor_id int `json:sensor_id`
+    Datetime string `json:datetime`
+}
+func getRowsInAndOut(db *sql.DB) *sql.Rows {
+    rows, err := db.Query("SELECT * FROM inAndOut")
+    if err != nil {
+        fmt.Println("Err2")
+        panic(err.Error())
+    }
+    return rows
+}
+func getInAndOut(w http.ResponseWriter, r *http.Request) {
+    db := connectionDB()
+    defer db.Close()
+    rows := getRowsInAndOut(db) // 行データ取得
+    inAndOut := InAndOut{}
+    var resultInAndOut [] InAndOut
+    for rows.Next() {
+        error := rows.Scan(&inAndOut.Id, &inAndOut.Rfid, &inAndOut.Sensor_id, &inAndOut.Datetime)
+        if error != nil {
+            fmt.Println("scan error")
+        } else {
+            resultInAndOut = append(resultInAndOut, inAndOut)
+        }
+    }
+    var buf bytes.Buffer //バッファを作成　TODO調べる
+    enc := json.NewEncoder(&buf) //書き込み先を指定するのですから、 &buf のように必ずポインタを渡すことに注意
+    if err := enc.Encode(&resultInAndOut); err != nil {
+        log.Fatal(err)
+    }
+    fmt.Println(buf.String())
+
+    _, err := fmt.Fprint(w, buf.String()) // json を返却
+    if err != nil {
+        return
+    }
+}
+
+func postInAndOut(w http.ResponseWriter, r *http.Request) {
+    dsn := "user:pass@tcp(mysql-db:3306)/aikon_db"
+    db, err := sql.Open("mysql", dsn)
+    if err != nil {
+        fmt.Println("db connect error!")
+    }
+    defer db.Close()
+    // request bodyの読み取り
+    b, err := ioutil.ReadAll(r.Body)
+    if err != nil {
+        fmt.Println("io error")
+        return
+    }
+
+    // jsonのdecode
+    jsonBytes := ([]byte)(b)
+    data := new(InAndOut)
+    if err := json.Unmarshal(jsonBytes, data); err != nil {
+        fmt.Println("JSON Unmarshal error:", err)
+        return
+    }
+    _, err = db.Exec("INSERT INTO inAndOut (rfid, sensor_id, datetime) VALUES (?, ?, ?)", data.Rfid, data.Sensor_id, data.Datetime)
+    if err != nil {
+        fmt.Println("insert error!")
+    }
+}
 
 func main() {
-    mux := http.NewServeMux() //登録されたパターンのリストと各受信リクエストのURLをマッチさせ、URLに最も理解パターンのハンドラを呼び出す
-    mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-        w.Header().Set("Content-Type", "application/json") //ヘッダーの設定
-        w.Write([]byte("{\"hello\": \"world\"}"))
-    })
-    handler := cors.Default().Handler(mux)
-    c := cors.New(cors.Options{
-        AllowedOrigins: []string{"http://localhost:3000", "http://app-next:3000"},
-        AllowCredentials: true,
-        // Enable Debugging for testing, consider disabling in production
-        Debug: true,
-    })
-    // Insert the middleware
-    handler = c.Handler(handler)
+    // mux := http.NewServeMux() //登録されたパターンのリストと各受信リクエストのURLをマッチさせ、URLに最も理解パターンのハンドラを呼び出す
+    // mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+    //     w.Header().Set("Content-Type", "application/json") //ヘッダーの設定
+    //     w.Write([]byte("{\"hello\": \"world\"}"))
+    // })
+    // handler := cors.Default().Handler(mux)
+    // c := cors.New(cors.Options{
+    //     AllowedOrigins: []string{"http://localhost:3000", "http://app-next:3000"},
+    //     AllowCredentials: true,
+    //     // Enable Debugging for testing, consider disabling in production
+    //     Debug: true,
+    // })
+    // // Insert the middleware
+    // handler = c.Handler(handler)
     http.HandleFunc("/", helloHandler)
     http.HandleFunc("/dailyReportGet", getDailyReport)
     http.HandleFunc("/dailyReportPost", postDailyReport)
-    http.HandleFunc("/eventGet", getEvent)
-    http.HandleFunc("/eventPost", postEvent)
-    http.HandleFunc("/shareBoardGet", getShareBoard)
-    http.HandleFunc("/shareBoardPost", postShareBoard)
     http.HandleFunc("/middleGet", getMiddle)
     http.HandleFunc("/middlePost", postMiddle)
     http.HandleFunc("/teacherMessageGet", getTeacherMessage)
@@ -735,8 +733,12 @@ func main() {
     http.HandleFunc("/staffsGet", getStaffs)
     http.HandleFunc("/staffPost", postStaff)
     http.HandleFunc("/staStatustPut", putStaStatus)
+    http.HandleFunc("/sensorsGet", getSensors)
+    http.HandleFunc("/sensorPost", postSensor)
+    http.HandleFunc("/inAndOutGet", getInAndOut)
+    http.HandleFunc("/inAndOutPost", postInAndOut)
     // fmt.Println("Server Start")
-    http.ListenAndServe(":8080", handler)
-    //http.ListenAndServe(":8080", nil)
+    // http.ListenAndServe(":8080", handler)
+    http.ListenAndServe(":8080", nil)
     fmt.Println("Hello, World!!")
 }
