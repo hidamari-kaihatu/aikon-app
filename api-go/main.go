@@ -7,10 +7,18 @@ import (
     "log"
     "database/sql"
     "io/ioutil"
+    "os"
+    "github.com/joho/godotenv"
+    "github.com/comail/colog"
 
-    // "github.com/rs/cors"
     _ "github.com/go-sql-driver/mysql"
 )
+func envLoad() {
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatalf("Error loading env target")
+	}
+}
 func helloHandler(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintf(w, "<h1>Hello, World</h1>")//固定値を返してる
 }
@@ -46,7 +54,7 @@ type TeacherMessage struct {
 
 //データベースに接続する部分
 func connectionDB() *sql.DB {
-    dsn := "user:pass@tcp(mysql-db:3306)/aikon_db"
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("Err1")
@@ -66,6 +74,7 @@ func getDailyReportsRows(db *sql.DB) *sql.Rows {
 
 //rows.Next()でループを回す。rows.Nextは、Scanメソッドを実行しているレコードの次が存在するかどうかでtrueかfalseを返す。Scanメソッドは引数に与えられた変数にフィールドの値を代入。今回は8つのフィールドがあるので8つの引数を与える。また引数に渡した変数に書き込むのでポインタで渡す。
 func getDailyReport(w http.ResponseWriter, r *http.Request) {
+    // log.Printf("trace: this is a trace log.")
     db := connectionDB()
     defer db.Close()
     rows := getDailyReportsRows(db) // 行データ取得
@@ -93,7 +102,7 @@ func getDailyReport(w http.ResponseWriter, r *http.Request) {
 }
 
 func postDailyReport(w http.ResponseWriter, r *http.Request) {
-    dsn := "user:pass@tcp(mysql-db:3306)/aikon_db"
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("Err1")
@@ -151,7 +160,7 @@ func getMiddle(w http.ResponseWriter, r *http.Request) {
 }
 
 func postMiddle (w http.ResponseWriter, r *http.Request) {
-    dsn := "user:pass@tcp(mysql-db:3306)/aikon_db"
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("Err1")
@@ -208,7 +217,7 @@ func getTeacherMessage(w http.ResponseWriter, r *http.Request) {
 }
 
 func postTeacherMessage (w http.ResponseWriter, r *http.Request) {
-    dsn := "user:pass@tcp(mysql-db:3306)/aikon_db"
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("Err1")
@@ -272,7 +281,7 @@ func getCenter(w http.ResponseWriter, r *http.Request) {
 }
 
 func postCenter(w http.ResponseWriter, r *http.Request) {
-    dsn := "user:pass@tcp(mysql-db:3306)/aikon_db"
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("Err1")
@@ -341,7 +350,7 @@ func getPayment(w http.ResponseWriter, r *http.Request) {
 }
 
 func postPayment(w http.ResponseWriter, r *http.Request) {
-    dsn := "user:pass@tcp(mysql-db:3306)/aikon_db"
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -413,7 +422,7 @@ func getStudents(w http.ResponseWriter, r *http.Request) {
 }
 
 func postStudent(w http.ResponseWriter, r *http.Request) {
-    dsn := "user:pass@tcp(mysql-db:3306)/aikon_db"
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -440,7 +449,7 @@ func postStudent(w http.ResponseWriter, r *http.Request) {
 }
 
 func putStuStatus(w http.ResponseWriter, r *http.Request) {
-    dsn := "user:pass@tcp(mysql-db:3306)/aikon_db"
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -466,13 +475,37 @@ func putStuStatus(w http.ResponseWriter, r *http.Request) {
     }
 }
 
+func putStuRfid(w http.ResponseWriter, r *http.Request) {
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    db, err := sql.Open("mysql", dsn)
+    if err != nil {
+        fmt.Println("db connect error!")
+    }
+    defer db.Close()
+    // request bodyの読み取り
+    b, err := ioutil.ReadAll(r.Body)
+    if err != nil {
+        fmt.Println("io error")
+        return
+    }
+
+    // jsonのdecode
+    jsonBytes := ([]byte)(b)
+    data := new(Students)
+    if err := json.Unmarshal(jsonBytes, data); err != nil {
+        fmt.Println("JSON Unmarshal error:", err)
+        return
+    }
+    _, err = db.Exec("UPDATE students SET rfid = ? where id = ?", data.Rfid, data.Id)
+    if err != nil {
+        fmt.Println("update error!")
+    }
+}
 
 type Staffs struct {
     Id int `json:id`
-    Center_id int `json:center_id`
     Name string`json:name`
     Email string `json:email`
-    RoleId int `json:roleId`
     Status *bool `json:status`
     Rfid string `json:rfid`
 }
@@ -491,7 +524,7 @@ func getStaffs(w http.ResponseWriter, r *http.Request) {
     staffs := Staffs{}
     var resultStaffs [] Staffs
     for rows.Next() {
-        error := rows.Scan(&staffs.Id, &staffs.Center_id, &staffs.Name, &staffs.Email, &staffs.RoleId, &staffs.Status, &staffs.Rfid)
+        error := rows.Scan(&staffs.Id, &staffs.Name, &staffs.Email, &staffs.Status, &staffs.Rfid)
         if error != nil {
             fmt.Println("scan error")
         } else {
@@ -512,7 +545,7 @@ func getStaffs(w http.ResponseWriter, r *http.Request) {
 }
 
 func postStaff(w http.ResponseWriter, r *http.Request) {
-    dsn := "user:pass@tcp(mysql-db:3306)/aikon_db"
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -532,14 +565,14 @@ func postStaff(w http.ResponseWriter, r *http.Request) {
         fmt.Println("JSON Unmarshal error:", err)
         return
     }
-    _, err = db.Exec("INSERT INTO staffs (center_id, name, email, roleId, status, rfid) VALUES (?, ?, ?, ?, ?, ?)", data.Center_id, data.Name, data.Email, data.RoleId, data.Status, data.Rfid)
+    _, err = db.Exec("INSERT INTO staffs (name, email, status, rfid) VALUES (?, ?, ?, ?)", data.Name, data.Email, data.Status, data.Rfid)
     if err != nil {
         fmt.Println("insert error!")
     }
 }
 
 func putStaStatus(w http.ResponseWriter, r *http.Request) {
-    dsn := "user:pass@tcp(mysql-db:3306)/aikon_db"
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -554,12 +587,39 @@ func putStaStatus(w http.ResponseWriter, r *http.Request) {
 
     // jsonのdecode
     jsonBytes := ([]byte)(b)
-    data := new(Students)
+    data := new(Staffs)
     if err := json.Unmarshal(jsonBytes, data); err != nil {
         fmt.Println("JSON Unmarshal error:", err)
         return
     }
     _, err = db.Exec("UPDATE staffs SET status = false where id = ?", data.Id)
+    if err != nil {
+        fmt.Println("update error!")
+    }
+}
+
+func putStaRfid(w http.ResponseWriter, r *http.Request) {
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    db, err := sql.Open("mysql", dsn)
+    if err != nil {
+        fmt.Println("db connect error!")
+    }
+    defer db.Close()
+    // request bodyの読み取り
+    b, err := ioutil.ReadAll(r.Body)
+    if err != nil {
+        fmt.Println("io error")
+        return
+    }
+
+    // jsonのdecode
+    jsonBytes := ([]byte)(b)
+    data := new(Staffs)
+    if err := json.Unmarshal(jsonBytes, data); err != nil {
+        fmt.Println("JSON Unmarshal error:", err)
+        return
+    }
+    _, err = db.Exec("UPDATE staffs SET rfid = ? where id = ?", data.Rfid, data.Id)
     if err != nil {
         fmt.Println("update error!")
     }
@@ -607,7 +667,7 @@ func getSensors(w http.ResponseWriter, r *http.Request) {
 }
 
 func postSensor(w http.ResponseWriter, r *http.Request) {
-    dsn := "user:pass@tcp(mysql-db:3306)/aikon_db"
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -675,7 +735,7 @@ func getInAndOut(w http.ResponseWriter, r *http.Request) {
 }
 
 func postInAndOut(w http.ResponseWriter, r *http.Request) {
-    dsn := "user:pass@tcp(mysql-db:3306)/aikon_db"
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -702,20 +762,14 @@ func postInAndOut(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-    // mux := http.NewServeMux() //登録されたパターンのリストと各受信リクエストのURLをマッチさせ、URLに最も理解パターンのハンドラを呼び出す
-    // mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-    //     w.Header().Set("Content-Type", "application/json") //ヘッダーの設定
-    //     w.Write([]byte("{\"hello\": \"world\"}"))
-    // })
-    // handler := cors.Default().Handler(mux)
-    // c := cors.New(cors.Options{
-    //     AllowedOrigins: []string{"http://localhost:3000", "http://app-next:3000"},
-    //     AllowCredentials: true,
-    //     // Enable Debugging for testing, consider disabling in production
-    //     Debug: true,
-    // })
-    // // Insert the middleware
-    // handler = c.Handler(handler)
+    envLoad()
+    colog.SetDefaultLevel(colog.LDebug)
+    colog.SetMinLevel(colog.LTrace)
+    colog.SetFormatter(&colog.StdFormatter{
+        Colors: true,
+        Flag:   log.Ldate | log.Ltime | log.Lshortfile,
+    })
+    colog.Register()
     http.HandleFunc("/", helloHandler)
     http.HandleFunc("/dailyReportGet", getDailyReport)
     http.HandleFunc("/dailyReportPost", postDailyReport)
@@ -730,9 +784,11 @@ func main() {
     http.HandleFunc("/studentsGet", getStudents)
     http.HandleFunc("/studentPost", postStudent)
     http.HandleFunc("/stuStatustPut", putStuStatus)
+    http.HandleFunc("/stuRfidPut", putStuRfid)
     http.HandleFunc("/staffsGet", getStaffs)
     http.HandleFunc("/staffPost", postStaff)
     http.HandleFunc("/staStatustPut", putStaStatus)
+    http.HandleFunc("/staRfidPut", putStaRfid)
     http.HandleFunc("/sensorsGet", getSensors)
     http.HandleFunc("/sensorPost", postSensor)
     http.HandleFunc("/inAndOutGet", getInAndOut)
