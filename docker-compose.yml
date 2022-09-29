@@ -9,7 +9,7 @@ services:
     tty: true 
     stdin_open: true
     env_file:
-      - ./app-next/.env
+      - ./app-next/next/.env
     volumes:
       - ./app-next/next:/usr/src/app
     # app-nextに移動してからrun
