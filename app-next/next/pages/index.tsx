@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import axios from "axios";
+import Link from 'next/link';
 
 
 export async function getServerSideProps() {
@@ -30,6 +31,9 @@ const Home: NextPage = ({data}:any) => {
       <main className={styles.main}>
       
         {data}
+        <Link href={"/parents/parent-dairy"}>
+            <h2>イベントページをみる</h2>
+          </Link>
         
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>

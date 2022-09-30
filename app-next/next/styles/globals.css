@@ -24,3 +24,17 @@ a {
     background: black;
   }
 }
+.list-table {
+  margin: auto;
+}
+
+table {
+  border-collapse: collapse;
+  border: solid 2px black;
+}
+
+table th,
+table td {
+  border: solid 1px black;
+
+}
