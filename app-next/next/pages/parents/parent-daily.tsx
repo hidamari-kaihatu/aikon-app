@@ -1,5 +1,3 @@
-import type { NextPage } from 'next'
-
 import React,{ useState } from "react";
 import { Axios } from '../../lib/api';
 import Link from 'next/link';
@@ -11,10 +9,28 @@ export default function dailyReportPost() {
     const [timeToPickup, settimeToPickup] = useState("");
     const [message, setmessage] = useState("");
 
+    const today = new Date();
+    const formatted = today.toLocaleDateString("ja-JP", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    })
+    .split("/")
+    .join("-");
+
+    //ここの今日の日時と曜日を出すところは、コンポーネント化できる。
+    const year = today.getFullYear()
+    const month = today.getMonth() + 1
+    const day = today.getDate()
+    const week = today.getDay()
+    const weekItems = ["日", "月", "火", "水", "木", "金", "土"]
+    const dayOfWeek = weekItems[week]
+
+    //未完：Student_idでidをGETする必要がある
     function handleSubmit(e:any) {
         e.preventDefault();
         const data = {
-            "Date":"2022-10-07",
+            "Date":formatted,
             "Student_id":1,
             "Attend":JSON.parse(attend),
             "Temperature":temperature,
@@ -29,15 +45,16 @@ export default function dailyReportPost() {
         .catch((error) => {
           console.log(error);
         });
+        window.location.reload()
       }
 
     return(
         <div>
-            <h1>Daily Report</h1>
+            <h1>まいにちの出欠報告</h1>
             <br></br>
             <div>
-            <h2>ここに今日の日付と曜日がでるはず</h2>
-            <h2>ここに生徒の名前が来るはず</h2>
+            <h2>{year}年{month}月{day}日（{dayOfWeek}）</h2>
+            <h2>ここに生徒の名前が来るyotei</h2>
             <label>出欠: </label>
             <select value={attend} onChange={(e) => setattend(e.target.value)}>
                 <option value="A">出欠</option>
@@ -75,13 +92,13 @@ export default function dailyReportPost() {
             <label>お迎えの時間: </label>
             <select value={timeToPickup} onChange={(e) => settimeToPickup(e.target.value)}>
                 <option value="A">時間</option>
-                <option value={"18:00"}>16:00</option>
-                <option value={"18:00"}>16:30</option>
-                <option value={"18:00"}>17:00</option>
-                <option value={"18:00"}>17:30</option>
+                <option value={"16:00"}>16:00</option>
+                <option value={"16:30"}>16:30</option>
+                <option value={"17:00"}>17:00</option>
+                <option value={"17:30"}>17:30</option>
                 <option value={"18:00"}>18:00</option>
-                <option value={"18:00"}>18:30</option>
-                <option value={"18:00"}>19:00</option>
+                <option value={"18:30"}>18:30</option>
+                <option value={"19:00"}>19:00</option>
             </select>
             <br></br>
             <br></br>
