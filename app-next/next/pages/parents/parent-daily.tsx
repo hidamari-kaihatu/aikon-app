@@ -1,6 +1,6 @@
 import React,{ useState } from "react";
 import { Axios } from '../../lib/api';
-import Link from 'next/link';
+import Layout from "./parent-layout";
 
 export default function dailyReportPost() {
     const [attend, setattend] = useState("");
@@ -31,7 +31,7 @@ export default function dailyReportPost() {
         e.preventDefault();
         const data = {
             "Date":formatted,
-            "Student_id":1,
+            "Student_id":2,
             "Attend":JSON.parse(attend),
             "Temperature":temperature,
             "SomeoneToPickUp":someToPickup,
@@ -45,16 +45,15 @@ export default function dailyReportPost() {
         .catch((error) => {
           console.log(error);
         });
-        window.location.reload()
+        //window.location.reload()
       }
 
     return(
+      <>
+      <Layout>
         <div>
-            <h1>まいにちの出欠報告</h1>
+         <h2>日々の出欠報告</h2>
             <br></br>
-            <div>
-            <h2>{year}年{month}月{day}日（{dayOfWeek}）</h2>
-            <h2>ここに生徒の名前が来るyotei</h2>
             <label>出欠: </label>
             <select value={attend} onChange={(e) => setattend(e.target.value)}>
                 <option value="A">出欠</option>
@@ -107,10 +106,8 @@ export default function dailyReportPost() {
             <br></br>
             <br></br>
             <button onClick = {handleSubmit}>送信する！</button>
-            <Link href={"/"}>
-            <h2>HOME</h2>
-          </Link>
-            </div>
-        </div>       
+        </div> 
+      </Layout>    
+      </>  
     )
 }
