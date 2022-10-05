@@ -40,7 +40,8 @@ export async function getServerSideProps() {
   };
 }
 
-interface TeacherGetProps {
+
+interface SearchFormProps {
   data: any,//typeof dataにするとdataに赤波線が入る
   centerData: any,//typeof dataにするとdataに赤波線が入る
   middleData: any,//typeof dataにするとdataに赤波線が入る
@@ -52,7 +53,8 @@ interface TeacherGetProps {
   //   centerData: typeof data,
   //   middleData: typeof data
   // }) => {  
-    const TeacherGet: NextPage = ({data,centerData,middleData,onChangeCenter}:TeacherGetProps) => {
+
+    const TeacherGet: NextPage = ({data,centerData,middleData,onChangeCenter}:SearchFormProps) => {
       // const {data} = props
       // const {centerData} = props
       // const {middleData} = props
