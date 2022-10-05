@@ -40,6 +40,7 @@ export async function getServerSideProps() {
   };
 }
 
+
 interface SearchFormProps {
   data: any,//typeof dataにするとdataに赤波線が入る
   centerData: any,//typeof dataにするとdataに赤波線が入る
@@ -52,6 +53,7 @@ interface SearchFormProps {
   //   centerData: typeof data,
   //   middleData: typeof data
   // }) => {  
+
     const TeacherGet: NextPage = ({data,centerData,middleData,onChangeCenter}:SearchFormProps) => {
       // const {data} = props
       // const {centerData} = props
@@ -162,6 +164,7 @@ return (
     <div>
       <label>施設名: </label>
         <select name="centerData" id="centerData" onChange={(e) => onChangeCenter(e)}>
+        <option  value="example">施設を選択してください</option>
         {selectCenter}
         </select>
     </div>
