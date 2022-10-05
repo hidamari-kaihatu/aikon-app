@@ -4,6 +4,7 @@ import { Axios } from '../../lib/api';
 import Link from 'next/link';
 import { auth } from '../../firebaseConfig'
 import { useRouter } from 'next/router';
+import Layout from "./parent-layout";
 export default function dailyReportPost() {
     const [attend, setattend] = useState("");
     const [temperature, settemperature] = useState("");
@@ -132,6 +133,7 @@ export default function dailyReportPost() {
           </Link>
             </div>
             <button className="btn" onClick={logOut}>Logout</button>
-        </div>       
+          </Layout>
+        </>       
     )
 }
