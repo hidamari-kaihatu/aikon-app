@@ -15,7 +15,7 @@ export default function Header() {
       </li>
       <li>
         <Link href="/teachers/teacher-sendMsg">
-          <a>メッセージを送る</a>
+          <a>保護者にメッセージを送る</a>
         </Link>
       </li>
       <li>

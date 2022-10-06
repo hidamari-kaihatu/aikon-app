@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { auth } from '../../firebaseConfig'
 import { useRouter } from 'next/router';
 import Layout from "./parent-layout";
+
 export default function dailyReportPost() {
     const [attend, setattend] = useState("");
     const [temperature, settemperature] = useState("");
@@ -29,8 +30,6 @@ export default function dailyReportPost() {
       }
     }
 
-
-
     const today = new Date();
     const formatted = today.toLocaleDateString("ja-JP", {
       year: "numeric",
@@ -40,15 +39,8 @@ export default function dailyReportPost() {
     .split("/")
     .join("-");
 
-    //ここの今日の日時と曜日を出すところは、コンポーネント化できる。
-    const year = today.getFullYear()
-    const month = today.getMonth() + 1
-    const day = today.getDate()
-    const week = today.getDay()
-    const weekItems = ["日", "月", "火", "水", "木", "金", "土"]
-    const dayOfWeek = weekItems[week]
 
-    //未完：Student_idでidをGETする必要がある
+    //未完：Student_idでidをGETする必要がある。今はベタ打ちの「２」
     function handleSubmit(e:any) {
         e.preventDefault();
         const data = {
@@ -67,7 +59,7 @@ export default function dailyReportPost() {
         .catch((error) => {
           console.log(error);
         });
-        //window.location.reload()
+        window.location.reload()
       }
 
     return(
