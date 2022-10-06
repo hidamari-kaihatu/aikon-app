@@ -4,69 +4,67 @@ import { Axios } from '../../lib/api';
 import React,{ useState } from "react";
 
 export async function getServerSideProps() {
-  const res = await axios.get(`${process.env.API}/dailyReportGet`, {
+  const res = await axios.get(`${process.env.API}/studentsGet`, {
   });
   const data = await res.data;
 
   return { 
-      props: {
-        data: data,
-      },
+    props: {
+      data: data,
+    },
   };
 }
 
 const StudentGet = ({data}:any) => {
-console.log(data)
-/* let n = 1;
-function counter(){
-  return n++;
-}; */
 
-function liftButton (id:any) {
-      // e.preventDefault();
-      const teacher = {id: id};
-      Axios.put(`api/proxy/stuStatustPut`, teacher)
-      .then((res) => {
-      })
-      .catch((error) => {
-      });
-      window.location.reload()
-    }
+//現状2回ダブルクリックしないと、変更が反映されない
+function liftButton (Id:any) {
+  const student = {Id: Id};
+  Axios.put(`api/proxy/stuStatustPut`, student)
+  .then((res) => {
+  })
+  .catch((error) => {
+  });
+  window.location.reload()
+}
+
+//statusがtrueのものだけ表示
+//Center_idが今はベタ打ち。ここに、先生が所属するCenter_idが入るようにしたい
+const info = data
+.filter(obj => obj.Status.toString() === "true")
+.filter(obj =>obj.Center_id === 1 )
 
 return (
 <Layout>
     <table className='list-table'>
       <thead>
-        <tr>
-          <th>ID</th>
-          <th>Date</th>
-          <th>Student_ID</th>
-          <th>Attend</th>
-          <th>Temperature</th>
-          <th>topickup</th>
-          <th>timepickup</th>
-          <th>message</th>
+        <tr >
+          <th>センターID</th>
+          <th>名前</th>
+          <th>学年</th>
+          <th>緊急連絡先</th>
+          <th>メールアドレス</th>
+          <th>status</th>
+          <th>除籍</th>
         </tr>
       </thead>
       <tbody>
-        {data.map((item:any, i:number) => {
-              return (
-                  <>
-                  <tr  key={item}>
-                   <td>{item.Id}</td>
-                   <td>{item.Date}</td>
-                   <td>{item.Student_id}</td>
-                   <td>{item.Attend.toString()}</td>
-                   <td>{item.Temperature}</td>
-                   <td>{item.SomeoneToPickUp}</td>
-                   <td>{item.TimeToPickUp}</td>
-                   <td>{item.Message}</td>
-                   <td> <button onClick = {() => {liftButton(item.Id)}}>除籍</button></td>
-                  </tr>
-                  </>   
-              )
-      }
-    )}
+        {info.map((item:any, i:number) => {
+          return (
+          <>
+          <tr  key={item}>
+            <td>{item.Center_id}</td>
+            <td>{item.Name}</td>
+            <td>{item.Grade}</td>
+            <td>{item.ContactTell}</td>
+            <td>{item.Email}</td>
+            <td>{item.Status.toString()}</td>
+            <td> <button onClick = {() => {liftButton(item.Id)}}>除籍</button></td>
+            </tr>
+            </>   
+          )
+        }
+        )}
       </tbody>
     </table>
     </Layout>
