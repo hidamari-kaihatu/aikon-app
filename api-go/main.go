@@ -328,7 +328,7 @@ func postCenter(w http.ResponseWriter, r *http.Request) {
         fmt.Println("JSON Unmarshal error:", err)
         return
     }
-    _, err = db.Exec("INSERT INTO centers (name, productId) VALUES (?,?)", data.Name, data.productId)
+    _, err = db.Exec("INSERT INTO centers (name, productId) VALUES (?,?)", data.Name, data.ProductId)
     log.Printf("trace: this is a trace log postCenter end.")
 }
 
@@ -411,7 +411,7 @@ type Students struct {
     Grade int `json:grade`
     Email *string `json:email`
     Status bool `json:status`
-    Rfid string `json:rfid`
+    Rfid *string `json:rfid`
 }
 func getRowsStu(db *sql.DB) *sql.Rows { //mysqlからcenterの情報取得
     rows, err := db.Query("SELECT * FROM students")
