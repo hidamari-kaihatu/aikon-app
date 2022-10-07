@@ -21,7 +21,6 @@ const Login: FC = () => {
       //console.log(idToken)
         Axios.post(`api/proxy/staffIsLogin`,idToken, { 
         headers:{
-          // 'Content-Type':'application/x-www-form-urlencoded',
           Authorization: `Bearer ${idToken}` //ヘッダにトークン付与
           },
       })
@@ -42,7 +41,7 @@ const Login: FC = () => {
 
   return (
     <div>
-        hitomi@hitomi.com
+      takumi@takumi.com 
       <form onSubmit={logIn}>
         <div>
           <label htmlFor="email">
