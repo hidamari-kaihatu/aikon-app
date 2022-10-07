@@ -1,6 +1,4 @@
-import type { NextPage } from 'next'
 import axios from "axios";
-import { Axios } from '../../lib/api';
 import React,{ useState } from "react";
 import Layout from './teacher-layout';
 
@@ -17,36 +15,30 @@ export async function getServerSideProps() {
 }
 
 const StudentGet = ({data}:any) => {
-console.log(data)
-/* let n = 1;
-function counter(){
-  return n++;
-}; */
+  let n = 1;
+  function counter(){
+    return n++;
+  }; 
 
-function liftButton (id:any) {
-      // e.preventDefault();
-      const teacher = {id: id};
-      Axios.put(`api/proxy/stuStatustPut`, teacher)
-      .then((res) => {
-      })
-      .catch((error) => {
-      });
-      window.location.reload()
-    }
+  let attend;
+
+//ここにfilterの処理を書かないとだめ。すべてのdailyReportの中から、「学童の先生」の施設IDと生徒の施設IDが同じものだけを表示させるようにする
+//dailyReportはstudent_idしかgetできないので、その情報をもとに、studentテーブルに行きstudent_idとcenter_idを照合する必要がある。
+
 
 return (
 <Layout>
     <table className='list-table'>
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Date</th>
+          <th>No.</th>
+          <th>日付</th>
           <th>Student_ID</th>
-          <th>Attend</th>
-          <th>Temperature</th>
-          <th>topickup</th>
-          <th>timepickup</th>
-          <th>message</th>
+          <th>出欠</th>
+          <th>体温</th>
+          <th>お迎えの人</th>
+          <th>お迎えの時間</th>
+          <th>メッセージ</th>
         </tr>
       </thead>
       <tbody>
@@ -54,7 +46,7 @@ return (
               return (
                   <>
                   <tr  key={item}>
-                   <td>{item.Id}</td>
+                   <td>{counter()}</td>
                    <td>{item.Date}</td>
                    <td>{item.Student_id}</td>
                    <td>{item.Attend.toString()}</td>
