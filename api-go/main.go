@@ -456,6 +456,7 @@ type Students struct {
     Email *string `json:email`
     Status bool `json:status`
     Rfid *string `json:rfid`
+    CenterName string `json:centerName`
 }
 
 func getRowsStu(db *sql.DB) *sql.Rows { //mysqlからcenterの情報取得
@@ -476,7 +477,7 @@ func getRowsStu(db *sql.DB) *sql.Rows { //mysqlからcenterの情報取得
     }
     id := claims["sutudent"]
 
-    rows, err := db.Query("SELECT * FROM students where students.Id = ?", id)
+    rows, err := db.Query("SELECT students.id, students.center_id, students.name, students.contactTell, students.grade, students.email, students.status, students.rfid, centers.name from students INNER JOIN centers ON  students.center_id = centers.id WHERE students.id=?", id)
     if err != nil {
         fmt.Println("Err2")
         panic(err.Error())
@@ -491,7 +492,7 @@ func getStudents(w http.ResponseWriter, r *http.Request) {
     students := Students{}
     var resultStudents [] Students
     for rows.Next() {
-        error := rows.Scan(&students.Id, &students.Center_id, &students.Name, &students.ContactTell, &students.Grade, &students.Email, &students.Status, &students.Rfid)
+        error := rows.Scan(&students.Id, &students.Center_id, &students.Name, &students.ContactTell, &students.Grade, &students.Email, &students.Status, &students.Rfid, &students.CenterName)
         if error != nil {
             fmt.Println("scan error")
         } else {
@@ -878,7 +879,24 @@ type StuInAndOutSensors struct {
     Place string  `json:place`
 }
 
-func getRowsStuInAndOutSensors(db *sql.DB, id int) *sql.Rows {
+func getRowsStuInAndOutSensors(db *sql.DB) *sql.Rows {
+    claims := jwt.MapClaims{}
+
+    token, err := jwt.ParseWithClaims(setCookie, claims, func(token *jwt.Token) (interface{}, error) {
+        return []byte("secret"), nil
+    })
+    fmt.Printf("%v\n", token)
+
+	if err != nil {
+        fmt.Println("verifyToken error")
+	}
+    for key, val := range claims {
+        log.Printf("Key: %v, value: %v\n", key, val)
+        fmt.Printf("%T\n", val)
+        log.Printf("Verified matchId val: %v\n", val)
+    }
+    id := claims["sutudent"]
+
     rows, err := db.Query(`SELECT students.id, inAndOut.datetime, students.rfid, inAndOut.sensor_id, students.name, sensors.place FROM students INNER JOIN inAndOut ON students.rfid = inAndOut.rfid INNER JOIN sensors ON inAndOut.sensor_id = sensors.id WHERE students.id = ? AND inAndOut.datetime > CURDATE() AND sensors.place = "入口・出口"`,id)
     if err != nil {
         fmt.Println("Err2")
@@ -890,7 +908,7 @@ func getRowsStuInAndOutSensors(db *sql.DB, id int) *sql.Rows {
 func getStuInAndOutSensors(w http.ResponseWriter, r *http.Request) {
     db := connectionDB()
     defer db.Close()
-    rows := getRowsStuInAndOutSensors(db, 1)
+    rows := getRowsStuInAndOutSensors(db)
     stuInAndOutSensors := StuInAndOutSensors{}
     var resultStuInAndOutSensors [] StuInAndOutSensors
     for rows.Next() {
@@ -913,6 +931,71 @@ func getStuInAndOutSensors(w http.ResponseWriter, r *http.Request) {
         return
     }
 }
+
+type StaffAndMiddle struct {
+    Id int `json:id`
+    Name string `json;name`
+    Email string `json:email`
+    Status bool `json;status`
+    Rfid string `json:rfid`
+    Center_id int `json:center_id`
+    Role_id int `json:role_id`
+    CenterName string `json:centerName`
+}
+
+func getRowsStaffAndMiddle(db *sql.DB) *sql.Rows {
+    claims := jwt.MapClaims{}
+
+    token, err := jwt.ParseWithClaims(setCookie, claims, func(token *jwt.Token) (interface{}, error) {
+        return []byte("secret"), nil
+    })
+    fmt.Printf("%v\n", token)
+
+	if err != nil {
+        fmt.Println("verifyToken error")
+	}
+    for key, val := range claims {
+        log.Printf("Key: %v, value: %v\n", key, val)
+        fmt.Printf("%T\n", val)
+        log.Printf("Verified matchId val: %v\n", val)
+    }
+    id := claims["sutudent"]
+
+    rows, err := db.Query(`SELECT staffs.id, staffs.name, staffs.email, staffs.status, staffs.rfid, middle.center_id, middle.role_id, centers.name from staffs INNER JOIN middle ON staffs.id = middle.staff_id INNER JOIN centers ON middle.center_id = centers.id WHERE staffs.id = ?`,id)
+    if err != nil {
+        fmt.Println("getRowsStaffAndMiddle")
+        panic(err.Error())
+    }
+    return rows
+}
+
+func getStaffAndMiddle(w http.ResponseWriter, r *http.Request) {
+    db := connectionDB()
+    defer db.Close()
+    rows := getRowsStaffAndMiddle(db)
+    staffAndMiddle := StaffAndMiddle{}
+    var resultStaffAndMiddle [] StaffAndMiddle
+    for rows.Next() {
+        error := rows.Scan(&staffAndMiddle.Id, &staffAndMiddle.Name, &staffAndMiddle.Email, &staffAndMiddle.Status, &staffAndMiddle.Rfid, &staffAndMiddle.Center_id, &staffAndMiddle.Role_id, &staffAndMiddle.CenterName)
+        if error != nil {
+            fmt.Println("scan error getStaffAndMiddle")
+        } else {
+            resultStaffAndMiddle = append(resultStaffAndMiddle, staffAndMiddle)
+        }
+    }
+    var buf bytes.Buffer
+    enc := json.NewEncoder(&buf)
+    if err := enc.Encode(&resultStaffAndMiddle); err != nil {
+        log.Fatal(err)
+    }
+    fmt.Println(buf.String())
+
+    _, err := fmt.Fprint(w, buf.String()) 
+    if err != nil {
+        return
+    }
+}
+
 
 // // //暗号化スタート
 // func GenerateIV() ([]byte, error) { //１番初めの暗号文ブロック作成
@@ -1239,6 +1322,8 @@ cookie := &http.Cookie{
     HttpOnly: true,
 }
 
+=======
+
 http.SetCookie(w, cookie)
 log.Printf("cookie: ", cookie) 
 }
@@ -1301,6 +1386,7 @@ func main() {
     http.HandleFunc("/stuInAndOutSensorsGet", getStuInAndOutSensors)
     http.HandleFunc("/parentIsLogin", parentIsLogin)
     http.HandleFunc("/staffIsLogin", staffIsLogin)
+    http.HandleFunc("/getStaffAndMiddle", getStaffAndMiddle)
     // fmt.Println("Server Start")
     // http.ListenAndServe(":8080", handler)
     http.ListenAndServe(":8080", nil)

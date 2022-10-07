@@ -1,8 +1,8 @@
+/* eslint react-hooks/exhaustive-deps: off */ 
 import type { NextPage } from 'next'
 import Layout from './teacher-layout';
 import Router from 'next/router';
 
-export default function mypage() {
     return (
       <>
       <Layout>
@@ -31,3 +31,4 @@ export default function mypage() {
       </>
     );
 }
+export default Mypage
