@@ -42,6 +42,7 @@ const Login: FC = () => {
 
   return (
     <div>
+      ayaka@ayaka.com
       <form onSubmit={logIn}>
         <div>
           <label htmlFor="email">

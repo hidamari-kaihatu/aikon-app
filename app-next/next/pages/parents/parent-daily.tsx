@@ -5,7 +5,9 @@ import Link from 'next/link';
 import { auth } from '../../firebaseConfig'
 import { useRouter } from 'next/router';
 import Layout from "./parent-layout";
-export default function dailyReportPost() {
+import axios from "axios";
+
+export default function dailyReportPost(students:any) {
     const [attend, setattend] = useState("");
     const [temperature, settemperature] = useState("");
     const [someToPickup, setsomeToPickup] = useState("");
@@ -15,6 +17,10 @@ export default function dailyReportPost() {
     const router = useRouter()
     const [currentUser, setCurrentUser] = useState<null | object>(null)
   
+
+  const studentId = students.students[0].Id
+  //{console.log(studentId)}
+
     useEffect(() => {
       auth.onAuthStateChanged((user) => {
         user ? setCurrentUser(user) : router.push('/parents/parent-login')
@@ -29,6 +35,7 @@ export default function dailyReportPost() {
       }
     }
 
+    
 
 
     const today = new Date();
@@ -53,14 +60,14 @@ export default function dailyReportPost() {
         e.preventDefault();
         const data = {
             "Date":formatted,
-            "Student_id":2,
+            "Student_id":studentId,
             "Attend":JSON.parse(attend),
             "Temperature":temperature,
             "SomeoneToPickUp":someToPickup,
             "TimeToPickUp":timeToPickup,
             "Message":message
         }
-        Axios.post(`api/proxy/dailyReportPost`, data)
+        Axios.post(`api/proxy/dailyReportPost`, data/*, { withCredentials: true }*/)
         .then((res) => {
           console.log(res);
         })
@@ -128,7 +135,7 @@ export default function dailyReportPost() {
             <br></br>
             <br></br>
             <button onClick = {handleSubmit}>送信する！</button>
-            <Link href={"/"}>
+            <Link href={"/parents/parent-mypage"}>
             <h2>HOME</h2>
           </Link>
             </div>
@@ -136,4 +143,17 @@ export default function dailyReportPost() {
           </Layout>
         </>       
     )
+}
+
+export async function getServerSideProps() {
+  const res = await axios.get(`${process.env.API}/studentsGet`, {
+  });
+  const students = await res.data;
+  {console.log(students)}
+
+  return { 
+      props: {
+        students
+      },
+  };
 }

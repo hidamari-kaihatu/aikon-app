@@ -27,6 +27,10 @@ import (
 
     _ "github.com/go-sql-driver/mysql"
 )
+
+var setCookie string
+
+
 func envLoad() {
 	err := godotenv.Load(".env")
 	if err != nil {
@@ -68,7 +72,7 @@ type TeacherMessage struct {
 
 //データベースに接続する部分
 func connectionDB() *sql.DB {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     fmt.Println(dsn)
     db, err := sql.Open("mysql", dsn)
     if err != nil {
@@ -120,7 +124,30 @@ func getDailyReport(w http.ResponseWriter, r *http.Request) {
 
 func postDailyReport(w http.ResponseWriter, r *http.Request) {
     log.Printf("trace: this is a trace log postDailyReport start.")
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    log.Printf("trace: this is getDailyReport log.")
+    log.Printf(setCookie)
+
+    claims := jwt.MapClaims{}
+
+    token, err := jwt.ParseWithClaims(setCookie, claims, func(token *jwt.Token) (interface{}, error) {
+        return []byte("secret"), nil
+    })
+    fmt.Printf("%v\n", token)
+
+	if err != nil {
+        fmt.Println("verifyToken error")
+	}
+    for key, val := range claims {
+        fmt.Printf("Key: %v, value: %v\n", key, val)
+        fmt.Printf("%T\n", val)
+    }
+    id := claims["sutudent"]
+    log.Printf("trace: this is studentID log.")
+    fmt.Printf("%v\n", id/*claims["sutudent"]*/) //作成されたjwt確認
+
+	//return token, nil
+
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("Err1")
@@ -183,7 +210,7 @@ func getMiddle(w http.ResponseWriter, r *http.Request) {
 }
 
 func postMiddle (w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("Err1")
@@ -204,7 +231,24 @@ func postMiddle (w http.ResponseWriter, r *http.Request) {
 }
 
 func getTeacherMessageRows(db *sql.DB) *sql.Rows {
-    rows, err := db.Query("SELECT * FROM teacherMessage")
+    claims := jwt.MapClaims{}
+
+    token, err := jwt.ParseWithClaims(setCookie/*入る？*/, claims, func(token *jwt.Token) (interface{}, error) {
+        return []byte("secret"), nil
+    })
+    fmt.Printf("%v\n", token)
+
+	if err != nil {
+        fmt.Println("verifyToken error")
+	}
+    for key, val := range claims {
+        log.Printf("Key: %v, value: %v\n", key, val)
+        fmt.Printf("%T\n", val)
+        log.Printf("Verified matchId val: %v\n", val)
+    }
+    id := claims["sutudent"] 
+
+    rows, err := db.Query("SELECT * FROM dailyReports where staffs.staff_id = ?", id)
     if err != nil {
         fmt.Println("Err2")
         panic(err.Error())
@@ -240,7 +284,7 @@ func getTeacherMessage(w http.ResponseWriter, r *http.Request) {
 }
 
 func postTeacherMessage (w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("Err1")
@@ -308,7 +352,7 @@ func getCenter(w http.ResponseWriter, r *http.Request) {
 
 func postCenter(w http.ResponseWriter, r *http.Request) {
     log.Printf("trace: this is a trace log postCenter start.")
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("Err1")
@@ -334,7 +378,7 @@ func postCenter(w http.ResponseWriter, r *http.Request) {
 
 func putCenterStatus(w http.ResponseWriter, r *http.Request) {
     log.Printf("trace: this is a trace log putCenterStatus start.")
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -360,7 +404,7 @@ func putCenterStatus(w http.ResponseWriter, r *http.Request) {
     }
 }
 func putCenterProductId(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -413,14 +457,33 @@ type Students struct {
     Status bool `json:status`
     Rfid *string `json:rfid`
 }
+
 func getRowsStu(db *sql.DB) *sql.Rows { //mysqlからcenterの情報取得
-    rows, err := db.Query("SELECT * FROM students")
+    claims := jwt.MapClaims{}
+
+    token, err := jwt.ParseWithClaims(setCookie/*入る？*/, claims, func(token *jwt.Token) (interface{}, error) {
+        return []byte("secret"), nil
+    })
+    fmt.Printf("%v\n", token)
+
+	if err != nil {
+        fmt.Println("verifyToken error")
+	}
+    for key, val := range claims {
+        log.Printf("Key: %v, value: %v\n", key, val)
+        fmt.Printf("%T\n", val)
+        log.Printf("Verified matchId val: %v\n", val)
+    }
+    id := claims["sutudent"]
+
+    rows, err := db.Query("SELECT * FROM students where students.Id = ?", id)
     if err != nil {
         fmt.Println("Err2")
         panic(err.Error())
     }
     return rows
 }
+
 func getStudents(w http.ResponseWriter, r *http.Request) {
     db := connectionDB()
     defer db.Close()
@@ -449,7 +512,7 @@ func getStudents(w http.ResponseWriter, r *http.Request) {
 }
 
 func postStudent(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -476,7 +539,7 @@ func postStudent(w http.ResponseWriter, r *http.Request) {
 }
 
 func putStuStatus(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -503,7 +566,7 @@ func putStuStatus(w http.ResponseWriter, r *http.Request) {
 }
 
 func putStuRfid(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -537,9 +600,27 @@ type Staffs struct {
     Rfid string `json:rfid`
 }
 func getRowsSta(db *sql.DB) *sql.Rows { //mysqlからcenterの情報取得
-    rows, err := db.Query("SELECT * FROM staffs")
+    claims := jwt.MapClaims{}
+
+    token, err := jwt.ParseWithClaims(setCookie/*入る？*/, claims, func(token *jwt.Token) (interface{}, error) {
+        return []byte("secret"), nil
+    })
+    fmt.Printf("%v\n", token)
+    log.Printf(setCookie)
+
+	if err != nil {
+        fmt.Println("verifyToken error")
+	}
+    for key, val := range claims {
+        log.Printf("Key: %v, value: %v\n", key, val)
+        fmt.Printf("%T\n", val)
+        log.Printf("Verified matchId val: %v\n", val)
+    }
+    id := claims["sutudent"]
+
+    rows, err := db.Query("SELECT * FROM staffs where staffs.id = ?", id)
     if err != nil {
-        fmt.Println("Err2")
+        fmt.Println("Err2 a")
         panic(err.Error())
     }
     return rows
@@ -572,7 +653,7 @@ func getStaffs(w http.ResponseWriter, r *http.Request) {
 }
 
 func postStaff(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -599,7 +680,7 @@ func postStaff(w http.ResponseWriter, r *http.Request) {
 }
 
 func putStaStatus(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -626,7 +707,7 @@ func putStaStatus(w http.ResponseWriter, r *http.Request) {
 }
 
 func putStaRfid(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -694,7 +775,7 @@ func getSensors(w http.ResponseWriter, r *http.Request) {
 }
 
 func postSensor(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -762,7 +843,7 @@ func getInAndOut(w http.ResponseWriter, r *http.Request) {
 }
 
 func postInAndOut(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -925,18 +1006,17 @@ func CreateToken(studentID string) (string) {
 }
 
 //cookieに乗ってきたjwtを解析する用？
-func VerifyToken(tokenString string) (*jwt.Token, error) {
+// func VerifyToken(tokenString string) (*jwt.Token, error) {
 
-	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		return []byte("secret"), nil
-	})
-	if err != nil {
-		return  nil, err
-	}
+// 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+// 		return []byte("secret"), nil
+// 	})
+// 	if err != nil {
+// 		return  nil, err
+// 	}
 
-	return token, nil
-
-}
+// 	return token, nil
+//}
 
 type StuId struct {
     Id int `json:id`
@@ -974,6 +1054,7 @@ type Cookie struct {
 	Unparsed []string // Raw text of unparsed attribute-value pairs
 }
 
+
 func parentIsLogin(w http.ResponseWriter, r *http.Request){ //保護者ページ用
         app, err := firebase.NewApp(context.Background(), nil)
         if err != nil {
@@ -985,8 +1066,9 @@ func parentIsLogin(w http.ResponseWriter, r *http.Request){ //保護者ページ
             fmt.Printf("error: %v\n", err)
             os.Exit(1)
         }
-    log.Printf("trace: this is a trace headers test.")
+    //log.Printf("trace: this is a trace headers test.")
 	authHeader := r.Header.Get("Authorization")
+    log.Printf("Verified authHeader: %T\n", authHeader)
     idToken := strings.Replace(authHeader, "Bearer ", "", 1)
 	// fmt.Fprintln(w, idToken)
     // fmt.Println(w, idToken)
@@ -1047,6 +1129,8 @@ func parentIsLogin(w http.ResponseWriter, r *http.Request){ //保護者ページ
     afterAuthJwt := CreateToken(toString)
     log.Printf(afterAuthJwt) //作成されたjwt確認
 
+    setCookie = afterAuthJwt
+
     cookie := &http.Cookie{
         Name:   "studentID",
         Value:  afterAuthJwt,
@@ -1054,9 +1138,131 @@ func parentIsLogin(w http.ResponseWriter, r *http.Request){ //保護者ページ
     }
 
     http.SetCookie(w, cookie)
-    fmt.Println("cookie: ", cookie) 
+    log.Printf("cookie: ", cookie) 
 }
 
+type StaId struct {
+    Id int `json:id`
+}
+
+func getRowsStaId(db *sql.DB, email string) *sql.Rows {
+    rows, err := db.Query("SELECT id FROM aikon_db.staffs where email = ?", email)
+    if err != nil {
+        fmt.Println("Err2")
+        panic(err.Error())
+    }
+    fmt.Println(rows)
+    return rows
+}      
+
+
+//staff用ログイン関数
+func staffIsLogin(w http.ResponseWriter, r *http.Request){ //保護者ページ用
+    app, err := firebase.NewApp(context.Background(), nil)
+    if err != nil {
+        fmt.Printf("error: %v\n", err)
+        os.Exit(1)
+    }
+    auth, err := app.Auth(context.Background())
+    if err != nil {
+        fmt.Printf("error: %v\n", err)
+        os.Exit(1)
+    }
+log.Printf("trace: this is a trace headers test.")
+authHeader := r.Header.Get("Authorization")
+log.Printf("Verified authHeader: %T\n", authHeader)
+idToken := strings.Replace(authHeader, "Bearer ", "", 1)
+// fmt.Fprintln(w, idToken)
+// fmt.Println(w, idToken)
+
+log.Printf("trace: this is a trace JWT の検証.")
+// JWT の検証
+token, err := auth.VerifyIDToken(context.Background(), idToken)
+if err != nil {
+// JWT が無効なら Handler に進まず別処理
+    fmt.Printf("error verifying ID token: %v\n", err)
+    w.WriteHeader(http.StatusUnauthorized)
+    w.Write([]byte("error verifying ID token\n"))
+    return
+}
+log.Printf("Verified ID token: %v\n", token)
+
+jwt := authHeader
+hCS, err := jwtdecode.JwtDecode.DecomposeFB(jwt)
+if err != nil {
+    log.Fatalln("Error : ", err)
+}
+payload, err := jwtdecode.JwtDecode.DecodeClaimFB(hCS[1])
+if err != nil {
+    log.Fatalln("Error :", err)
+}
+
+//ユーザーIDと, メールアドレスを表示
+user := payload.Subject
+emailInToken := payload.Email
+log.Printf("User ID: " + user + " ,Email: " + emailInToken + "\n")
+
+//studentテーブルのid取得用
+db := connectionDB()
+defer db.Close()
+rows := getRowsStaId(db, emailInToken)
+staId := StaId{}
+var resultStaId [] StaId
+for rows.Next() {
+    error := rows.Scan(&staId.Id)
+    if error != nil {
+        fmt.Println("scan error")
+    } else {
+        resultStaId = append(resultStaId, staId)
+    }
+}
+matchId := resultStaId[0].Id //トークンで取れたemailと同じアドレスの人のidを変数に入れた！
+log.Printf("Verified matchId: %v\n", matchId)
+fmt.Printf("%T\n", matchId)//数値型
+toString := strconv.Itoa(matchId) //文字列に変換
+log.Printf("Verified matchId type: %T\n", toString)
+
+// //暗号化処理
+// Encrypt(toString)
+// log.Printf("Verified enc: %v\n", enc)
+// log.Printf("Verified outIv: %v\n", outIv)
+
+//jwtにのせる　認証情報が入ったJsonを加工（電子署名を加える等）し、JWTにしたのち、それを認証Tokenとして ×クライアントに渡す　〇クッキーに渡す
+afterAuthJwt := CreateToken(toString)
+log.Printf(afterAuthJwt) //作成されたjwt確認
+
+setCookie = afterAuthJwt
+
+cookie := &http.Cookie{
+    Name:   "studentID",
+    Value:  afterAuthJwt,
+    HttpOnly: true,
+}
+
+http.SetCookie(w, cookie)
+log.Printf("cookie: ", cookie) 
+}
+
+
+//cookieに乗ってきたjwtを解析する用
+// func verifyToken(tokenString string) (*jwt.Token, error){
+//     claims := jwt.MapClaims{}
+//     token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
+//         return []byte("secret"), nil
+//     })
+    
+// 	if err != nil {
+//         fmt.Println("verifyToken error")
+// 	}
+//     for key, val := range claims {
+//         fmt.Printf("Key: %v, value: %v\n", key, val)
+//         fmt.Printf("%T\n", val)
+//     }
+//     fmt.Printf("%v\n", claims["sutudent"]) //作成されたjwt確認
+
+// 	return token, nil
+
+// }
 
 
 func main() {
@@ -1070,18 +1276,16 @@ func main() {
     colog.Register()
     log.Printf("trace: this is a trace log test.")
     http.HandleFunc("/", helloHandler)
-    http.HandleFunc("/dailyReportGet", getDailyReport)
+    http.HandleFunc("/dailyReportGet", getDailyReport) 
     http.HandleFunc("/dailyReportPost", postDailyReport)
     http.HandleFunc("/middleGet", getMiddle)
     http.HandleFunc("/middlePost", postMiddle)
-    http.HandleFunc("/teacherMessageGet", getTeacherMessage)
+    http.HandleFunc("/teacherMessageGet", getTeacherMessage)//その先生が送ったメッセージをgetする必要あり　staff_idカラムあり
     http.HandleFunc("/teacherMessagePost", postTeacherMessage)
 	http.HandleFunc("/centerGet", getCenter)
     http.HandleFunc("/centerPost", postCenter)
     http.HandleFunc("/centerPut", putCenterStatus)
     http.HandleFunc("/centerProductIdPut", putCenterProductId)
-    // http.HandleFunc("/paymentGet", getPayment)
-    // http.HandleFunc("/paymentPost", postPayment)
     http.HandleFunc("/studentsGet", getStudents)
     http.HandleFunc("/studentPost", postStudent)
     http.HandleFunc("/stuStatustPut", putStuStatus)
@@ -1096,6 +1300,7 @@ func main() {
     http.HandleFunc("/inAndOutPost", postInAndOut)
     http.HandleFunc("/stuInAndOutSensorsGet", getStuInAndOutSensors)
     http.HandleFunc("/parentIsLogin", parentIsLogin)
+    http.HandleFunc("/staffIsLogin", staffIsLogin)
     // fmt.Println("Server Start")
     // http.ListenAndServe(":8080", handler)
     http.ListenAndServe(":8080", nil)
