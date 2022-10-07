@@ -5,8 +5,9 @@ import Link from 'next/link';
 import { auth } from '../../firebaseConfig'
 import { useRouter } from 'next/router';
 import Layout from "./parent-layout";
+import axios from "axios";
 
-export default function dailyReportPost() {
+export default function dailyReportPost(students:any) {
     const [attend, setattend] = useState("");
     const [temperature, settemperature] = useState("");
     const [someToPickup, setsomeToPickup] = useState("");

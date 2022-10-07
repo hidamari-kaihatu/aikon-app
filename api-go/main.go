@@ -1322,6 +1322,8 @@ cookie := &http.Cookie{
     HttpOnly: true,
 }
 
+=======
+
 http.SetCookie(w, cookie)
 log.Printf("cookie: ", cookie) 
 }

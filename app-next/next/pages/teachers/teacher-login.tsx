@@ -18,6 +18,7 @@ const Login: FC = () => {
       const firebaseAuth = getAuth()
       const user:any = firebaseAuth.currentUser
       const idToken = await getIdToken(user, true)
+
         Axios.post(`api/proxy/staffIsLogin`,idToken, { 
         headers:{
           Authorization: `Bearer ${idToken}` //ヘッダにトークン付与
@@ -30,7 +31,8 @@ const Login: FC = () => {
         console.log(error);
       });
 
-      router.push('/teachers/teacher-mypage')
+      router.push('/parents/teacher-mypage')
+
     } catch (err) {
        alert("メールアドレスまたはパスワードが間違っています")
       router.push('/404')
