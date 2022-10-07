@@ -1,56 +1,34 @@
 /* eslint react-hooks/exhaustive-deps: off */ 
 import type { NextPage } from 'next'
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { auth } from '../../firebaseConfig';
 import Layout from './teacher-layout';
-
-export async function getServerSideProps() {
-  const res = await axios.get(`${process.env.API}/getStaffAndMiddle`, {
-  });
-  const staffs = await res.data;
-  {console.log(staffs)}
-
-  return { 
-      props: {
-        staffs
-      },
-  };
-}
-
-interface staffObj {
-  [key: string]: Array<Arr>
-}
-interface Arr {
-  Array : Object
-}
-
-const Mypage: NextPage = (staffs:staffObj) => {
-  const [currentUser, setCurrentUser] = useState<null | object>(null)
-  const router = useRouter()
-
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      user ? setCurrentUser(user) : router.push('/teachers/teacher-login')
-    })
-  }, [])
+import Router from 'next/router';
 
     return (
+      <>
       <Layout>
-        <h2>TEACHER MY PAGE</h2>
+      <h3>先生HOME</h3>
+      <div>
         <div>
-            {staffs.staffs.map((s:any, i:number) => {
-                return (
-                    <div key={i}>
-                      {s.CenterName}
-                      <br></br>
-                      {s.Name}
-                    </div>
-                )
-                })}
+          <button onClick={() => Router.push('/teacher/teacher-todayKids', '/teacher/teacher-todayKids', { shallow: true})}>今日の児童一覧を見る</button>
         </div>
-      </Layout>
+        <div>
+          <button onClick={() => Router.push('/teacher/teacher-kidsinfo', '/teacher/teacher-kidsinfo', { shallow: true})}>児童名簿一覧を見る</button> 
+        </div>
+        <div>
+          <button onClick={() => Router.push('/teacher/sendMsg', '/teacher/sendMsg', { shallow: true})}>保護者メッセージを送る</button> 
+        </div>
+        <div>
+          <button onClick={() => Router.push('/teacher/teacher-msgList', '/teacher/teacher-msgList', { shallow: true})}>保護者に送ったメッセージを見る</button>         
+        </div>
+        <div>
+          <button onClick={() => Router.push('/teacher/teacher-childInOut', '/teacher/teacher-newer', { shallow: true})}>子供の入退室を確認するS</button>         
+        </div>
+        <div>
+          <button onClick={() => Router.push('/teacher/teacher-teacherInOut', '/teacher/teacher-teacherInOut', { shallow: true})}>先生の出退勤を確認する</button>         
+        </div>
+      </div>
+    </Layout>
+      </>
     );
 }
 export default Mypage
