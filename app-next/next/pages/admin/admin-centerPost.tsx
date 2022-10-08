@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function addCenter() {
   const [newCenter, setNewCenter] = useState("");
-
+  //TODO:Stripeの決済画面へページ遷移
   function handleSubmit(e:any) {
       e.preventDefault();
       const data = {
@@ -34,6 +34,3 @@ export default function addCenter() {
          
   )
 }
-// import React,{ useState } from "react";
-// import { Axios } from '../../lib/api';
-// import Link from 'next/link';
