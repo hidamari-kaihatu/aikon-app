@@ -1,13 +1,39 @@
-import React,{ useState } from "react";
+/* eslint-disable */
+import React,{ useEffect, useState } from "react";
 import { Axios } from '../../lib/api';
 import Link from 'next/link';
+import { auth } from '../../firebaseConfig'
+import { useRouter } from 'next/router';
+import Layout from "./parent-layout";
+import axios from "axios";
 
-export default function dailyReportPost() {
+export default function dailyReportPost(students:any) {
     const [attend, setattend] = useState("");
     const [temperature, settemperature] = useState("");
     const [someToPickup, setsomeToPickup] = useState("");
     const [timeToPickup, settimeToPickup] = useState("");
     const [message, setmessage] = useState("");
+
+    const router = useRouter()
+    const [currentUser, setCurrentUser] = useState<null | object>(null)
+  
+
+  const studentId = students.students[0].Id
+  //{console.log(studentId)}
+
+    useEffect(() => {
+      auth.onAuthStateChanged((user) => {
+        user ? setCurrentUser(user) : router.push('/parents/parent-login')
+      })
+    }, [])
+    const logOut = async () => {
+      try {
+        await auth.signOut()
+        router.push('/parents/parent-login')
+      } catch (error) {
+        router.push('/parents/parent-login')
+      }
+    }
 
     const today = new Date();
     const formatted = today.toLocaleDateString("ja-JP", {
@@ -18,27 +44,20 @@ export default function dailyReportPost() {
     .split("/")
     .join("-");
 
-    //ここの今日の日時と曜日を出すところは、コンポーネント化できる。
-    const year = today.getFullYear()
-    const month = today.getMonth() + 1
-    const day = today.getDate()
-    const week = today.getDay()
-    const weekItems = ["日", "月", "火", "水", "木", "金", "土"]
-    const dayOfWeek = weekItems[week]
 
-    //未完：Student_idでidをGETする必要がある
+    //未完：Student_idでidをGETする必要がある。今はベタ打ちの「２」
     function handleSubmit(e:any) {
         e.preventDefault();
         const data = {
             "Date":formatted,
-            "Student_id":1,
+            "Student_id":studentId,
             "Attend":JSON.parse(attend),
             "Temperature":temperature,
             "SomeoneToPickUp":someToPickup,
             "TimeToPickUp":timeToPickup,
             "Message":message
         }
-        Axios.post(`api/proxy/dailyReportPost`, data)
+        Axios.post(`api/proxy/dailyReportPost`, data/*, { withCredentials: true }*/)
         .then((res) => {
           console.log(res);
         })
@@ -49,12 +68,11 @@ export default function dailyReportPost() {
       }
 
     return(
+      <>
+      <Layout>
         <div>
-            <h1>まいにちの出欠報告</h1>
+         <h2>日々の出欠報告</h2>
             <br></br>
-            <div>
-            <h2>{year}年{month}月{day}日（{dayOfWeek}）</h2>
-            <h2>ここに生徒の名前が来るyotei</h2>
             <label>出欠: </label>
             <select value={attend} onChange={(e) => setattend(e.target.value)}>
                 <option value="A">出欠</option>
@@ -107,10 +125,25 @@ export default function dailyReportPost() {
             <br></br>
             <br></br>
             <button onClick = {handleSubmit}>送信する！</button>
-            <Link href={"/"}>
+            <Link href={"/parents/parent-mypage"}>
             <h2>HOME</h2>
           </Link>
             </div>
-        </div>       
+            <button className="btn" onClick={logOut}>Logout</button>
+          </Layout>
+        </>       
     )
+}
+
+export async function getServerSideProps() {
+  const res = await axios.get(`${process.env.API}/studentsGet`, {
+  });
+  const students = await res.data;
+  {console.log(students)}
+
+  return { 
+      props: {
+        students
+      },
+  };
 }

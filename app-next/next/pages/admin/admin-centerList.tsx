@@ -3,6 +3,7 @@ import axios from "axios";
 import { Axios } from '../../lib/api';
 import Link from 'next/link';
 import Layout from './admin-layout';
+import test from 'node:test';
 
 export interface centers {
     data: center[];
@@ -27,7 +28,6 @@ export async function getServerSideProps() {
       data: data 
     }
   };
-  window.location.reload()
 }
 
 const CenterGet: NextPage = ({data}:any) => {
@@ -65,17 +65,33 @@ const CenterGet: NextPage = ({data}:any) => {
           
         //TODO:リロード処理(現状、２回クリックでしかリロードされない)
         //window.location.reload()
-
       }
 
+  function mailButton (e:any,Name:any) {
+      e.preventDefault();
+      console.log("test for mailButton");
+      const center = Name;
+      console.log("center: ", center);
+      window.alert(`${center}の登録解除にあたり、利用料のサブスクリプションの解約手続きが必要になります。詳しくは、お問合せください。ひだまり開発`)
+      //アラート後にお問合せフォームへ遷移
+      window.location.href='../all/all-mailForm'
+
+    }    
   return (
     <Layout>
+      <div>
+        <Link href={"/admin/admin-centerPost"}>
+           <a><button>新規施設登録</button></a>
+        </Link>
+      </div>
       <table className='list-table'>
         <thead>
           <tr>
             <th>No.</th>
             <th>施設名</th>
             <th>登録解除</th>
+            <th>解除のお問合せ</th>
+
           </tr>
         </thead>
         <tbody>
@@ -89,6 +105,7 @@ const CenterGet: NextPage = ({data}:any) => {
                      <td>{counter()}</td>
                      <td>{item.Name}</td>
                      <td> <button onClick = {() => {liftButton(item.Id)}}>解除</button></td>
+                     <td> <button onClick = {(e:any) => {mailButton(e,item.Name)}}>お問合せ</button></td>
                     </tr>
                     </>   
                 )
@@ -98,11 +115,6 @@ const CenterGet: NextPage = ({data}:any) => {
 
         </tbody>
       </table>
-                    <div>
-                    <Link href={"/admin/admin-centerPost"}>
-                    <a><button>施設の新規登録</button></a>
-                    </Link>
-                    </div>
     </Layout>
       )
     }
