@@ -9,9 +9,9 @@ export async function getServerSideProps() {
   const stuRes = await axios.get(`${process.env.API}/studentsGet`, {
   });
   const students = await stuRes.data;
-  {console.log(students)}
+  //{console.log(students)}
 
-  console.log(data)
+  //console.log(data)
 
   return { 
     props: {
@@ -33,18 +33,17 @@ export default function mypage({data, students}:any) {
             日付: {d.Datetime}<br/><br/>メッセージ: {d.Message}<br/><br/><hr/>
         </ul>
         ))}
-              <div>
-            {students.map((d:any, i:number) => {
-            return (
-                <div key={i}>
-                  {d.CenterName}
-                  <br></br>
-                  {d.Name}
-                </div>
+      <div>
+        {students.map((d:any, i:number) => {
+          return (
+            <div key={i}>
+              {d.CenterName}
+              <br></br>
+              {d.Name}
+            </div>
             )
           })}
       </div>
-
         </Layout>
       </>
     );

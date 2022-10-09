@@ -19,22 +19,14 @@ export default function dailyReportPost(students:any) {
   
 
   const studentId = students.students[0].Id
-  {console.log(studentId)}
+   //{console.log(studentId)}
 
     useEffect(() => {
       auth.onAuthStateChanged((user) => {
         user ? setCurrentUser(user) : router.push('/parents/parent-login')
       })
     }, [])
-    const logOut = async () => {
-      try {
-        await auth.signOut()
-        router.push('/parents/parent-login')
-      } catch (error) {
-        router.push('/parents/parent-login')
-      }
-    }
-
+    
     const today = new Date();
     const formatted = today.toLocaleDateString("ja-JP", {
       year: "numeric",
@@ -51,7 +43,7 @@ export default function dailyReportPost(students:any) {
         const data = {
             "Date":formatted,
             "Student_id":studentId,
-            "Attend":attend,
+            "Attend":Number(attend),
             "Temperature":temperature,
             "SomeoneToPickUp":someToPickup,
             "TimeToPickUp":timeToPickup,
@@ -64,7 +56,7 @@ export default function dailyReportPost(students:any) {
         .catch((error) => {
           console.log(error);
         });
-        window.location.reload()
+        //window.location.reload()
       }
 
     return(
@@ -129,13 +121,23 @@ export default function dailyReportPost(students:any) {
             <h2>HOME</h2>
           </Link>
             </div>
-            <button className="btn" onClick={logOut}>Logout</button>
+            <div>
+              {students.students.map((d:any, i:number) => {
+              return (
+                  <div key={i}>
+                    {d.CenterName}
+                    <br></br>
+                    {d.Name}
+                  </div>
+              )
+            })}
+            </div>
           </Layout>
         </>       
     )
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps() { //ssg
   const res = await axios.get(`${process.env.API}/studentsGet`, {
   });
   const students = await res.data;
@@ -143,7 +145,7 @@ export async function getServerSideProps() {
 
   return { 
       props: {
-        students
+        students:students
       },
   };
 }
