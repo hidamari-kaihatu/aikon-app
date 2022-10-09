@@ -1,173 +1,156 @@
-import type { NextPage } from 'next';
-import Link from 'next/link';
+import { useForm, SubmitHandler } from "react-hook-form";
+import isEmail from 'validator/lib/isEmail';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { ErrorMessage } from "@hookform/error-message";
 import React,{ useState, useEffect } from "react";
-import Router from 'next/router';
-import { auth } from '../../firebaseConfig';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import{ FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import { Axios } from '../../lib/api';
-import { useForm, SubmitHandler }from 'react-hook-form';
-import { ErrorMessage } from "@hookform/error-message";
-import isEmail from 'validator/lib/isEmail';
-import { redirect } from 'next/dist/server/api-utils';
+import Router from 'next/router';
+import { auth } from "../../firebaseConfig";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import Link from 'next/link';
 
-type FormData = {
-  staffName: string,
-  staffEmail: string,
+type Inputs = {
+  name: string,
+  email: string,
   password: string,
-  passwordCheck: string
-}
+  confirmPassword: string
+};
+const schema = yup.object().shape({
+  name: yup
+    .string()
+    .required('入力してください')
+    .matches(
+      /^[ぁ-んァ-ヶｱ-ﾝﾞﾟ一-龠]*$/,
+      'スペースなしで全角のひらがな、カタカナ、漢字で入力してください'
+    ),
+  email: yup
+    .string()
+    .required('入力してください')
+    .email('メールアドレスの形式が不正です'),
+  password: yup
+    .string()
+    .required('入力してください')
+    .matches(
+      /^(?=.*?[a-zA-Z])(?=.*?\d)[a-zA-Z\d]{8,}$/,
+      'アルファベットと数字を組み合わせて8文字以上で入力してください'
+    ),
+  confirmPassword: yup
+    .string()
+    .required('入力してください')
+    .matches(
+      /^(?=.*?[a-zA-Z])(?=.*?\d)[a-zA-Z\d]{8,}$/,
+      'アルファベットと数字を組み合わせて8文字以上で入力してください'
+    )
+    .oneOf([yup.ref('password'), null], '確認用パスワードが一致していません'),
 
-//TODOリスト
-//登録ボタンを押すと、staffテーブルにName ,EmailがPOSTされる。[OK]
-//passwordがfirebaseに登録される[OK]
-//未記入のものがあれば登録できないようにする。（未記入のものがありますメッセージ）
-//メールアドレスに全角があったらエラーを出す
-//パスワードが半角英数字で８文字以上でなかったら（半角英数字で８文字以上で入力してくださいメッセージ）
-//パスワードとパスワード確認の内容が一致しなかったら（パスワードと同じものを再度入力してください）
-//”登録しました”のポップアップ表示
+})
+.required();//これがないとコンソールにdataが表示されなかった！
 
-
-const SignUp: NextPage = () => {
-  const { register, setValue,trigger,getValues, handleSubmit, formState: { errors },
- } = useForm<FormData>();
-  const onSubmit: SubmitHandler<FormData> = data => console.log(data);
-  
-  const [staffName, setStaffName] = useState("");
-  const [staffEmail, setStaffEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordCheck, setPasswordCheck] = useState("");
-
-  function Password (){
-    // パスワード表示制御ようのstate
-    const [isRevealPassword, setIsRevealPassword] = useState(false);
-    const [isRevealRe_Password, setIsRevealRe_Password] = useState(false);
-
-    const togglePassword = () => {
-      setIsRevealPassword((prevState) => !prevState);
-    }
-    const toggleRe_Password = () => {
-      setIsRevealRe_Password((prevState) => !prevState);
-    }
-    return (
-      <>
-        <div className='newer-form'>
-          パスワード<span> ※必須</span><br></br>
-         <input 
-           placeholder="半角英数字で８文字以上"
-           type={isRevealPassword ? 'text' : 'password'}
-           name="password"
-           value={password}
-           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.currentTarget.value)}
-           />
-          <span
-	          onClick={togglePassword}
-            role="presentation"
-            style={{'color': 'black'}}
-            >
-           {isRevealPassword ? (
-             <FontAwesomeIcon icon={faEye} />
-             ) : (
-               <FontAwesomeIcon icon={faEyeSlash} />
-               )}
-          </span><br></br>
-         </div>
-         <div className='newer-form'>
-          パスワード確認<span> ※必須</span><br></br>
-         <input 
-           placeholder="半角英数字で８文字以上"
-           type={isRevealRe_Password ? 'text' : 'password'}
-           name="password"
-           value={passwordCheck}
-           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPasswordCheck(e.currentTarget.value)}
-           />
-          <span
-	          onClick={toggleRe_Password}
-            role="presentation"
-            style={{'color': 'black'}}
-            >
-           {isRevealRe_Password ? (
-             <FontAwesomeIcon icon={faEye} />
-             ) : (
-               <FontAwesomeIcon icon={faEyeSlash} />
-               )}
-          </span><br></br>
-         </div>
-         </>
-         )
-         
-        }
-        //バリデーションに通った後、これ（finalSubmit)を実行するボタンを押せるようにする
-        //firebaseに保存したemail, passwordを渡し、新規登録
-        const finalSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-          e.preventDefault()
-          console.log("firebase");
-          await createUserWithEmailAndPassword(auth, staffEmail, password)
-          Router.push("/admin/admin-login")
+export default function App() {
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>({
+    resolver: yupResolver(schema)
+  });
+  const onSubmit: SubmitHandler<Inputs> = data => {
+    console.log("data : ",data);
+    console.log("firebase");
+          createUserWithEmailAndPassword(auth, data.email, data.password)
+          
           //DBのスタッフテーブルに職員のName ,EmailをPOST
-          const staffData = {
-            "Name":staffName,
-            "Email":staffEmail,
+          const postData = {
+            "Name":data.name,
+            "Email":data.email,
           }
           
-          Axios.post(`api/proxy/staffPost`, staffData)
+          Axios.post(`api/proxy/staffPost`, postData)
           .then((res) => {
-            console.log(res);
+            console.log(res.data);
+            //登録完了したらログイン画面へ
+            Router.push("/admin/admin-login")
           })
           .catch((error) => {
             console.log(error);
           });
-        }
-        
+
+  }
+  
+  // パスワード表示制御ようのstate
+  const [isRevealPassword, setIsRevealPassword] = useState(false);
+  const [isRevealRe_Password, setIsRevealRe_Password] = useState(false);
+
+  const togglePassword = () => {
+    setIsRevealPassword((prevState) => !prevState);
+  }
+  const toggleRe_Password = () => {
+    setIsRevealRe_Password((prevState) => !prevState);
+  }
+
+
   return (
-    <>
-    <h1>ようこそ！スマートGAKUDOへ</h1>
-    <div>
-      <h3>新規登録</h3>
-      <form>
-        <div className='newer-form'>
-          名前<span> ※必須</span><br></br>
-          <input 
-           type="text" 
-           value={staffName} 
-           {...register("staffName", { 
-             required: '必須入力です',
-             pattern: {
-               value: /^[ぁ-んァ-ヶー一-龠]+$/,
-               message: '全角文字で入力してください'
-             }
-            })}
-           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setStaffName(e.currentTarget.value)}
-          /><br></br>
-          {/* 名前入力のバリデーションメッセージ */}
-          {errors.staffName && <p style={{'color': 'red'}}>{errors.staffName.message}</p>}<br></br>
-        </div>
-        <div className='newer-form'>
-          メールアドレス<span> ※必須</span><br></br>
-          <input 
-           type="email"
-           placeholder='mail@example.com' 
-           value={staffEmail}
-           {...register("staffEmail", {
-            required: "メールアドレスを入力してください。",
-            validate: value => isEmail(value) || '',
-          })}
-           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setStaffEmail(e.currentTarget.value)}
-           /><br></br>
-            {/* メールアドレスのバリデーションメッセージ */}
-            {errors.staffEmail && <p style={{'color': 'red'}}>{errors.staffEmail.message}</p>}<br></br>
-        </div>
-        {Password()}
-        {/* <div><button onClick = {(e:any) => {finalSubmit(e)}}>登録</button></div> */}
-        <div><button onSubmit={handleSubmit(onSubmit)}>登録</button></div>
-        <p>会員登録には、<Link href='../all/all-termsOfService'><a>利用規約</a></Link >と<Link href='../all/all-privacyPolicy'><a>プライバシーポリシーへ</a></Link>の同意が必要です。</p>
-      </form>
+    /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
+    <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <div><h1>ようこそ！スマートGAKUDOへ</h1></div>
+      <div>
+       <h3>新規登録</h3>
+      名前<span style={{'color': 'red', 'fontSize': 'small'}}> ※必須</span><br></br>
+      <input 
+        type='text'
+        placeholder='全角文字で入力'
+        {...register("name")} /><br></br>
+      <span style={{'color': 'red', 'fontSize': 'small'}}>{errors.name?.message}</span><br></br>
+
+      メールアドレス<span style={{'color': 'red', 'fontSize': 'small'}}> ※必須</span><br></br>
+      <input 
+        type="email"
+        placeholder='mail@example.com' 
+        {...register("email")} /><br></br>
+      <span style={{'color': 'red', 'fontSize': 'small'}}>{errors.email?.message}</span><br></br>
+      
+      パスワード<span style={{'color': 'red', 'fontSize': 'small'}}> ※必須</span><br></br>
+      <input 
+        placeholder="半角英数字で８文字以上"
+        {...register('password')}
+        type={isRevealPassword ? 'text' : 'password'}
+      />
+      <span
+	          onClick={togglePassword}
+            role="presentation"
+            style={{'color': 'black','fontSize': 'small'}}
+            >
+                {isRevealPassword ? (
+            <button> <FontAwesomeIcon icon={faEye} /></button>
+             ) : (
+              <button> <FontAwesomeIcon icon={faEyeSlash} /></button>
+               )}
+          </span><br></br>
+      <span style={{'color': 'red', 'fontSize': 'small'}}>{errors.password?.message}</span><br></br>
+      
+      パスワード確認<span style={{'color': 'red', 'fontSize': 'small'}}> ※必須</span><br></br>
+      <input 
+        placeholder="半角英数字で８文字以上"
+        {...register('confirmPassword')}
+        type={isRevealRe_Password ? 'text' : 'password'}
+      />
+      <span
+	          onClick={toggleRe_Password}
+            role="presentation"
+            style={{'color': 'black', 'fontSize': 'small'}}
+            >
+           {isRevealRe_Password ? (
+             <button><FontAwesomeIcon icon={faEye} /></button>
+             ) : (
+               <button><FontAwesomeIcon icon={faEyeSlash} /></button>
+               )}
+          </span><br></br>
+      <span style={{'color': 'red', 'fontSize': 'small'}}>{errors.confirmPassword?.message}</span><br></br>
+
+      <input type="submit" />
+      <p style={{'fontSize': 'small'}}>会員登録には、<Link href='../all/all-termsOfService'><a>利用規約</a></Link >と<Link href='../all/all-privacyPolicy'><a>プライバシーポリシーへ</a></Link>の同意が必要です。</p>
 
     </div>
-   
-   </>
+    </form>
   );
 }
 
-export default SignUp
