@@ -55,7 +55,7 @@ function confirm({data}:any) {
 
     return (
         <div>
-           <p>登録が完了しました！</p> 
+           <p>{staffName}さんの登録が完了しました！</p> 
            <p>ログイン画面へお進みください</p>
            <button onClick={() => Router.push('/teachers/teacher-login', '/teachers/teacher-login', { shallow: true})}>ログイン画面へ進む</button> 
         </div>
