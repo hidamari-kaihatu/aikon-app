@@ -13,6 +13,7 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import axios from "axios";
+
 type Inputs = {
     name: string,
     email: string,
@@ -61,7 +62,7 @@ type Inputs = {
     const onSubmit: SubmitHandler<Inputs> = data => {
       console.log("data : ",data);
       console.log("firebase");
-            // createUserWithEmailAndPassword(auth, data.email, data.password)
+            createUserWithEmailAndPassword(auth, data.email, data.password)
             
             //DBのスタッフテーブルに職員のName ,EmailをPOST
             const postData = {
@@ -72,6 +73,8 @@ type Inputs = {
             Axios.post(`api/proxy/staffPost`, postData)
             .then((res) => {
                 console.log(res.data);
+                // 登録完了したら確認画面へ(新規登録職員の名前を渡す)
+                Router.push({pathname: "/teachers/teacher-newer", query: query} ,"/teachers/teacher-newer")
             })
             .catch((error) => {
                 console.log(error);
@@ -83,84 +86,9 @@ type Inputs = {
                             }
             //登録完了したらログイン画面へ
             // Router.push("/admin/admin-login")
-            // // 登録完了したら確認画面へ(新規登録職員の名前を渡す)
-            Router.push({pathname: "/teachers/teacher-newer", query: query} ,"/teachers/teacher-newer")
   
     }
-// type Inputs = {
-//   name: string,
-//   email: string,
-//   password: string,
-//   confirmPassword: string
-// };
-// const schema = yup.object().shape({
-//   name: yup
-//     .string()
-//     .required('入力してください')
-//     .matches(
-//       /^[ぁ-んァ-ヶｱ-ﾝﾞﾟ一-龠]*$/,
-//       'スペースなしで全角のひらがな、カタカナ、漢字で入力してください'
-//     ),
-//   email: yup
-//     .string()
-//     .required('入力してください')
-//     .email('メールアドレスの形式が不正です'),
-//   password: yup
-//     .string()
-//     .required('入力してください')
-//     .matches(
-//       /^(?=.*?[a-zA-Z])(?=.*?\d)[a-zA-Z\d]{8,}$/,
-//       'アルファベットと数字を組み合わせて8文字以上で入力してください'
-//     ),
-//   confirmPassword: yup
-//     .string()
-//     .required('入力してください')
-//     .matches(
-//       /^(?=.*?[a-zA-Z])(?=.*?\d)[a-zA-Z\d]{8,}$/,
-//       'アルファベットと数字を組み合わせて8文字以上で入力してください'
-//     )
-//     .oneOf([yup.ref('password'), null], '確認用パスワードが一致していません'),
 
-// })
-// .required();//これがないとコンソールにdataが表示されなかった！
-
-//  export default function App() {
-//   const { register, handleSubmit, watch, formState: { errors } } = useForm<Inputs>({
-//     resolver: yupResolver(schema)
-//   });
-//   const router = useRouter();
-// //   console.log(router.query.id);
-//   const center_id = router.query.id;
-// //   console.log(center_id);
-
-//    const onSubmit: SubmitHandler<Inputs> = data => {
-//     console.log("data : ",data);
-//     console.log("firebase");
-//         //   createUserWithEmailAndPassword(auth, data.email, data.password)
-          
-//           //DBのスタッフテーブルに職員のName ,Email,
-//           const postData = {
-//               "Center_id": center_id,
-//               "Name":data.name,
-//               "Email":data.email,
-//             }
-//              Axios.post(`api/proxy/staffPost`, postData)
-//             .then((res) => {
-//                 console.log(res.data);
-//             })
-//             .catch((error) => {
-//                 console.log("staffPostError : ",error);
-//             })
-            
-//             const query = {
-//                 name: data.name,
-//                 center_id: center_id
-//             }
-            
-//             //登録完了したら確認画面へ(新規登録職員の名前を渡す)
-//             Router.push({pathname: "/teachers/teacher-newer", query: query} ,"/teachers/teacher-newer")
-//   }
-  
   // パスワード表示制御ようのstate
   const [isRevealPassword, setIsRevealPassword] = useState(false);
   const [isRevealRe_Password, setIsRevealRe_Password] = useState(false);
@@ -178,7 +106,7 @@ type Inputs = {
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
       <div>
         <h1>ようこそ！スマートGAKUDOへ</h1>
-        <h3>〇〇学童</h3>
+        {/* <h3>〇〇学童</h3> */}
       </div>
       <div>
        <h3>新規登録</h3>
