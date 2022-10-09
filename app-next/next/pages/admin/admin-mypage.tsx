@@ -14,7 +14,7 @@ interface Arr {
 }
 
 export async function getServerSideProps() {
-  const res = await axios.get(`${process.env.API}/getStaffAndMiddle`, {
+  const res = await axios.get(`${process.env.API}/staffsGet`, {
   });
   const staffs = await res.data;
   {console.log(staffs)}

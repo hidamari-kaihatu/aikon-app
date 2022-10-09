@@ -41,7 +41,7 @@ type DailyReports struct {
     Id    int `json:id`
 	Date  string `json:data`
 	Student_id  int `json:student_id`
-	Attend bool `json:attend`
+	Attend int `json:attend`
 	Temperature *string `json:temperature`
 	SomeoneToPickUp *string `json:someoneToPickUp`
 	TimeToPickUp *string `json:timeToPickUp`
@@ -67,7 +67,7 @@ type TeacherMessage struct {
 
 //データベースに接続する部分
 func connectionDB() *sql.DB {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     fmt.Println(dsn)
     db, err := sql.Open("mysql", dsn)
     if err != nil {
@@ -139,7 +139,7 @@ func postDailyReport(w http.ResponseWriter, r *http.Request) {
     log.Printf("trace: this is studentID log.")
     fmt.Printf("%v\n", id) //作成されたjwt確認
 
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("Err1")
@@ -201,7 +201,7 @@ func getMiddle(w http.ResponseWriter, r *http.Request) {
 }
 
 func postMiddle (w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("Err1")
@@ -275,7 +275,7 @@ func getTeacherMessage(w http.ResponseWriter, r *http.Request) {
 }
 
 func postTeacherMessage (w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("Err1")
@@ -298,7 +298,7 @@ func postTeacherMessage (w http.ResponseWriter, r *http.Request) {
 type Centers struct {
     Id int `json:id`
     Name string`json:name`
-    Status *bool `json:status`
+    Status int `json:status`
     ProductId *string `json:productId`
 }
 
@@ -343,7 +343,7 @@ func getCenter(w http.ResponseWriter, r *http.Request) {
 
 func postCenter(w http.ResponseWriter, r *http.Request) {
     log.Printf("trace: this is a trace log postCenter start.")
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("Err1")
@@ -369,7 +369,7 @@ func postCenter(w http.ResponseWriter, r *http.Request) {
 
 func putCenterStatus(w http.ResponseWriter, r *http.Request) {
     log.Printf("trace: this is a trace log putCenterStatus start.")
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -387,13 +387,13 @@ func putCenterStatus(w http.ResponseWriter, r *http.Request) {
         fmt.Println("JSON Unmarshal error:", err)
         return
     }
-    _, err = db.Exec("UPDATE centers SET status = false where id = ?", data.Id)
+    _, err = db.Exec("UPDATE centers SET status = 0 where id = ?", data.Id)
     if err != nil {
         fmt.Println("update error!")
     }
 }
 func putCenterProductId(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -425,7 +425,7 @@ type Students struct {
     ContactTell *string `json:contactTell`
     Grade int `json:grade`
     Email *string `json:email`
-    Status bool `json:status`
+    Status int `json:status`
     Rfid *string `json:rfid`
     CenterName string `json:centerName`
 }
@@ -484,7 +484,7 @@ func getStudents(w http.ResponseWriter, r *http.Request) {
 }
 
 func postStudent(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -502,14 +502,14 @@ func postStudent(w http.ResponseWriter, r *http.Request) {
         fmt.Println("JSON Unmarshal error:", err)
         return
     }
-    _, err = db.Exec("INSERT INTO students (center_id, name, contactTell, grade, email, status, rfid) VALUES (?, ?, ?, ?, ?, ?, ?)", data.Center_id, data.Name, data.ContactTell, data.Grade, data.Email, data.Status, data.Rfid)
+    _, err = db.Exec("INSERT INTO students (center_id, name, contactTell, grade, email, rfid) VALUES (?, ?, ?, ?, ?, ?)", data.Center_id, data.Name, data.ContactTell, data.Grade, data.Email, data.Rfid)
     if err != nil {
         fmt.Println("insert error!")
     }
 }
 
 func putStuStatus(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -527,14 +527,14 @@ func putStuStatus(w http.ResponseWriter, r *http.Request) {
         fmt.Println("JSON Unmarshal error:", err)
         return
     }
-    _, err = db.Exec("UPDATE students SET status = false where id = ?", data.Id)
+    _, err = db.Exec("UPDATE students SET status = 0 where id = ?", data.Id)
     if err != nil {
         fmt.Println("update error!")
     }
 }
 
 func putStuRfid(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -562,8 +562,8 @@ type Staffs struct {
     Id int `json:id`
     Name string`json:name`
     Email string `json:email`
-    Status bool `json:status`
-    Rfid string `json:rfid`
+    Status int `json:status`
+    Rfid *string `json:rfid`
 }
 func getRowsSta(db *sql.DB) *sql.Rows { 
     claims := jwt.MapClaims{}
@@ -619,7 +619,7 @@ func getStaffs(w http.ResponseWriter, r *http.Request) {
 }
 
 func postStaff(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -644,7 +644,7 @@ func postStaff(w http.ResponseWriter, r *http.Request) {
 }
 
 func putStaStatus(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -662,14 +662,14 @@ func putStaStatus(w http.ResponseWriter, r *http.Request) {
         fmt.Println("JSON Unmarshal error:", err)
         return
     }
-    _, err = db.Exec("UPDATE staffs SET status = false where id = ?", data.Id)
+    _, err = db.Exec("UPDATE staffs SET status = 0 where id = ?", data.Id)
     if err != nil {
         fmt.Println("update error!")
     }
 }
 
 func putStaRfid(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -735,7 +735,7 @@ func getSensors(w http.ResponseWriter, r *http.Request) {
 }
 
 func postSensor(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -801,7 +801,7 @@ func getInAndOut(w http.ResponseWriter, r *http.Request) {
 }
 
 func postInAndOut(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -891,11 +891,11 @@ type StaffAndMiddleAndCenter struct {
     Id int `json:id`
     Name string `json;name`
     Email string `json:email`
-    Status bool `json;status`
-    Rfid string `json:rfid`
-    Center_id int `json:center_id`
+    Status int `json;status`
+    Rfid *string `json:rfid`
+    Center_id *int `json:center_id`
     Role_id int `json:role_id`
-    CenterName string `json:centerName`
+    CenterName *string `json:centerName`
 }
 
 func getRowsStaffAndMiddleAndCenter(db *sql.DB) *sql.Rows {
@@ -909,9 +909,9 @@ func getRowsStaffAndMiddleAndCenter(db *sql.DB) *sql.Rows {
 	if err != nil {
         fmt.Println("verifyToken error")
 	}
-    for key, val := range claims {
-        log.Printf("Key: %v, value: %v\n", key, val)
-        fmt.Printf("%T\n", val)
+    for _, val := range claims {
+        // log.Printf("Key: %v, value: %v\n", key, val)
+        // fmt.Printf("%T\n", val)
         log.Printf("Verified matchId val: %v\n", val)
     }
     id := claims["sutudent"]
@@ -943,7 +943,7 @@ func getStaffAndMiddleAndCenter(w http.ResponseWriter, r *http.Request) {
     if err := enc.Encode(&resultStaffAndMiddleAndCenter); err != nil {
         log.Fatal(err)
     }
-    fmt.Println(buf.String())
+    log.Printf(buf.String())
 
     _, err := fmt.Fprint(w, buf.String()) 
     if err != nil {
@@ -1111,9 +1111,7 @@ func staffIsLogin(w http.ResponseWriter, r *http.Request){ //保護者ページ�
         fmt.Printf("error: %v\n", err)
         os.Exit(1)
     }
-log.Printf("trace: this is a trace headers test.")
 authHeader := r.Header.Get("Authorization")
-log.Printf("Verified authHeader: %T\n", authHeader)
 idToken := strings.Replace(authHeader, "Bearer ", "", 1)
 
 log.Printf("trace: this is a trace JWT の検証.")
@@ -1160,11 +1158,11 @@ matchId := resultStaId[0].Id //トークンで取れたemailと同じアドレ�
 log.Printf("Verified matchId: %v\n", matchId)
 fmt.Printf("%T\n", matchId)//数値型
 toString := strconv.Itoa(matchId) //文字列に変換
-log.Printf("Verified matchId type: %T\n", toString)
+// log.Printf("Verified matchId type: %T\n", toString)
 
 //jwtにのせる　認証情報が入ったJsonを加工（電子署名を加える等）し、JWTにしたのち、それを認証Tokenとしてクッキーに渡す
 afterAuthJwt := CreateToken(toString)
-log.Printf("作成されたjwt:", afterAuthJwt) //作成されたjwt確認
+// log.Printf("作成されたjwt:", afterAuthJwt) //作成されたjwt確認
 
 setCookie = afterAuthJwt
 
