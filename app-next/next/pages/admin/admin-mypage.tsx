@@ -15,8 +15,8 @@ export default function adminHome () {
         <div>
           <button onClick={() => Router.push('/admin/url', '/admin/url', { shallow: true})}>URL</button> 
         </div>
-        <div>
-          <button onClick={() => Router.push('/admin/admin-newer', '/admin/admin-newer', { shallow: true})}>新規施設登録</button>         
+        <div>      
+          <button onClick={() => Router.push('https://forms.gle/UWVFgSBWAFJT271M9', 'https://forms.gle/UWVFgSBWAFJT271M9',{ shallow: true})}>新規施設登録</button>         
         </div>
       </div>
     </Layout>
