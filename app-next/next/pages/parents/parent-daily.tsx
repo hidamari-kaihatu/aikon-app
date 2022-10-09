@@ -19,7 +19,7 @@ export default function dailyReportPost(students:any) {
   
 
   const studentId = students.students[0].Id
-  //{console.log(studentId)}
+  {console.log(studentId)}
 
     useEffect(() => {
       auth.onAuthStateChanged((user) => {
@@ -51,7 +51,7 @@ export default function dailyReportPost(students:any) {
         const data = {
             "Date":formatted,
             "Student_id":studentId,
-            "Attend":JSON.parse(attend),
+            "Attend":attend,
             "Temperature":temperature,
             "SomeoneToPickUp":someToPickup,
             "TimeToPickUp":timeToPickup,
@@ -76,8 +76,8 @@ export default function dailyReportPost(students:any) {
             <label>出欠: </label>
             <select value={attend} onChange={(e) => setattend(e.target.value)}>
                 <option value="A">出欠</option>
-                <option value={"true"}>学童に行きます</option>
-                <option value={"false"}>学童に行きません</option>
+                <option value={1}>学童に行きます</option>
+                <option value={0}>学童に行きません</option>
             </select>
             <br></br>
             <br></br>
