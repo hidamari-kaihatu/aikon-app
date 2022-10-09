@@ -949,6 +949,42 @@ func getStaffAndMiddleAndCenter(w http.ResponseWriter, r *http.Request) {
     }
 }
 
+func getRowsAllStu(db *sql.DB) *sql.Rows { 
+    rows, err := db.Query("SELECT students.id, students.center_id, students.name, students.contactTell, students.grade, students.email, students.status, students.rfid, centers.name from students INNER JOIN centers ON  students.center_id = centers.id")
+    if err != nil {
+        fmt.Println("Err2")
+        panic(err.Error())
+    }
+    return rows
+}
+
+func getAllStudents(w http.ResponseWriter, r *http.Request) {
+    db := connectionDB()
+    defer db.Close()
+    rows := getRowsAllStu(db) 
+    students := Students{}
+    var resultStudents [] Students
+    for rows.Next() {
+        error := rows.Scan(&students.Id, &students.Center_id, &students.Name, &students.ContactTell, &students.Grade, &students.Email, &students.Status, &students.Rfid, &students.CenterName)
+        if error != nil {
+            fmt.Println("scan error")
+        } else {
+            resultStudents = append(resultStudents, students)
+        }
+    }
+    var buf bytes.Buffer 
+    enc := json.NewEncoder(&buf) 
+    if err := enc.Encode(&resultStudents); err != nil {
+        log.Fatal(err)
+    }
+    fmt.Println(buf.String())
+
+    _, err := fmt.Fprint(w, buf.String()) 
+    if err != nil {
+        return
+    }
+}
+
 
 //トークン作成
 func CreateToken(studentID string) (string) {
@@ -1212,6 +1248,7 @@ func main() {
     http.HandleFunc("/parentIsLogin", parentIsLogin)
     http.HandleFunc("/staffIsLogin", staffIsLogin)
     http.HandleFunc("/getStaffAndMiddleAndCenter", getStaffAndMiddleAndCenter)
+    http.HandleFunc("/getAllStudents", getAllStudents)
     http.ListenAndServe(":8080", nil)
     
 }
