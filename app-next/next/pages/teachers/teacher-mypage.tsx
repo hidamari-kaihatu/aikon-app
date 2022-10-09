@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { auth } from '../../firebaseConfig';
 import Layout from './teacher-layout';
-
+import Router from 'next/router';
 export async function getServerSideProps() {
   const res = await axios.get(`${process.env.API}/getStaffAndMiddleAndCenter`, {
   });

@@ -5,12 +5,21 @@ import { useRouter } from 'next/router'
 import { auth } from '../../firebaseConfig'
 import axios from "axios";
 import Layout from "./parent-layout";
+import internal from 'stream';
 
 interface studentObj {
   [key: string]: Array<Arr>
 }
 interface Arr {
+  Datetime(Datetime: any): unknown;
   Array : Object
+}
+
+interface inOut {
+  Id: number
+  Datetime: Date
+  Rfid: string
+  Sensor_id: number
 }
 
 export async function getServerSideProps() { //ssg
@@ -18,10 +27,15 @@ export async function getServerSideProps() { //ssg
   });
   const students = await res.data;
   {console.log(students)}
+  const inOutRes = await axios.get(`${process.env.API}/stuInAndOutSensorsGet`, {
+  });
+  const inOut = await inOutRes.data;
+  {console.log(inOut)}
 
   return { 
       props: {
-        students
+        students:students,
+        inOut: inOut
       },
   };
 }
@@ -36,10 +50,16 @@ const List: NextPage = (students: studentObj) => {
       user ? setCurrentUser(user) : router.push('/parents/parent-login')
     })
   }, [])
-  console.log(students)
-
+  // console.log(students)
+  // console.log(students.inOut[0].Datetime)
+  // console.log(students.inOut[1].Datetime)
   return (
     <>
+    <div>
+      入室：{students.inOut[0].Datetime}
+      <br></br>
+      退室：{students.inOut[1].Datetime}
+    </div>
     <Layout>
       <div>
             {students.students.map((d:any, i:number) => {
