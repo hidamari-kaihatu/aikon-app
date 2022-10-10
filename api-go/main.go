@@ -47,6 +47,7 @@ type DailyReports struct {
 	TimeToPickUp *string `json:timeToPickUp`
 	Message *string `json:message`
     Center_id int `json:center_id`
+    Student_name string `json:student_name`
 }
 
 type Middle struct {
@@ -77,7 +78,7 @@ func connectionDB() *sql.DB {
 
 // db.Queryはクエリを実行しRows型で返す。Rows型はクエリの実行結果
 func getDailyReportsRows(db *sql.DB) *sql.Rows {
-    rows, err := db.Query("SELECT dailyReports.id, dailyReports.date, dailyReports.student_id, dailyReports.attend, dailyReports.temperature, dailyReports.someoneToPickUp, dailyReports.timeToPickUp, dailyReports.message, students.center_id FROM dailyReports INNER JOIN students ON students.center_id WHERE dailyReports.student_id = students.id")
+    rows, err := db.Query("SELECT dailyReports.id, dailyReports.date, dailyReports.student_id, dailyReports.attend, dailyReports.temperature, dailyReports.someoneToPickUp, dailyReports.timeToPickUp, dailyReports.message, students.center_id, students.name FROM dailyReports INNER JOIN students ON students.center_id WHERE dailyReports.student_id = students.id")
     if err != nil {
         fmt.Println("Err2")
         panic(err.Error())
@@ -96,7 +97,7 @@ func getDailyReport(w http.ResponseWriter, r *http.Request) {
     dailyReports := DailyReports{}
     var resultDailyReport [] DailyReports
     for rows.Next() {
-        error := rows.Scan(&dailyReports.Id, &dailyReports.Date, &dailyReports.Student_id, &dailyReports.Attend, &dailyReports.Temperature, &dailyReports.SomeoneToPickUp, &dailyReports.TimeToPickUp, &dailyReports.Message, &dailyReports.Center_id )
+        error := rows.Scan(&dailyReports.Id, &dailyReports.Date, &dailyReports.Student_id, &dailyReports.Attend, &dailyReports.Temperature, &dailyReports.SomeoneToPickUp, &dailyReports.TimeToPickUp, &dailyReports.Message, &dailyReports.Center_id, &dailyReports.Student_name)
         if error != nil {
             fmt.Println("scan error")
         } else {
@@ -220,7 +221,7 @@ func postMiddle (w http.ResponseWriter, r *http.Request) {
     _, err = db.Exec("INSERT INTO middle (staff_id, center_id, role_id) VALUES (?, ?, ?)", data.Staff_id, data.Center_id, data.Role_id)
 }
 
-func getTeacherMessageRows(db *sql.DB) *sql.Rows {
+func getTeacherMessageRows(db *sql.DB) *sql.Rows { //保護者ページで使う用
     claims := jwt.MapClaims{}
 
     token, err := jwt.ParseWithClaims(setCookie, claims, func(token *jwt.Token) (interface{}, error) {
@@ -291,7 +292,8 @@ func postTeacherMessage (w http.ResponseWriter, r *http.Request) {
         fmt.Println("JSON Unmarshal error:", err)
         return
     }
-    _, err = db.Exec("INSERT INTO teacherMessage (staff_id, message, datetime, student_id) VALUES (?, ?, ?, ?, ?)", data.Staff_id, data.Message, data.Datetime, data.Student_id)
+    _, err = db.Exec("INSERT INTO teacherMessage (staff_id, message, student_id) VALUES (?, ?, ?)", data.Staff_id, data.Message, data.Student_id)
+    log.Printf("postTeacherMessage end")
 }
 
 type Centers struct {
@@ -985,6 +987,7 @@ func getAllStudents(w http.ResponseWriter, r *http.Request) {
         return
     }
 }
+
 type StudentInAndOut struct {
     Id int  `json:id`
     Datetime string  `json:datetime`
@@ -1029,6 +1032,54 @@ func  getStudentInAndOut(w http.ResponseWriter, r *http.Request) {
         return
     }
 }
+
+
+type TeacherMessageForTeacher struct {
+    Id int `json:id`
+    Staff_id int `json:staff_id`
+    Message *string `json:message`
+    Datetime string `json:datetime`
+    Student_id int `json:student_id`
+    Student_name string `json:student_name`
+    Center_id int `json:center_id`
+}
+
+func getTeacherMessageRowsForTeacher(db *sql.DB) *sql.Rows { //先生ページで使う用
+    rows, err := db.Query("SELECT teacherMessage.id, teacherMessage.staff_id, teacherMessage.message, teacherMessage.datetime, teacherMessage.student_id, students.name, students.center_id FROM teacherMessage INNER JOIN students ON teacherMessage.student_id = students.id")
+    if err != nil {
+        fmt.Println("Err2")
+        panic(err.Error())
+    }
+    return rows
+}
+
+func getTeacherMessageForTeacher(w http.ResponseWriter, r *http.Request) {
+    db := connectionDB()
+    defer db.Close()
+    rows := getTeacherMessageRowsForTeacher(db) // 行データ取得
+    teacherMessageForTeacher := TeacherMessageForTeacher{}
+    var resultTeacherMessageForTeacher [] TeacherMessageForTeacher
+    for rows.Next() {
+        error := rows.Scan(&teacherMessageForTeacher.Id, &teacherMessageForTeacher.Staff_id, &teacherMessageForTeacher.Message, &teacherMessageForTeacher.Datetime, &teacherMessageForTeacher.Student_id, &teacherMessageForTeacher.Student_name, &teacherMessageForTeacher.Center_id)
+        if error != nil {
+            log.Printf("scan error")
+        } else {
+            resultTeacherMessageForTeacher = append(resultTeacherMessageForTeacher, teacherMessageForTeacher)
+        }
+    }
+    var buf bytes.Buffer 
+    enc := json.NewEncoder(&buf) 
+    if err := enc.Encode(&resultTeacherMessageForTeacher); err != nil {
+        log.Fatal(err)
+    }
+    log.Printf(buf.String())
+
+    _, err := fmt.Fprint(w, buf.String()) 
+    if err != nil {
+        return
+    }
+}
+
 
 //トークン作成
 func CreateToken(studentID string) (string) {
@@ -1294,6 +1345,8 @@ func main() {
     http.HandleFunc("/getStaffAndMiddleAndCenter", getStaffAndMiddleAndCenter)
     http.HandleFunc("/getAllStudents", getAllStudents)
     http.HandleFunc("/getStudentInAndOut", getStudentInAndOut)
+    http.HandleFunc("/getTeacherMessageForTeacher", getTeacherMessageForTeacher)
+    
     http.ListenAndServe(":8080", nil)
     
 }
