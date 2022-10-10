@@ -26,11 +26,9 @@ export async function getServerSideProps() { //ssg
   const res = await axios.get(`${process.env.API}/studentsGet`, {
   });
   const students = await res.data;
-  {console.log(students)}
   const inOutRes = await axios.get(`${process.env.API}/stuInAndOutSensorsGet`, {
   });
   const inOut = await inOutRes.data;
-  {console.log(inOut)}
 
   return { 
       props: {
@@ -68,9 +66,7 @@ const List: NextPage = (students: studentObj) => {
     }
   }
 
-  // console.log(students)
-  // console.log(students.inOut[0].Datetime)
-  // console.log(students.inOut[1].Datetime)
+
   return (
     <>
     <div>
