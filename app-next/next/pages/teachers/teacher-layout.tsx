@@ -12,7 +12,7 @@ export default function Layout({ children }:any) {
         </Head>
         <Header />
         <main>{children}</main>
-        <Footer />
+{/*         <Footer /> */}
       </>
     );
   }
