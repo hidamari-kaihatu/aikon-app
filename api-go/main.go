@@ -990,6 +990,7 @@ func getAllStudents(w http.ResponseWriter, r *http.Request) {
 
 type StudentInAndOut struct {
     Id int  `json:id`
+    Center_id int `json:cencer_id`
     Datetime string  `json:datetime`
     Rfid string  `json:rfid`
     Sensor_id int  `json:sensor_id`
@@ -998,7 +999,7 @@ type StudentInAndOut struct {
 }
 
 func getRowsStudentInAndOut(db *sql.DB) *sql.Rows {
-    rows, err := db.Query(`SELECT students.id, inAndOut.datetime, students.rfid, inAndOut.sensor_id, students.name, sensors.place FROM students INNER JOIN inAndOut ON students.rfid = inAndOut.rfid INNER JOIN sensors ON inAndOut.sensor_id = sensors.id`)
+    rows, err := db.Query(`SELECT students.id, students.center_id, inAndOut.datetime, students.rfid, inAndOut.sensor_id, students.name, sensors.place FROM students INNER JOIN inAndOut ON students.rfid = inAndOut.rfid INNER JOIN sensors ON inAndOut.sensor_id = sensors.id`)
     if err != nil {
         fmt.Println("Err2")
         panic(err.Error())
@@ -1013,7 +1014,7 @@ func  getStudentInAndOut(w http.ResponseWriter, r *http.Request) {
     studentInAndOut := StudentInAndOut{}
     var resultStudentInAndOut [] StudentInAndOut
     for rows.Next() {
-        error := rows.Scan(&studentInAndOut.Id, &studentInAndOut.Datetime, &studentInAndOut.Rfid, &studentInAndOut.Sensor_id, &studentInAndOut.Name, &studentInAndOut.Place)
+        error := rows.Scan(&studentInAndOut.Id, &studentInAndOut.Center_id, &studentInAndOut.Datetime, &studentInAndOut.Rfid, &studentInAndOut.Sensor_id, &studentInAndOut.Name, &studentInAndOut.Place)
         if error != nil {
             fmt.Println("scan error")
         } else {
