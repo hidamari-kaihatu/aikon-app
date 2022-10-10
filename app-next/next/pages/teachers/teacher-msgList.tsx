@@ -34,7 +34,7 @@ export default function mypage({data, staffs}:any) {
         {info.map((i) => (
                 <div className='sendmsg'>
         <ul key={i.Id}>
-            日付: {i.Datetime}<br/><br/>宛先：{i.Student_name}<br/><br/>メッセージ: {i.Message}<br/><br/><hr/>
+            日付: {i.Datetime}<br/><br/>宛先：{i.Student_name}<br/><br/>メッセージ: {i.Message}<br/><br/>
         </ul>
               </div>
         ))}
