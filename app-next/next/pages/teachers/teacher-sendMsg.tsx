@@ -85,8 +85,10 @@ function Output({data, staffs}:any) {
   return (
     <>
     <Layout>
-      <h1>先生が保護者に音声でメッセージを送るページ</h1>
+{/*       <h1>先生が保護者に音声でメッセージを送るページ</h1> */}
     <div className='center'>
+      <div className="tosend">
+        <br></br>
       <label>誰へ送る: </label>
       <select value={toPerson} onChange={(e) => settoPerson(e.target.value)}>
         <option value="A">生徒の名前</option>
@@ -99,16 +101,26 @@ function Output({data, staffs}:any) {
         }))}
       </select>
       <br></br>
-      <button onClick={clickHandler}>
-        <span>{listen ? "Stop Listening" : "Start Listening"} 
+      <br></br>
+      </div>
+      <div className="recording">
+      <br></br>
+      <p>{transcript}</p>
+      <br></br>
+      <button  className="mikebutton" onClick={clickHandler}>
+        <span>{listen ? "録音を止める" : "録音を始める"} 
         </span>
       </button>
-      <p>{transcript}</p>
-      <button onClick={submit}>送信する!</button> 
+      <br></br>
+      <br></br>
+      </div>
+      <button className="sendmsgbutton" onClick={submit}>送信する!</button> 
     </div>
-      {staffs[0].CenterName}
+    <div className="centername">
+    {staffs[0].CenterName}
         <br></br>
       {staffs[0].Name}
+    </div>
     </Layout>
     </>
   );

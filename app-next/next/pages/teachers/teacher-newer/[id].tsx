@@ -104,11 +104,12 @@ type Inputs = {
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
+    <div className="centerblack"></div>
       <div>
-        <h1>ようこそ！スマートGAKUDOへ</h1>
+        <p className="youkoso111">ようこそ！スマートGAKUDOへ</p>
         {/* <h3>〇〇学童</h3> */}
       </div>
-      <div>
+      <div className="centerblack22">
        <h3>新規登録</h3>
       名前<span style={{'color': 'red', 'fontSize': 'small'}}> ※必須</span><br></br>
       <input 

@@ -42,31 +42,44 @@ const Login: FC = () => {
 
   return (
     <div>
-      ayaka@ayaka.com
+{/*       ayaka@ayaka.com */}
       <form onSubmit={logIn}>
+      <p className="youkoso2">ようこそ！スマートGAKUDOへ</p>
+      <div>
+        <div className='parentloginback'>
+        <h3>ログイン</h3>
         <div>
+        <br></br>
           <label htmlFor="email">
-            Email:{' '}
+            メールアドレス:{' '}
           </label>
+          <br></br>
           <input
             id="email"
             type="email"
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
+        <br></br>
         <div>
           <label htmlFor="password">
-            Password:{' '}
+            パスワード:{' '}
           </label>
+          <br></br>
           <input
             id="password"
             type="password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+        <br></br>
         <button type="submit">
-          Login
+          ログイン
         </button>
+        <br></br>
+        <br></br>
+        </div>
+        </div>
       </form>
     </div>
   )

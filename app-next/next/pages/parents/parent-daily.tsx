@@ -20,14 +20,22 @@ export default function dailyReportPost(students:any) {
   
 
   const studentId = students.students[0].Id
-   //{console.log(studentId)}
+  //{console.log(studentId)}
 
     useEffect(() => {
       auth.onAuthStateChanged((user) => {
         user ? setCurrentUser(user) : router.push('/parents/parent-login')
       })
     }, [])
-    
+    const logOut = async () => {
+      try {
+        await auth.signOut()
+        router.push('/parents/parent-login')
+      } catch (error) {
+        router.push('/parents/parent-login')
+      }
+    }
+
     const today = new Date();
     const formatted = today.toLocaleDateString("ja-JP", {
       year: "numeric",
@@ -44,8 +52,8 @@ export default function dailyReportPost(students:any) {
         const data = {
             "Date":formatted,
             "Student_id":studentId,
-            "Attend":Number(attend),
-            "Temperature":temperature,
+            "Attend":JSON.parse(attend),
+            "Temperature":String(temperature),
             "SomeoneToPickUp":someToPickup,
             "TimeToPickUp":timeToPickup,
             "Message":message
@@ -57,21 +65,22 @@ export default function dailyReportPost(students:any) {
         .catch((error) => {
           console.log(error);
         });
-        //window.location.reload()
+        window.location.reload()
       }
 
     return(
       <>
       <Layout>
-      <div className="bluebackpd">
+      <p className='fromcentertitle'>出欠を連絡する</p>
+        <div className="bluebackpd">
         <div>
 {/*          <h2>日々の出欠報告</h2> */}
             <br></br>
             <label className="sisetsu">出欠: </label>
             <select value={attend} onChange={(e) => setattend(e.target.value)}>
                 <option value="A">出欠</option>
-                <option value={1}>学童に行きます</option>
-                <option value={0}>学童に行きません</option>
+                <option value={"true"}>学童に行きます</option>
+                <option value={"false"}>学童に行きません</option>
             </select>
             <br></br>
             <br></br>
@@ -83,7 +92,7 @@ export default function dailyReportPost(students:any) {
             <input type="text" value={someToPickup} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setsomeToPickup(e.currentTarget.value)}/>
             <br></br>
             <br></br>
-            <label className="sisetsu">お迎えの時間: </label>
+            <label className="sisetsu">帰り時間: </label>
             <select value={timeToPickup} onChange={(e) => settimeToPickup(e.target.value)}>
                 <option value="A">時間</option>
                 <option value={"16:00"}>16:00</option>
@@ -103,18 +112,14 @@ export default function dailyReportPost(students:any) {
 {/*             <button className="btn" onClick={logOut}>Logout</button> */}
             </div>
             </div>
-
             <button className="buttonpdlog" onClick={logOut}>Logout</button>
             <button className="buttonpdsub" onClick = {handleSubmit}>< SendTwoToneIcon style={{ color: "white" , fontSize: 40 }} /></button><p className="pdsub">送信</p>
-
-
-
           </Layout>
         </>       
     )
 }
 
-export async function getServerSideProps() { //ssg
+export async function getServerSideProps() {
   const res = await axios.get(`${process.env.API}/studentsGet`, {
   });
   const students = await res.data;
@@ -122,7 +127,7 @@ export async function getServerSideProps() { //ssg
 
   return { 
       props: {
-        students:students
+        students
       },
   };
 }

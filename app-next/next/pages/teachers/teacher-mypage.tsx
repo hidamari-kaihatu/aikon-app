@@ -57,6 +57,7 @@ const Mypage: NextPage = (staffs:staffObj) => {
                 })}
         </div> */}
         <div>
+         <p className='teachermypagetitle'>ホーム</p> 
         <div>
           <button className='button' onClick={() => Router.push('/teachers/teacher-todayKids', '/teachers/teacher-todayKids', { shallow: true})}><FaceTwoToneIcon style={{ color: "white", fontSize: 64  }}/></button>
           <p className='p1'>今日の児童一覧を見る</p>

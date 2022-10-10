@@ -38,6 +38,7 @@ export default function Header() {
           <a className='a6'>入退室を確認する</a>
         </Link>
         </div>
+        <p className='sumagakuipad'>スマートGAKUDO</p>
     </>
   );
 }
