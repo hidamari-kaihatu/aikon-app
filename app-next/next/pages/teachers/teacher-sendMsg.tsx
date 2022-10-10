@@ -59,7 +59,7 @@ function Output({data, staffs}:any) {
   //入力できない。音声のみ
   //reloadができてない
   const stuId = Number(staffs[0].Id)
-  console.log(typeof stuId)
+  // console.log(typeof stuId)
   const submit = () => {
     const data = {
       "Staff_id":stuId,
@@ -77,23 +77,23 @@ function Output({data, staffs}:any) {
 
 
   const infos = data.filter(obj =>obj.Center_id  === staffs[0].Center_id)//idでふるいにかける
-  console.log(data)
-  console.log(infos)
-  console.log(staffs)
+  // console.log(data)
+  // console.log(infos)
+  // console.log(staffs)
   // console.log(infos[0].Student_name)
   //現状、toPersonの値はデフォルトで１だけ
   return (
     <>
     <Layout>
       <h1>先生が保護者に音声でメッセージを送るページ</h1>
-    <div>
+    <div className='center'>
       <label>誰へ送る: </label>
       <select value={toPerson} onChange={(e) => settoPerson(e.target.value)}>
         <option value="A">生徒の名前</option>
         {infos.map(((info:any, i: number) => {
           return (
             <>
-            <option value={info.Id}>{info.Name}</option>
+            <option value={info.Id} key={i}>{info.Name}</option>
             </>
           )
         }))}
