@@ -54,7 +54,7 @@ interface SearchFormProps {
   //   middleData: typeof data
   // }) => {  
 
-    const TeacherGet: NextPage = ({data,centerData,middleData,onChangeCenter}:SearchFormProps) => {
+    export default function TeacherGet ({data,centerData,middleData,onChangeCenter}:SearchFormProps) {
       // const {data} = props
       // const {centerData} = props
       // const {middleData} = props
@@ -82,7 +82,7 @@ interface SearchFormProps {
         for(const key in newMiddleData){
             console.log(newMiddleData[key]);
             const newStaffData = data.filter((obj:any) => {
-            if(obj.Id === newMiddleData[key]["Staff_id"] && obj.Status === true) {
+            if(obj.Id === newMiddleData[key]["Staff_id"] && obj.Status === 1) {
               result.push(obj);
               setNewStaffDatas(result);
               return obj;
@@ -101,7 +101,7 @@ const counter = () => {
 };
 //セレクトボタンでSatusがtrueの施設名だけを表示させる
 const selectCenter = centerData.map((item:any, i:number) => {
-  if(item.Status === true){
+  if(item.Status === 1){
     //  {console.log("item.Name : ",item.Name)}
       return(
         <option key={i} value={item.Id}>{item.Name}</option>
@@ -187,4 +187,4 @@ return (
     )
   }
   
-  export default TeacherGet
+  

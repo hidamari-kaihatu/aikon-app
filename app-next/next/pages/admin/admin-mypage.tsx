@@ -57,7 +57,7 @@ const adminHome: NextPage = (staffs: staffObj) => {
           style={{color: "white" , fontSize: 64 }}/></button><p className='pa2'>職員一覧</p>
         </div>
         <div>
-          <button className='buttona3' onClick={() => Router.push('/admin/url', '/admin/url', { shallow: true})}><LinkTwoToneIcon
+          <button className='buttona3' onClick={() => Router.push('/admin/admin-url', '/admin/admin-url', { shallow: true})}><LinkTwoToneIcon
           style={{color: "white" , fontSize: 64 }}/></button><p className='pa3'>URL</p>
         </div>
         <div>      
