@@ -3,6 +3,8 @@ import axios from "axios";
 import { Axios } from '../../lib/api';
 import Link from 'next/link';
 import Layout from './admin-layout';
+
+
 import test from 'node:test';
 
 export interface centers {
@@ -97,7 +99,7 @@ const CenterGet: NextPage = ({data}:any) => {
         <tbody>
           {data.map((item:any, i:number) => {
              console.log("item:", item);
-             if(item.Status === true){
+             if(item.Status === 1){
                {console.log(item)}
                 return (
                     <>
