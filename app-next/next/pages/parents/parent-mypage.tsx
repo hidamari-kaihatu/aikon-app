@@ -5,7 +5,13 @@ import { useRouter } from 'next/router'
 import { auth } from '../../firebaseConfig'
 import axios from "axios";
 import Layout from "./parent-layout";
+
+import Router from 'next/router';
+import EmailTwoToneIcon from '@mui/icons-material/EmailTwoTone';
+import AccessAlarmTwoToneIcon from '@mui/icons-material/AccessAlarmTwoTone';
+
 import internal from 'stream';
+
 
 interface studentObj {
   [key: string]: Array<Arr>
@@ -75,7 +81,7 @@ const List: NextPage = (students: studentObj) => {
       退室：{checkStudentOut()}
     </div>
     <Layout>
-      <div>
+      <div className='myname'>
             {students.students.map((d:any, i:number) => {
             return (
                 <div key={i}>
@@ -86,6 +92,17 @@ const List: NextPage = (students: studentObj) => {
             )
           })}
       </div>
+      <div>
+        <div>
+          <button className='buttonp1' onClick={() => Router.push('/parents/parent-daily', '/parents/parent-daily', { shallow: true})}><AccessAlarmTwoToneIcon style={{ color: "white", fontSize: 64  }}/></button>
+          <p className='pp1'>出欠を連絡する</p>
+        </div>
+        <div>
+          <button className='buttonp2' onClick={() => Router.push('/parents/parent-fromCenter', '/parents/parent-fromCenter', { shallow: true})}><EmailTwoToneIcon
+          style={{color: "white" , fontSize: 64 }}/></button> 
+          <p className='pp2'>学童からの連絡を見る</p>
+        </div>
+        </div>
     </Layout>
     </>
   )

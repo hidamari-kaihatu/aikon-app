@@ -6,6 +6,7 @@ import { auth } from '../../firebaseConfig'
 import { useRouter } from 'next/router';
 import Layout from "./parent-layout";
 import axios from "axios";
+import SendTwoToneIcon from '@mui/icons-material/SendTwoTone';
 
 export default function dailyReportPost(students:any) {
     const [attend, setattend] = useState("");
@@ -62,10 +63,11 @@ export default function dailyReportPost(students:any) {
     return(
       <>
       <Layout>
+      <div className="bluebackpd">
         <div>
-         <h2>日々の出欠報告</h2>
+{/*          <h2>日々の出欠報告</h2> */}
             <br></br>
-            <label>出欠: </label>
+            <label className="sisetsu">出欠: </label>
             <select value={attend} onChange={(e) => setattend(e.target.value)}>
                 <option value="A">出欠</option>
                 <option value={1}>学童に行きます</option>
@@ -73,33 +75,15 @@ export default function dailyReportPost(students:any) {
             </select>
             <br></br>
             <br></br>
-            <label>体温: </label>
-            <select value={temperature} onChange={(e) => settemperature(e.target.value)}>
-                <option value="A">体温</option>
-                <option value="36.0">36.0</option>
-                <option value="36.1">36.1</option>
-                <option value="36.2">36.2</option>
-                <option value="36.3">36.3</option>
-                <option value="36.4">36.4</option>
-                <option value="36.5">36.5</option>
-                <option value="36.6">36.6</option>
-                <option value="36.7">36.7</option>
-                <option value="36.8">36.8</option>
-                <option value="36.9">36.9</option>
-                <option value="37.0">37.0</option>
-                <option value="37.1">37.1</option>
-                <option value="37.2">37.2</option>
-                <option value="37.3">37.3</option>
-                <option value="37.4">37.4</option>
-                <option value="37.5">37.5</option>
-            </select>
+            <label className="sisetsu">体温: </label>
+            <input type="text" value={temperature} onChange={(e: React.ChangeEvent<HTMLInputElement>) => settemperature(e.currentTarget.value)}/>
             <br></br>
             <br></br>
-            <label>お迎えの人: </label>
+            <label className="sisetsu">お迎えの人: </label>
             <input type="text" value={someToPickup} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setsomeToPickup(e.currentTarget.value)}/>
             <br></br>
             <br></br>
-            <label>お迎えの時間: </label>
+            <label className="sisetsu">お迎えの時間: </label>
             <select value={timeToPickup} onChange={(e) => settimeToPickup(e.target.value)}>
                 <option value="A">時間</option>
                 <option value={"16:00"}>16:00</option>
@@ -112,26 +96,19 @@ export default function dailyReportPost(students:any) {
             </select>
             <br></br>
             <br></br>
-            <label>メッセージ：</label>
+            <label className="sisetsu">メッセージ：</label>
             <input type="text" value={message} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setmessage(e.currentTarget.value)}/>
             <br></br>
             <br></br>
-            <button onClick = {handleSubmit}>送信する！</button>
-            <Link href={"/parents/parent-mypage"}>
-            <h2>HOME</h2>
-          </Link>
+{/*             <button className="btn" onClick={logOut}>Logout</button> */}
             </div>
-            <div>
-              {students.students.map((d:any, i:number) => {
-              return (
-                  <div key={i}>
-                    {d.CenterName}
-                    <br></br>
-                    {d.Name}
-                  </div>
-              )
-            })}
             </div>
+
+            <button className="buttonpdlog" onClick={logOut}>Logout</button>
+            <button className="buttonpdsub" onClick = {handleSubmit}>< SendTwoToneIcon style={{ color: "white" , fontSize: 40 }} /></button><p className="pdsub">送信</p>
+
+
+
           </Layout>
         </>       
     )

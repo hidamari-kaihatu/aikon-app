@@ -27,23 +27,20 @@ export default function mypage({data, students}:any) {
     return (
       <>
       <Layout>
-        <h2>学童からの連絡一覧</h2>
+{/*         <h2>学童からの連絡一覧</h2> */}
+<div className='msgblueback'>
         {data.map((d) => (
+                    <div className='sendmsg'>
         <ul key={d.Id}>
             日付: {d.Datetime}<br/><br/>メッセージ: {d.Message}<br/><br/><hr/>
         </ul>
+        </div>
         ))}
-      <div>
-        {students.map((d:any, i:number) => {
-          return (
-            <div key={i}>
-              {d.CenterName}
-              <br></br>
-              {d.Name}
-            </div>
-            )
-          })}
-      </div>
+
+        </div>
+
+
+
         </Layout>
       </>
     );

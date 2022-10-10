@@ -50,9 +50,9 @@ const ShowURL: NextPage = ({centerData,copyUrl}:ShowURLProps) => {
   }
   return (
     <Layout>
-    <div>
-      <h3>管理者用</h3>
-      <p>あなたの使用するURLです</p>
+    <div className='urlback1'>
+{/*       <h3 className='center'>管理者用</h3>  */}
+      <p className='center'>管理者用<br></br>あなたの使用するURLです</p>
       <table className='list-table'>
          <thead>
            <tr>
@@ -74,9 +74,9 @@ const ShowURL: NextPage = ({centerData,copyUrl}:ShowURLProps) => {
          </tbody>
          </table>
     </div>
-    <div>
-      <h3>職員用</h3>
-      <p>学童の職員が使用するURLです。各施設の職員へこのURLをお知らせください。</p>
+    <div className='urlback2'>
+{/*       <h3 className='center'>職員用</h3> */}
+      <p className='center'>職員用<br></br>学童の職員が使用するURLです。各施設の職員へこのURLをお知らせください。</p>
       <table className='list-table'>
          <thead>
            <tr>
@@ -113,9 +113,9 @@ const ShowURL: NextPage = ({centerData,copyUrl}:ShowURLProps) => {
          </tbody>
        </table>
     </div>
-    <div>
-      <h3>保護者用</h3>
-      <p>学童利用の保護者が使用するURLです。各施設から保護者へこのURLをお知らせください。</p>
+    <div className='urlback3'>
+{/*       <h3 className='center'>保護者用</h3> */}
+      <p className='center'>保護者用<br></br>学童利用の保護者が使用するURLです。各施設から保護者へこのURLをお知らせください。</p>
       <table className='list-table'>
          <thead>
            <tr>
@@ -152,6 +152,7 @@ const ShowURL: NextPage = ({centerData,copyUrl}:ShowURLProps) => {
          </tbody>
       </table>
     </div>
+    
     </Layout>
   );
 }
