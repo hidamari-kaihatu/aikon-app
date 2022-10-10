@@ -26,11 +26,9 @@ export async function getServerSideProps() { //ssg
   const res = await axios.get(`${process.env.API}/studentsGet`, {
   });
   const students = await res.data;
-  {console.log(students)}
   const inOutRes = await axios.get(`${process.env.API}/stuInAndOutSensorsGet`, {
   });
   const inOut = await inOutRes.data;
-  {console.log(inOut)}
 
   return { 
       props: {
@@ -50,15 +48,31 @@ const List: NextPage = (students: studentObj) => {
       user ? setCurrentUser(user) : router.push('/parents/parent-login')
     })
   }, [])
-  // console.log(students)
-  // console.log(students.inOut[0].Datetime)
-  // console.log(students.inOut[1].Datetime)
+
+  function checkStudentIn() { //引数students.inOut[0].Datetimeにすると問答無用で[0]読んで、それはないって怒られるから関数の中で呼んだ
+    if(students.inOut !== null){
+      return students.inOut[0].Datetime
+    }
+    return 
+  }
+  function checkStudentOut() {
+    if(!students.inOut){
+      return 
+    }
+    else if(!students.inOut[1]) {
+      return 
+    } else {
+      students.inOut[1].Datetime
+    }
+  }
+
+
   return (
     <>
     <div>
-      入室：{students.inOut[0].Datetime}
+      入室：{checkStudentIn()}
       <br></br>
-      退室：{students.inOut[1].Datetime}
+      退室：{checkStudentOut()}
     </div>
     <Layout>
       <div>

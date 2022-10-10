@@ -39,13 +39,14 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 //受け取るデータ構造の定義
 type DailyReports struct {
     Id    int `json:id`
-	Date  string `json:data`
+	Date  string `json:date`
 	Student_id  int `json:student_id`
 	Attend int `json:attend`
 	Temperature *string `json:temperature`
 	SomeoneToPickUp *string `json:someoneToPickUp`
 	TimeToPickUp *string `json:timeToPickUp`
 	Message *string `json:message`
+    Center_id int `json:center_id`
 }
 
 type Middle struct {
@@ -76,7 +77,7 @@ func connectionDB() *sql.DB {
 
 // db.Queryはクエリを実行しRows型で返す。Rows型はクエリの実行結果
 func getDailyReportsRows(db *sql.DB) *sql.Rows {
-    rows, err := db.Query("SELECT * FROM dailyReports")
+    rows, err := db.Query("SELECT dailyReports.id, dailyReports.date, dailyReports.student_id, dailyReports.attend, dailyReports.temperature, dailyReports.someoneToPickUp, dailyReports.timeToPickUp, dailyReports.message, students.center_id FROM dailyReports INNER JOIN students ON students.center_id WHERE dailyReports.student_id = students.id")
     if err != nil {
         fmt.Println("Err2")
         panic(err.Error())
@@ -95,7 +96,7 @@ func getDailyReport(w http.ResponseWriter, r *http.Request) {
     dailyReports := DailyReports{}
     var resultDailyReport [] DailyReports
     for rows.Next() {
-        error := rows.Scan(&dailyReports.Id, &dailyReports.Date, &dailyReports.Student_id, &dailyReports.Attend, &dailyReports.Temperature, &dailyReports.SomeoneToPickUp, &dailyReports.TimeToPickUp, &dailyReports.Message)
+        error := rows.Scan(&dailyReports.Id, &dailyReports.Date, &dailyReports.Student_id, &dailyReports.Attend, &dailyReports.Temperature, &dailyReports.SomeoneToPickUp, &dailyReports.TimeToPickUp, &dailyReports.Message, &dailyReports.Center_id )
         if error != nil {
             fmt.Println("scan error")
         } else {
