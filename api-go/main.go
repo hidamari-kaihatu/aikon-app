@@ -985,7 +985,50 @@ func getAllStudents(w http.ResponseWriter, r *http.Request) {
         return
     }
 }
+type StudentInAndOut struct {
+    Id int  `json:id`
+    Datetime string  `json:datetime`
+    Rfid string  `json:rfid`
+    Sensor_id int  `json:sensor_id`
+    Name string  `json:name`
+    Place string  `json:place`
+}
 
+func getRowsStudentInAndOut(db *sql.DB) *sql.Rows {
+    rows, err := db.Query(`SELECT students.id, inAndOut.datetime, students.rfid, inAndOut.sensor_id, students.name, sensors.place FROM students INNER JOIN inAndOut ON students.rfid = inAndOut.rfid INNER JOIN sensors ON inAndOut.sensor_id = sensors.id`)
+    if err != nil {
+        fmt.Println("Err2")
+        panic(err.Error())
+    }
+    return rows
+}
+
+func  getStudentInAndOut(w http.ResponseWriter, r *http.Request) {
+    db := connectionDB()
+    defer db.Close()
+    rows := getRowsStudentInAndOut(db)
+    studentInAndOut := StudentInAndOut{}
+    var resultStudentInAndOut [] StudentInAndOut
+    for rows.Next() {
+        error := rows.Scan(&studentInAndOut.Id, &studentInAndOut.Datetime, &studentInAndOut.Rfid, &studentInAndOut.Sensor_id, &studentInAndOut.Name, &studentInAndOut.Place)
+        if error != nil {
+            fmt.Println("scan error")
+        } else {
+            resultStudentInAndOut = append(resultStudentInAndOut, studentInAndOut)
+        }
+    }
+    var buf bytes.Buffer
+    enc := json.NewEncoder(&buf)
+    if err := enc.Encode(&resultStudentInAndOut); err != nil {
+        log.Fatal(err)
+    }
+    fmt.Println(buf.String())
+
+    _, err := fmt.Fprint(w, buf.String()) 
+    if err != nil {
+        return
+    }
+}
 
 //トークン作成
 func CreateToken(studentID string) (string) {
@@ -1250,6 +1293,7 @@ func main() {
     http.HandleFunc("/staffIsLogin", staffIsLogin)
     http.HandleFunc("/getStaffAndMiddleAndCenter", getStaffAndMiddleAndCenter)
     http.HandleFunc("/getAllStudents", getAllStudents)
+    http.HandleFunc("/getStudentInAndOut", getStudentInAndOut)
     http.ListenAndServe(":8080", nil)
     
 }
