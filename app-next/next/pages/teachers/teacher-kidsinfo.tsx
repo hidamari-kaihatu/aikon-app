@@ -36,6 +36,7 @@ const info = data
 
 return (
 <Layout>
+<div className="blueback">
     <table className='list-table'>
       <thead>
         <tr >
@@ -67,6 +68,7 @@ return (
         )}
       </tbody>
     </table>
+    </div>
     </Layout>
     )
   }
