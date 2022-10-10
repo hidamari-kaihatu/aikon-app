@@ -19,7 +19,7 @@ interface Arr {
 }
 
 export async function getServerSideProps() {
-  const res = await axios.get(`${process.env.API}/getStaffAndMiddle`, {
+  const res = await axios.get(`${process.env.API}/staffsGet`, {
   });
   const staffs = await res.data;
   {console.log(staffs)}
@@ -61,8 +61,11 @@ const adminHome: NextPage = (staffs: staffObj) => {
           style={{color: "white" , fontSize: 64 }}/></button><p className='pa3'>URL</p>
         </div>
         <div>      
+
           <button className='buttona4' onClick={() => Router.push('https://forms.gle/UWVFgSBWAFJT271M9', 'https://forms.gle/UWVFgSBWAFJT271M9',{ shallow: true})}><AddCircleTwoToneIcon
           style={{color: "white" , fontSize: 64 }}/></button><p className='pa4'>新規施設登録</p>        
+     
+
         </div>
       </div>
       <div>
