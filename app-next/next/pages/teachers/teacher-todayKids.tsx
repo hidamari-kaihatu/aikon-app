@@ -45,6 +45,7 @@ function chanteAttendType(int: number) {
 }
 return (
 <Layout>
+<div  className="blueback2">
     <table className='list-table'>
       <thead>
         <tr>
@@ -78,9 +79,10 @@ return (
     )}
       </tbody>
     </table>
-    {staffs[0].CenterName}
+    </div>
+{/*     {staffs[0].CenterName}
       <br></br>
-    {staffs[0].Name}
+    {staffs[0].Name} */}
     </Layout>
     )
   }
