@@ -81,6 +81,7 @@ const List: NextPage = (students: studentObj) => {
       退室：{checkStudentOut()}
     </div>
     <Layout>
+    <p className='parentmypagetitle'>ホーム</p>
       <div className='myname'>
             {students.students.map((d:any, i:number) => {
             return (
