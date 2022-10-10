@@ -4,7 +4,7 @@ import { Axios } from '../../lib/api';
 import Link from 'next/link';
 import Layout from './admin-layout';
 import test from 'node:test';
-import { center } from './admin-centerList';
+// import { center } from './admin-centerList';
 
 export async function getServerSideProps() {
   const resCenter = await axios.get(`${process.env.API}/centerGet`, {
@@ -26,7 +26,7 @@ interface ShowURLProps {
   copyUrl: (text: string) => void;
 }
 
-const ShowURL: NextPage = ({centerData,copyUrl}:ShowURLProps) => {
+export default function ShowURL ({centerData,copyUrl}:ShowURLProps) {
   console.log("test2");
   console.log(centerData[0].Name);
 
@@ -62,14 +62,33 @@ const ShowURL: NextPage = ({centerData,copyUrl}:ShowURLProps) => {
          </thead>
          <tbody>
            <tr>
+            {/* ローカルでのパス */}
              <td>
-               `http://localhost:3000/register/admin`
-                <input type="button" value="コピー" onClick={()=>{copyUrl(`http://localhost:3000/register/admin`)}}></input>
+               http://localhost:3000/admin/admin-newer
+                <input type="button" value="コピー" onClick={()=>{copyUrl(`http://localhost:3000/admin/admin-newer`)}}></input>
              </td>
              <td>
-               `http://localhost:3000/login/admin`
-                <input type="button" value="コピー" onClick={()=>{copyUrl(`http://localhost:3000/login/admin`)}}></input>
+               http://localhost:3000/admin/admin-login
+                <input type="button" value="コピー" onClick={()=>{copyUrl(`http://localhost:3000/admin/admin-login`)}}></input>
              </td>
+             {/* ALBでのパス */}
+             {/* <td>
+               http://aikon-alb-1845111650.ap-southeast-1.elb.amazonaws.com/admin/admin-newer
+                <input type="button" value="コピー" onClick={()=>{copyUrl(` http://aikon-alb-1845111650.ap-southeast-1.elb.amazonaws.com/admin/admin-newer`)}}></input>
+             </td>
+             <td>
+               http://aikon-alb-1845111650.ap-southeast-1.elb.amazonaws.com/admin/admin-login
+                <input type="button" value="コピー" onClick={()=>{copyUrl(` http://aikon-alb-1845111650.ap-southeast-1.elb.amazonaws.com/admin/admin-login`)}}></input>
+             </td> */}
+             {/* サブドメインでのパス */}
+             {/* <td>
+               https://smart-gakudo.mse-stage.com/admin/admin-newer
+                <input type="button" value="コピー" onClick={()=>{copyUrl(`https://smart-gakudo.mse-stage.com/admin/admin-newer`)}}></input>
+             </td>
+             <td>
+               https://smart-gakudo.mse-stage.com/admin/admin-login
+                <input type="button" value="コピー" onClick={()=>{copyUrl(`https://smart-gakudo.mse-stage.com/admin/admin-login`)}}></input>
+             </td> */}
            </tr>
          </tbody>
          </table>
@@ -96,14 +115,33 @@ const ShowURL: NextPage = ({centerData,copyUrl}:ShowURLProps) => {
                     <tr  key={i}>
                       <td>{counter()}</td>
                       <td>{item.Name}</td>
+                      {/* ローカルでのパス */}
                       <td>
-                        `http://localhost:3000/register/staff/{item.Id}`
-                        <input type="button" value="コピー" onClick={()=>{copyUrl(`http://localhost:3000/register/staff/${item.Id}`)}}></input>
+                        http://localhost:3000/teachers/teacher-newer/{item.Id}
+                        <input type="button" value="コピー" onClick={()=>{copyUrl(`http://localhost:3000/teachers/teacher-newer/${item.Id}`)}}></input>
                       </td>
                       <td>
-                        `http://localhost:3000/login/staff/{item.Id}`
-                        <input type="button" value="コピー" onClick={()=>{copyUrl(`http://localhost:3000/login/staff/${item.Id}`)}}></input>
+                        http://localhost:3000/teachers/teacher-login
+                        <input type="button" value="コピー" onClick={()=>{copyUrl(`http://localhost:3000/teachers/teacher-login`)}}></input>
                       </td>
+                      {/* ALBでのパス */}
+                      {/* <td>
+                        http://aikon-alb-1845111650.ap-southeast-1.elb.amazonaws.com/teachers/teacher-newer/{item.Id}
+                        <input type="button" value="コピー" onClick={()=>{copyUrl(`http://aikon-alb-1845111650.ap-southeast-1.elb.amazonaws.com/teachers/teacher-newer/${item.Id}`)}}></input>
+                      </td>
+                      <td>
+                        http://aikon-alb-1845111650.ap-southeast-1.elb.amazonaws.com/teachers/teacher-login
+                        <input type="button" value="コピー" onClick={()=>{copyUrl(`http://aikon-alb-1845111650.ap-southeast-1.elb.amazonaws.com/teachers/teacher-login`)}}></input>
+                      </td> */}
+                      {/* サブドメインでのパス */}
+                      {/* <td>
+                        https://smart-gakudo.mse-stage.com/teachers/teacher-newer/{item.Id}
+                        <input type="button" value="コピー" onClick={()=>{copyUrl(`https://smart-gakudo.mse-stage.com/teachers/teacher-newer/${item.Id}`)}}></input>
+                      </td>
+                      <td>
+                        https://smart-gakudo.mse-stage.com/teachers/teacher-login
+                        <input type="button" value="コピー" onClick={()=>{copyUrl(`https://smart-gakudo.mse-stage.com/teachers/teacher-login`)}}></input>
+                      </td> */}
                     </tr>
                     </>
                   )
@@ -135,14 +173,33 @@ const ShowURL: NextPage = ({centerData,copyUrl}:ShowURLProps) => {
                     <tr  key={i}>
                       <td>{counter2()}</td>
                       <td>{item.Name}</td>
+                      {/* ローカルでのパス */}
                       <td>
-                        `http://localhost:3000/parents/parent-newer/{item.Id}`
+                        http://localhost:3000/parents/parent-newer/{item.Id}
                         <input type="button" value="コピー" onClick={()=>{copyUrl(`http://localhost:3000/parents/parent-newer/${item.Id}`)}}></input>
                       </td>
                       <td>
-                        `http://localhost:3000/parents/parent-login`
-                        <input type="button" value="コピー" onClick={()=>{copyUrl(`http://localhost:3000/login/${item.Id}`)}}></input>
+                        http://localhost:3000/parents/parent-login
+                        <input type="button" value="コピー" onClick={()=>{copyUrl(`http://localhost:3000/parents/parent-login`)}}></input>
                       </td>
+                     {/* ALBでのパス */}
+                     {/* <td>
+                        http://aikon-alb-1845111650.ap-southeast-1.elb.amazonaws.com/parents/parent-newer/{item.Id}
+                        <input type="button" value="コピー" onClick={()=>{copyUrl(`http://aikon-alb-1845111650.ap-southeast-1.elb.amazonaws.com/parents/parent-newer/${item.Id}`)}}></input>
+                      </td>
+                      <td>
+                        http://aikon-alb-1845111650.ap-southeast-1.elb.amazonaws.com/parents/parent-login
+                        <input type="button" value="コピー" onClick={()=>{copyUrl(`http://aikon-alb-1845111650.ap-southeast-1.elb.amazonaws.com/parents/parent-login`)}}></input>
+                      </td> */}
+                      {/* サブドメインでのパス */}
+                      {/* <td>
+                        https://smart-gakudo.mse-stage.com/parents/parent-newer/{item.Id}
+                        <input type="button" value="コピー" onClick={()=>{copyUrl(`https://smart-gakudo.mse-stage.com/parents/parent-newer/${item.Id}`)}}></input>
+                      </td>
+                      <td>
+                        https://smart-gakudo.mse-stage.com/parents/parent-login
+                        <input type="button" value="コピー" onClick={()=>{copyUrl(`https://smart-gakudo.mse-stage.com/parents/parent-login`)}}></input>
+                      </td> */}
                     </tr>
                     </>
                   )
@@ -156,8 +213,6 @@ const ShowURL: NextPage = ({centerData,copyUrl}:ShowURLProps) => {
     </Layout>
   );
 }
-
-export default ShowURL
 
 
 // import type { NextPage } from 'next'
@@ -221,8 +276,8 @@ export default ShowURL
 //          <tbody>
 //            <tr>
 //              <td>
-//                `http://localhost:3000/register/admin`
-//                 <input type="button" value="コピー" onClick={()=>{copyUrl(`http://localhost:3000/register/admin`)}}></input>
+//                `http://localhost:300m/teachers/teacher-newer`
+//                 <input type="button" value="コピー" onClick={()=>{copyUrl(`http://localhost:300m/teachers/teacher-newer`)}}></input>
 //              </td>
 //              <td>
 //                `http://localhost:3000/login/admin`
@@ -255,12 +310,12 @@ export default ShowURL
 //                       <td>{counter()}</td>
 //                       <td>{item.Name}</td>
 //                       <td>
-//                         `http://localhost:3000/register/staff/{item.Id}`
-//                         <input type="button" value="コピー" onClick={()=>{copyUrl(`http://localhost:3000/register/staff/${item.Id}`)}}></input>
+//                         `http://localhost:300m/teachers/teacher-newer/{item.Id}`
+//                         <input type="button" value="コピー" onClick={()=>{copyUrl(`http://localhost:300m/teachers/teacher-newer/${item.Id}`)}}></input>
 //                       </td>
 //                       <td>
-//                         `http://localhost:3000/login/staff/{item.Id}`
-//                         <input type="button" value="コピー" onClick={()=>{copyUrl(`http://localhost:3000/login/staff/${item.Id}`)}}></input>
+//                         `http://localhost:300m/teachers/teacher-login{item.Id}`
+//                         <input type="button" value="コピー" onClick={()=>{copyUrl(`http://localhost:300m/teachers/teacher-login${item.Id}`)}}></input>
 //                       </td>
 //                     </tr>
 //                     </>
@@ -294,11 +349,11 @@ export default ShowURL
 //                       <td>{counter2()}</td>
 //                       <td>{item.Name}</td>
 //                       <td>
-//                         `http://localhost:3000/register/staff/{item.Id}`
-//                         <input type="button" value="コピー" onClick={()=>{copyUrl(`http://localhost:3000/register/${item.Id}`)}}></input>
+//                         `http://localhost:300m/teachers/teacher-newer/{item.Id}`
+//                         <input type="button" value="コピー" onClick={()=>{copyUrl(`http://localhost:300m/teachers/teacher-newerm.Id}`)}}></input>
 //                       </td>
 //                       <td>
-//                         `http://localhost:3000/login/staff/{item.Id}`
+//                         `http://localhost:300m/teachers/teacher-login{item.Id}`
 //                         <input type="button" value="コピー" onClick={()=>{copyUrl(`http://localhost:3000/login/${item.Id}`)}}></input>
 //                       </td>
 //                     </tr>
