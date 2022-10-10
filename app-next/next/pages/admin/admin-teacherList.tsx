@@ -161,13 +161,14 @@ const showTable = newStaffDatas.map((item:any, i:number) => {
 //     }
 return (
   <Layout>
-    <div>
-      <label>施設名: </label>
+     <div className='bluebackat'>
+      <label className='sisetsu'>施設名: </label>
         <select name="centerData" id="centerData" onChange={(e) => onChangeCenter(e)}>
         <option  value="example">施設を選択してください</option>
         {selectCenter}
         </select>
     </div>
+    <div className='bluebackat2'>
     <table className='list-table'>
       <thead>
         <tr>
@@ -181,6 +182,7 @@ return (
         {showTable}
       </tbody>
     </table>
+    </div>
   </Layout>
     )
   }
