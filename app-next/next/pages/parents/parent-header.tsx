@@ -20,7 +20,7 @@ export default function Header() {
       <p className='parenthomeborder'></p>
       <ul>
         <Link href="/parents/parent-daily">
-          <a className='parenthomedaily'>出欠を報告する</a>
+          <a className='parenthomedaily'>出欠を連絡する</a>
         </Link>
       </ul>
       <ul>
@@ -30,6 +30,7 @@ export default function Header() {
       </ul>
       <div suppressHydrationWarning className='admintoday'>{month}月{day}日（{dayOfWeek}）</div> 
       </div>
+      <p className='smagakusumaho'>スマートGAKUDO</p>
     </>
   );
 }

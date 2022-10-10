@@ -122,13 +122,14 @@ export default function App() {
   
   return (
     /* "handleSubmit" will validate your inputs before invoking "onSubmit" */
+    
     <form onSubmit={handleSubmit(onSubmit)} noValidate>
-      <div>
-        <h1>ようこそ！スマートGAKUDOへ</h1>
+              <p className="youkoso1">ようこそ！スマートGAKUDOへ</p>
+      <div className="centerblack">
         {/* <h3>〇〇学童</h3> */}
         <h3></h3>
       </div>
-      <div>
+      <div className="centerblack2">
        <h3>新規登録</h3>
       名前<span style={{'color': 'red', 'fontSize': 'small'}}> ※必須</span><br></br>
       <input 
