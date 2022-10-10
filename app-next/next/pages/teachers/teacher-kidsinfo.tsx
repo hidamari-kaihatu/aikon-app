@@ -4,19 +4,26 @@ import { Axios } from '../../lib/api';
 import React,{ useState } from "react";
 
 export async function getServerSideProps() {
-  const res = await axios.get(`${process.env.API}/studentsGet`, {
+  const res = await axios.get(`${process.env.API}/getAllStudents`, {
   });
   const data = await res.data;
+  const staffsRes = await axios.get(`${process.env.API}/getStaffAndMiddleAndCenter`, {
+});
+const staffs = await staffsRes.data;
+{console.log(staffs)}
+
 
   return { 
     props: {
       data: data,
+      staffs: staffs
     },
   };
 }
 
-const StudentGet = ({data}:any) => {
-
+const StudentGet = ({data, staffs}:any) => {
+{console.log(data)}
+{console.log(staffs)}
 //現状2回ダブルクリックしないと、変更が反映されない
 function liftButton (Id:any) {
   const student = {Id: Id};
@@ -31,8 +38,8 @@ function liftButton (Id:any) {
 //statusがtrueのものだけ表示
 //Center_idが今はベタ打ち。ここに、先生が所属するCenter_idが入るようにしたい
 const info = data
-.filter(obj => obj.Status.toString() === "true")
-.filter(obj =>obj.Center_id === 1 )
+.filter(obj => obj.Status === 1)
+.filter(obj =>obj.Center_id === staffs[0].Center_id )
 
 return (
 <Layout>

@@ -31,7 +31,7 @@ const Login: FC = () => {
         console.log(error);
       });
 
-      router.push('/parents/teacher-mypage')
+      router.push('/teachers/teacher-mypage')
 
     } catch (err) {
        alert("メールアドレスまたはパスワードが間違っています")

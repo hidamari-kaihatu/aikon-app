@@ -14,7 +14,7 @@ interface Arr {
 }
 
 export async function getServerSideProps() {
-  const res = await axios.get(`${process.env.API}/getStaffAndMiddle`, {
+  const res = await axios.get(`${process.env.API}/staffsGet`, {
   });
   const staffs = await res.data;
   {console.log(staffs)}
@@ -52,8 +52,8 @@ const adminHome: NextPage = (staffs: staffObj) => {
         <div>
           <button onClick={() => Router.push('/admin/url', '/admin/url', { shallow: true})}>URL</button> 
         </div>
-        <div>
-          <button onClick={() => Router.push('/admin/admin-newer', '/admin/admin-newer', { shallow: true})}>新規施設登録</button>         
+        <div>      
+          <button onClick={() => Router.push('https://forms.gle/UWVFgSBWAFJT271M9', 'https://forms.gle/UWVFgSBWAFJT271M9',{ shallow: true})}>新規施設登録</button>         
         </div>
       </div>
       <div>

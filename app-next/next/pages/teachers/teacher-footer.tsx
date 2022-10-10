@@ -1,12 +1,25 @@
+import axios from 'axios';
 import Link from 'next/link';
+import { useRouter } from 'next/router'
+import { auth } from '../../firebaseConfig';
 import Today from '../../components/date';
 
-export default function Footer() {
+  
+export default function Footer(staffs:any) {
+    const router = useRouter()
+    const logOut = async () => {
+        try {
+          await auth.signOut()
+          router.push('/teachers/teacher-login')
+        } catch (error) {
+          router.push('/teachers/teacher-login')
+        }
+      }
+    
     return (
         <>
         <Today />
-        <p>MsEクラブ（ここにログインした人が所属する学童名が入る予定）</p>
-        <p>☆❤△先生のMYページ（ここにログインした人のnameが入る予定）</p>
+          <button className="btn" onClick={logOut}>Logout</button>
         </>
     );
-}
+  }
