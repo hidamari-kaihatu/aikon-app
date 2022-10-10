@@ -6,6 +6,11 @@ import Layout from './admin-layout';
 import { auth } from '../../firebaseConfig'
 import type { NextPage } from 'next'
 
+import AddCircleTwoToneIcon from '@mui/icons-material/AddCircleTwoTone';
+import LinkTwoToneIcon from '@mui/icons-material/LinkTwoTone';
+import SupervisorAccountTwoToneIcon from '@mui/icons-material/SupervisorAccountTwoTone';
+import MapsHomeWorkTwoToneIcon from '@mui/icons-material/MapsHomeWorkTwoTone';
+
 interface staffObj {
   [key: string]: Array<Arr>
 }
@@ -41,19 +46,23 @@ const adminHome: NextPage = (staffs: staffObj) => {
 
   return (
     <Layout>
-      <h3>管理者HOME</h3>
-      <div>
+{/*       <h3>管理者HOME</h3> */}
+<div>
         <div>
-          <button onClick={() => Router.push('/admin/admin-centerList', '/admin/admin-centerList', { shallow: true})}>施設一覧</button>
+          <button className='buttona1' onClick={() => Router.push('/admin/admin-centerList', '/admin/admin-centerList', { shallow: true})}><MapsHomeWorkTwoToneIcon
+          style={{color: "white" , fontSize: 64 }}/></button><p className='pa1'>学童施設一覧</p>
         </div>
         <div>
-          <button onClick={() => Router.push('/admin/admin-yeacherList', '/admin/admin-teacherList', { shallow: true})}>職員一覧</button> 
+          <button className='buttona2' onClick={() => Router.push('/admin/admin-yeacherList', '/admin/admin-teacherList', { shallow: true})}><SupervisorAccountTwoToneIcon
+          style={{color: "white" , fontSize: 64 }}/></button><p className='pa2'>職員一覧</p>
         </div>
         <div>
-          <button onClick={() => Router.push('/admin/url', '/admin/url', { shallow: true})}>URL</button> 
+          <button className='buttona3' onClick={() => Router.push('/admin/url', '/admin/url', { shallow: true})}><LinkTwoToneIcon
+          style={{color: "white" , fontSize: 64 }}/></button><p className='pa3'>URL</p>
         </div>
-        <div>
-          <button onClick={() => Router.push('/admin/admin-newer', '/admin/admin-newer', { shallow: true})}>新規施設登録</button>         
+        <div>      
+          <button className='buttona4' onClick={() => Router.push('https://forms.gle/UWVFgSBWAFJT271M9', 'https://forms.gle/UWVFgSBWAFJT271M9',{ shallow: true})}><AddCircleTwoToneIcon
+          style={{color: "white" , fontSize: 64 }}/></button><p className='pa4'>新規施設登録</p>        
         </div>
       </div>
       <div>
