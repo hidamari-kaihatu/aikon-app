@@ -31,8 +31,18 @@ const StudentGet = ({data, staffs}:any) => {
 //dailyReportはstudent_idしかgetできないので、その情報をもとに、studentテーブルに行きstudent_idとcenter_idを照合する必要がある。　→dailyReportsにcenter_idつけて、それを先生のcenter_idと照合
 // console.log(data)
 // console.log(staffs)
+const today = new Date();
+const year = today.getFullYear()
+const month = today.getMonth() + 1
+const day = today.getDate()
+const schoolDay = [year, month, day];
+// console.log(schoolDay)
+const todaySchool = schoolDay.join("-");
+// console.log(todaySchool)
+
 const info = data
-.filter(obj =>obj.Center_id  === staffs[0].Center_id)//idでふるいにかける
+.filter(obj =>obj.Center_id  === staffs[0].Center_id)//idでふるいにかける ＋日付のfilter
+.filter(obj =>obj.Date === todaySchool)
 // {console.log(info)}
 // const newInfo
 // .filter(obj =>obj.Center_id === staffs[0].CenterName )//学童名でふるいにかける
@@ -51,7 +61,7 @@ return (
         <tr>
           <th>No.</th>
           <th>日付</th>
-          <th>Student_ID</th>
+          <th>名前</th>
           <th>出欠</th>
           <th>体温</th>
           <th>お迎えの人</th>
@@ -66,7 +76,7 @@ return (
                   <tr  key={item}>
                    <td>{counter()}</td>
                    <td>{item.Date}</td>
-                   <td>{item.Student_id}</td>
+                   <td>{item.Student_name}</td>
                    <td>{chanteAttendType(item.Attend)}</td>
                    <td>{item.Temperature}</td>
                    <td>{item.SomeoneToPickUp}</td>

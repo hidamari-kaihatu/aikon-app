@@ -51,8 +51,8 @@ export default function dailyReportPost(students:any) {
         e.preventDefault();
         const data = {
             "Date":formatted,
-            "Student_id":studentId,
-            "Attend":JSON.parse(attend),
+            "Student_id":Number(studentId),
+            "Attend":Number(attend),
             "Temperature":String(temperature),
             "SomeoneToPickUp":someToPickup,
             "TimeToPickUp":timeToPickup,
@@ -65,7 +65,7 @@ export default function dailyReportPost(students:any) {
         .catch((error) => {
           console.log(error);
         });
-        window.location.reload()
+        // window.location.reload()
       }
 
     return(
@@ -79,8 +79,8 @@ export default function dailyReportPost(students:any) {
             <label className="sisetsu">出欠: </label>
             <select value={attend} onChange={(e) => setattend(e.target.value)}>
                 <option value="A">出欠</option>
-                <option value={"true"}>学童に行きます</option>
-                <option value={"false"}>学童に行きません</option>
+                <option value={1}>学童に行きます</option>
+                <option value={0}>学童に行きません</option>
             </select>
             <br></br>
             <br></br>
