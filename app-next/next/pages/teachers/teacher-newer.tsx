@@ -5,6 +5,7 @@ import axios from "axios";
 import { Axios } from '../../lib/api';
 // staffテーブル情報Get
 export async function getServerSideProps() {
+  // APIの変更(staffsGet→getAllstaffs)
     const res = await axios.get(`${process.env.API}/staffsGet`, {
     });
     const data = await res.data;
