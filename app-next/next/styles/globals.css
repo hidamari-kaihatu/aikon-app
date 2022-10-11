@@ -28,6 +28,67 @@ a {
   margin: auto;
 }
 
+.inoutblueback{
+  display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 32px 48px;
+gap: 8px;
+
+position: absolute;
+width: 672px;
+height: auto;
+left: 564px;
+top: 128px;
+
+/* BLU */
+
+background: #2A4FB9;
+border-radius: 32px;
+}
+
+.inoutsearchblueback{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 48px;
+  gap: 8px;
+  
+  position: absolute;
+  width: 672px;
+  height: auto;
+  left: 564px;
+  top: 300px;
+  
+  /* BLU */
+  
+  background: #2A4FB9;
+  border-radius: 32px;
+}
+
+.inoutoutput {
+  display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 32px 48px;
+gap: 8px;
+margin-top: 32px;
+position: absolute;
+width: 672px;
+height: 208px;
+left: 564px;
+top: 544px;
+
+/* BLU */
+
+background: #2A4FB9;
+border-radius: 32px;
+}
+
+
 
 .teacher-left {
   position: absolute;
@@ -635,7 +696,7 @@ font-size: 14px;
 
 .sendmsg {
   width: 424px;
-height: 120px;
+height: auto;
 background: #FFFFFF;
 border-radius: 4px;
 flex: none;
@@ -1839,19 +1900,19 @@ border-radius: 32px;
   }
   .youkoso111{
     position: absolute;
-    width: 334px;
+    width: 349px;
     height: 32px;
     left: 250px;
     top: 169px;
-  font-family: 'Hiragino Maru Gothic Pro';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 32px;
-  display: flex;
-  align-items: center;
-  text-align: center;
-  color: #000000;
+    font-family: 'Hiragino Maru Gothic Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 32px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #000000;
     }
   .teacherloginback{
     position: absolute;
@@ -2230,6 +2291,55 @@ top: 212px;
 
 background: #2A4FB9;
 border-radius: 32px;
+  }
+  .inoutstaffname{
+    display: none;
+  }
+  .inoutblueback{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 32px 48px;
+    gap: 8px;
+    
+    position: absolute;
+    width: 640px;
+    height: auto;
+    left: 128px;
+    top: 212px;
+    background: #2A4FB9;
+    border-radius: 32px;
+  }
+  .inoutsearchblueback{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 32px 48px;
+    gap: 8px;
+    position: absolute;
+    width: 640px;
+    height: auto;
+    left: 128px;
+    top: 512px;
+    background: #2A4FB9;
+    border-radius: 32px;
+  }
+  .inoutoutput{
+    display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 48px;
+  gap: 8px;
+  position: absolute;
+  width: 640px;
+  height: auto;
+  left: 128px;
+  top: 700px;
+  background: #2A4FB9;
+  border-radius: 32px;
   }
 }
 

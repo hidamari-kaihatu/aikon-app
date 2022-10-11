@@ -12,9 +12,10 @@ export default function Mypage({students, staffs}:any) {
     return (
       <>
       <div className='center'>
-      <h2 className='center'>子どもの入退室</h2>
-      <h3>検索</h3><input type="text" value={searchWord} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchWord(e.currentTarget.value)}/>
-      <h3 >検索結果</h3>
+{/*       <h2 className='center'>子どもの入退室</h2> */}
+<div className='inoutblueback'>
+      <h3>検索</h3><input type="text" value={searchWord} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchWord(e.currentTarget.value)}/></div>
+      <div className='inoutsearchblueback'><h3 >検索結果</h3>
       {
         inOutData.map(data => {
           if(searchWord === ""){
@@ -22,19 +23,20 @@ export default function Mypage({students, staffs}:any) {
           }
           else if(((data.Name).includes(searchWord)) || (data.Datetime).includes(searchWord)){
             return (
-              <>
+              <div>
               {data.Name}<span> :  </span>
               {data.Datetime}<br></br>
-              </>
+              </div>
             )
             }else{
               return 
             }
           })
       }
+</div>
       </div>
       <Layout>
-        <div>
+        <div className='inoutoutput'>
           {inOutData.map((inOut, i) => {
             return (
               <div key={i} className='center'>
@@ -43,12 +45,12 @@ export default function Mypage({students, staffs}:any) {
               </div>
             )
           })}
-          <div>
+                  </div>
+          <div className='inoutstaffname'>
             {staffs[0].CenterName}
             <br></br>
             {staffs[0].Name}
           </div>
-        </div>
         </Layout>
       </>
     );
@@ -72,3 +74,4 @@ export async function getServerSideProps() {
       },
   };
 }
+
