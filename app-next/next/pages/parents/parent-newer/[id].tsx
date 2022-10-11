@@ -90,7 +90,7 @@ export default function App() {
       "ContactTell":data.tell,
       "Email":data.email,
       "Grade":grade,
-      "Status":true//これがないと、statusがfalseでDBに入る。
+      "Status":1
     }
     
     Axios.post(`api/proxy/studentPost`, postData)
