@@ -163,7 +163,7 @@ type Inputs = {
           </span><br></br>
       <span style={{'color': 'red', 'fontSize': 'small'}}>{errors.confirmPassword?.message}</span><br></br>
 
-      <input type="submit" />
+      <input className="orangebutton" type="submit" />
       <p style={{'fontSize': 'small'}}>会員登録には、<Link href='../all/all-termsOfService'><a>利用規約</a></Link >と<Link href='../all/all-privacyPolicy'><a>プライバシーポリシーへ</a></Link>の同意が必要です。</p>
 
     </div>

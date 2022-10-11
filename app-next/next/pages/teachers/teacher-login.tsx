@@ -72,7 +72,7 @@ const Login: FC = () => {
           />
         </div>
         <br></br>
-        <button type="submit">
+        <button type="submit" className='orangebutton'>
           ログイン
         </button>
         <br></br>
