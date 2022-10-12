@@ -17,7 +17,6 @@ export async function getServerSideProps() {
     },
   };
 }
-
 //ここに絞り込みの.filter(取得したteacher messageのうち、自分（保護者）の子供のstudent_idのものだけを抜き出す処理。)を書く。
 
 export default function mypage({ data, students }: any) {
@@ -27,7 +26,7 @@ export default function mypage({ data, students }: any) {
         {/*         <h2>学童からの連絡一覧</h2> */}
         <p className='fromcentertitle'>学童からの連絡を見る</p>
         <div className='msgblueback'>
-          {data.map((d) => (
+          {data.reverse().map((d) => (
             <div className='sendmsg'>
               <ul key={d.Id}>
                 日付: {d.Datetime}<br /><br />メッセージ: {d.Message}<br /><br />
