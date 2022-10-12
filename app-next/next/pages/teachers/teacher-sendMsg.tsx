@@ -90,7 +90,7 @@ function Output({data, staffs}:any) {
       <div className="tosend">
         <br></br>
       <label>誰へ送る: </label>
-      <select value={toPerson} onChange={(e) => settoPerson(e.target.value)}>
+      <select className="inputnewer" value={toPerson} onChange={(e) => settoPerson(e.target.value)}>
         <option value="A">生徒の名前</option>
         {infos.map(((info:any, i: number) => {
           return (
@@ -114,7 +114,7 @@ function Output({data, staffs}:any) {
       <br></br>
       <br></br>
       </div>
-      <button className="sendmsgbutton" onClick={submit}>送信する!</button> 
+      <button className="sendmsgbutton" onClick={submit}>送信</button> 
     </div>
     <div className="centername">
     {staffs[0].CenterName}
