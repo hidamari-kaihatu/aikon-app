@@ -67,7 +67,7 @@ return (
             <td>{item.ContactTell}</td>
             <td>{item.Email}</td>
             <td>{item.Status.toString()}</td>
-            <td> <button onClick = {() => {liftButton(item.Id)}}>除籍</button></td>
+            <td> <button className="support" onClick = {() => {liftButton(item.Id)}}>除籍</button></td>
             </tr>
             </>   
           )
