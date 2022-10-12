@@ -130,29 +130,34 @@ export default function App() {
         <h3></h3>
       </div>
       <div className="centerblack2">
-       <h3>新規登録</h3>
-      名前<span style={{'color': 'red', 'fontSize': 'small'}}> ※必須</span><br></br>
+       <p className="pareshinki">新規登録</p>
+       <div className="leftname">
+      <p className="tourokuname">名前<span style={{'color': 'red', 'fontSize': 'small','fontFamily': 'Hiragino Maru Gothic St'}}>  ※必須</span><br></br></p>
       <input 
+      className="inputnewer"
         type='text'
         placeholder='全角文字で入力'
         {...register("name")} /><br></br>
-      <span style={{'color': 'red', 'fontSize': 'small'}}>{errors.name?.message}</span><br></br>
+      <span style={{'color': 'red', 'fontSize': 'small', 'fontFamily': 'Hiragino Maru Gothic St'}}>{errors.name?.message}</span><br></br>
 
-      学年<span style={{'color': 'red', 'fontSize': 'small'}}> ※必須</span><br></br>
+      <p className="tourokuname">学年<span style={{'color': 'red', 'fontSize': 'small', 'fontFamily': 'Hiragino Maru Gothic St'}}> ※必須</span><br></br></p>
       <input 
+      className="inputnewer"
         type='text'
         placeholder='例）1'
         {...register("grade")} /><br></br>
-      <span style={{'color': 'red', 'fontSize': 'small'}}>{errors.grade?.message}</span><br></br>
-      メールアドレス<span style={{'color': 'red', 'fontSize': 'small'}}> ※必須</span><br></br>
+      <span style={{'color': 'red', 'fontSize': 'small','fontFamily': 'Hiragino Maru Gothic St'}}>{errors.grade?.message}</span><br></br>
+      <p className="tourokuname">メールアドレス<span style={{'color': 'red', 'fontSize': 'small', 'fontFamily': 'Hiragino Maru Gothic St'}}> ※必須</span><br></br></p>
       <input 
+      className="inputnewer"
         type="email"
         placeholder='mail@example.com' 
         {...register("email")} /><br></br>
-      <span style={{'color': 'red', 'fontSize': 'small'}}>{errors.email?.message}</span><br></br>
+      <span style={{'color': 'red', 'fontSize': 'small', 'fontFamily': 'Hiragino Maru Gothic St'}}>{errors.email?.message}</span><br></br>
       
-      パスワード<span style={{'color': 'red', 'fontSize': 'small'}}> ※必須</span><br></br>
+      <p className="tourokuname">パスワード<span style={{'color': 'red', 'fontSize': 'small', 'fontFamily': 'Hiragino Maru Gothic St'}}> ※必須</span><br></br></p>
       <input 
+       className="inputnewerpass"
         placeholder="半角英数字で８文字以上"
         {...register('password')}
         type={isRevealPassword ? 'text' : 'password'}
@@ -160,18 +165,19 @@ export default function App() {
       <span
 	          onClick={togglePassword}
             role="presentation"
-            style={{'color': 'black','fontSize': 'small'}}
+            style={{'color': 'black','fontSize': 'small', 'fontFamily': 'Hiragino Maru Gothic St'}}
             >
                 {isRevealPassword ? (
-            <button> <FontAwesomeIcon icon={faEye} /></button>
+            <button className="inputnewereye"> <FontAwesomeIcon icon={faEye} /></button>
              ) : (
-              <button> <FontAwesomeIcon icon={faEyeSlash} /></button>
+              <button className="inputnewereye"> <FontAwesomeIcon icon={faEyeSlash} /></button>
                )}
           </span><br></br>
-      <span style={{'color': 'red', 'fontSize': 'small'}}>{errors.password?.message}</span><br></br>
+      <span style={{'color': 'red', 'fontSize': 'small', 'fontFamily': 'Hiragino Maru Gothic St'}}>{errors.password?.message}</span><br></br>
       
-      パスワード確認<span style={{'color': 'red', 'fontSize': 'small'}}> ※必須</span><br></br>
+      <p className="tourokuname">パスワード確認<span style={{'color': 'red', 'fontSize': 'small', 'fontFamily': 'Hiragino Maru Gothic St'}}> ※必須</span><br></br></p>
       <input 
+       className="inputnewerpass"
         placeholder="半角英数字で８文字以上"
         {...register('confirmPassword')}
         type={isRevealRe_Password ? 'text' : 'password'}
@@ -179,25 +185,27 @@ export default function App() {
       <span
 	          onClick={toggleRe_Password}
             role="presentation"
-            style={{'color': 'black', 'fontSize': 'small'}}
+            style={{'color': 'black', 'fontSize': 'small', 'fontFamily': 'Hiragino Maru Gothic St'}}
             >
            {isRevealRe_Password ? (
-             <button><FontAwesomeIcon icon={faEye} /></button>
+             <button className="inputnewereye"><FontAwesomeIcon icon={faEye} /></button>
              ) : (
-               <button><FontAwesomeIcon icon={faEyeSlash} /></button>
+               <button className="inputnewereye"><FontAwesomeIcon icon={faEyeSlash} /></button>
                )}
           </span><br></br>
-      <span style={{'color': 'red', 'fontSize': 'small'}}>{errors.confirmPassword?.message}</span><br></br>
+      <span style={{'color': 'red', 'fontSize': 'small', 'fontFamily': 'Hiragino Maru Gothic St'}}>{errors.confirmPassword?.message}</span><br></br>
 
-      緊急連絡先<span style={{'color': 'red', 'fontSize': 'small'}}> ※必須</span><br></br>
+      <p className="tourokuname">緊急連絡先<span style={{'color': 'red', 'fontSize': 'small', 'fontFamily': 'Hiragino Maru Gothic St'}}> ※必須</span><br></br></p>
       <input 
+      className="inputnewer"
         type="tell"
         placeholder='090-1111-2222' 
         {...register("tell")} /><br></br>
-      <span style={{'color': 'red', 'fontSize': 'small'}}>{errors.tell?.message}</span><br></br>
+      <span style={{'color': 'red', 'fontSize': 'small', 'fontFamily': 'Hiragino Maru Gothic St'}}>{errors.tell?.message}</span><br></br>
+      </div>
       <input className="orangebutton" type="submit" />
-      <p style={{'fontSize': 'small'}}>会員登録には、<Link href='../all/all-termsOfService'><a>利用規約</a></Link >と<Link href='../all/all-privacyPolicy'><a>プライバシーポリシーへ</a></Link>の同意が必要です。</p>
-
+       <p className="riyoupa" style={{'fontSize': 'small'}}>会員登録には、<Link href='../all/all-termsOfService'><a>利用規約</a></Link >と<Link href='../all/all-privacyPolicy'><a>プライバシーポリシーへ</a></Link>の同意が必要です。</p> 
+    
     </div>
     </form>
   );

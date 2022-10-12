@@ -75,7 +75,7 @@ const List: NextPage = (students: studentObj) => {
 
   return (
     <>
-    <div>
+    <div className='nyusitsu'>
       入室：{checkStudentIn()}
       <br></br>
       退室：{checkStudentOut()}
@@ -85,7 +85,7 @@ const List: NextPage = (students: studentObj) => {
       <div className='myname'>
             {students.students.map((d:any, i:number) => {
             return (
-                <div key={i}>
+                <div className='namecenter' key={i}>
                   {d.CenterName}
                   <br></br>
                   {d.Name}
