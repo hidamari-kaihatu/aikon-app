@@ -1,9 +1,9 @@
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+/*   padding: 0;
+  margin: 0; */
+  font-family: Hiragino Maru Gothic Std;
+   background-color:#E8E1DE; 
 }
 
 a {
@@ -13,7 +13,7 @@ a {
 
 * {
   box-sizing: border-box;
-}
+} */
 
 @media (prefers-color-scheme: dark) {
   html {
@@ -28,13 +28,2325 @@ a {
   margin: auto;
 }
 
+.inoutblueback{
+  display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 32px 48px;
+gap: 8px;
+
+position: absolute;
+width: 672px;
+height: auto;
+left: 564px;
+top: 128px;
+
+/* BLU */
+
+background: #2A4FB9;
+border-radius: 32px;
+}
+
+.inoutsearchblueback{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 48px;
+  gap: 8px;
+  
+  position: absolute;
+  width: 672px;
+  height: auto;
+  left: 564px;
+  top: 300px;
+  
+  /* BLU */
+  
+  background: #2A4FB9;
+  border-radius: 32px;
+}
+
+.inoutoutput {
+  display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 32px 48px;
+gap: 8px;
+margin-top: 32px;
+position: absolute;
+width: 672px;
+height: auto;
+left: 564px;
+top: 544px;
+
+/* BLU */
+
+background: #2A4FB9;
+border-radius: 32px;
+}
+
+
+
+.teacher-left {
+  position: absolute;
+  width: 288px;
+  height: 982px;
+  left: 0px;
+  top: 0px;
+  background: #E3DCD9;
+}
+
+@media screen and (max-width: 480px) {
+	/* 480px以下に適用されるCSS（スマホ用） */
+
+}
+
+.button {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  left: 527px;
+  top: 144px;
+  background: #D75024;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;}
+
+.button2 {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  left: 527px;
+  top: 384px;
+  background: #D75024;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+}
+
+.button3 {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  left: 815px;
+  top: 144px;
+  background: #D75024;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+}
+
+.button4 {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  left: 815px;
+  top: 384px;
+  background: #D75024;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+}
+
+.button5 {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  left: 1103px;
+  top: 144px;
+  background: #D75024;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+}
+
+.button6 {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  left: 1103px;
+  top: 384px;
+  background: #D75024;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+}
+
+.p1 {
+  position: absolute;
+  width: 200px;
+  height: 32px;
+  left: 507px;
+  top: 312px;
+  font-family: 'Hiragino Maru Gothic Std';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 32px;
+  display: flex;
+  align-items: center;
+  color: #333333;
+}
+
+.p2 {
+  position: absolute;
+  width: 180px;
+  height: 32px;
+  left: 517px;
+  top: 552px;
+  font-family: 'Hiragino Maru Gothic Std';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 32px;
+  display: flex;
+  align-items: center;
+  color: #4C4C4C;
+}
+
+.p3 {
+  position: absolute;
+  width: 160px;
+  height: 32px;
+  left: 811px;
+  top: 312px;
+  font-family: 'Hiragino Maru Gothic Std';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 32px;
+  display: flex;
+  align-items: center; 
+  color: #182222;
+}
+
+.p4 {
+  position: absolute;
+  width: 160px;
+  height: 32px;
+  left: 815px;
+  top: 552px;
+  font-family: 'Hiragino Maru Gothic Std';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 32px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #182222;
+}
+
+.p5 {
+  position: absolute;
+  width: 220px;
+  height: 32px;
+  left: 1073px;
+  top: 312px;
+  font-family: 'Hiragino Maru Gothic Std';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 32px; 
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #182222;
+}
+
+.p6 {
+  position: absolute;
+  width: 220px;
+  height: 32px;
+  left: 1073px;
+  top: 552px;
+  font-family: 'Hiragino Maru Gothic Std';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 32px;
+  display: flex;
+  align-items: center;
+  color: #182222;
+}
+
+
+.mse {
+position: absolute;
+width: 72px;
+height: 24px;
+left: 96px;
+top: 918px;
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 24px;
+color: #252525;
+}
+
+.today {
+  position: absolute;
+  width: 103px;
+  height: 24px;
+  left: 44px;
+  top: 878px;
+  font-family: 'Hiragino Maru Gothic Std';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  text-align: right;
+  color: #252525;
+}
+
+.a1 {
+  position:absolute;
+  width: 140px;
+  height: 24px;
+  left: 56px;
+  top: 292px;
+  font-family: 'Hiragino Maru Gothic Std';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  color: #182222;
+}
+
+.a2 {
+  position:absolute;
+  width: 126px;
+  height: 22px;
+  left: 56px;
+  top: 349px;
+  font-family: 'Hiragino Maru Gothic Std';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 160%;
+  display: flex;
+  align-items: center;
+  color: #182222;
+}
+
+.a3 {
+  position:absolute;
+  width: 126px;
+  height: 22px;
+  left: 56px;
+  top: 463px;
+  
+  font-family: 'Hiragino Maru Gothic Std';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 160%;
+  /* または22px */
+  
+  display: flex;
+  align-items: center;
+  
+  /* BLK */
+  
+  color: #182222;
+}
+
+.a4 {
+  position:absolute;
+  width: 126px;
+  height: 22px;
+  left: 56px;
+  top: 516px;
+  
+  font-family: 'Hiragino Maru Gothic Std';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 160%;
+  /* または22px */
+  
+  display: flex;
+  align-items: center;
+  
+  /* BLK */
+  
+  color: #182222;
+}
+
+.a5 {
+  position:absolute;
+  width: 126px;
+  height: 22px;
+  left: 56px;
+  top: 628px;
+  
+  font-family: 'Hiragino Maru Gothic Std';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 160%;
+  /* または22px */
+  
+  display: flex;
+  align-items: center;
+  
+  /* BLK */
+  
+  color: #182222;
+}
+
+.a6 {
+  position:absolute;
+  width: 126px;
+  height: 22px;
+  left: 56px;
+  top: 684px;
+  
+  font-family: 'Hiragino Maru Gothic Std';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 171%;
+  /* または22px */
+  
+  display: flex;
+  align-items: center;
+  
+  /* BLK */
+  
+  color: #182222;
+}
+
+.zidou {
+  position: absolute;
+width: 30px;
+height: 24px;
+left: 40px;
+top: 236px;
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 15px;
+line-height: 24px;
+/* ボックスの高さと同一、または160% */
+
+display: flex;
+align-items: center;
+
+/* BLK */
+
+color: #182222;
+}
+
+.msg {
+  position: absolute;
+width: 75px;
+height: 24px;
+left: 40px;
+top: 404px;
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 15px;
+line-height: 160%;
+/* ボックスの高さと同一、または24px */
+
+display: flex;
+align-items: center;
+
+/* BLK */
+
+color: #182222;
+}
+
+.inout {
+  position: absolute;
+width: 75px;
+height: 24px;
+left: 40px;
+top: 572px;
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 15px;
+line-height: 160%;
+/* ボックスの高さと同一、または24px */
+
+display: flex;
+align-items: center;
+
+/* BLK */
+
+color: #182222;
+}
+
+.home {
+  position: absolute;
+  width: 42px;
+  height: 24px;
+  left: 40px;
+  top: 156px;
+  
+  font-family: 'Hiragino Maru Gothic Std';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 24px;
+  /* ボックスの高さと同一、または171% */
+  
+  display: flex;
+  align-items: center;
+  
+  /* BLK */
+  
+  color: #182222;
+  
+}
+
+.smagaku {
+  position: absolute;
+  width: 175px;
+  height: 32px;
+  left: 40px;
+  top: 40px;
+  
+  font-family: 'Hiragino Maru Gothic Std';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 160%;
+  /* ボックスの高さと同一、または32px */
+  
+  display: flex;
+  align-items: center;
+  text-align: center;
+  
+  /* BLK */
+  
+  color: #182222;
+}
+
+.teaname {
+  position: absolute;
+width: 47px;
+height: 24px;
+left:94px;
+top: 962px;
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 24px;
+/* ボックスの高さと同一、または171% */
+
+
+/* Black/90 */
+
+color: #252525;
+
+}
+
+.blueback {
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 32px 48px 40px;
+  gap: 16px;
+  
+  position: absolute;
+  width: 960px;
+  height: auto;
+  left: 420px;
+  top: 144px;
+  
+  /* BLU */
+  
+  background: #2A4FB9;
+  border-radius: 32px;
+}
+
+.blueback2 {
+  display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 32px 48px;
+gap: 8px;
+
+position: absolute;
+width: 1120px;
+height: auto;
+left: 340px;
+top: 144px;
+
+/* BLU */
+
+background: #2A4FB9;
+border-radius: 32px;
+}
+
+
+.blueback3 {
+  position: absolute;
+width: 690px;
+height: 120px;
+left: 555px;
+top: 144px;
+
+/* BLU */
+
+background: #2A4FB9;
+border-radius: 32px;
+}
+
+.blueback4 {
+  position: absolute;
+  width: 690px;
+  height: 352px;
+  left: 555px;
+  top: 304px;
+  
+  /* BLU */
+  
+  background: #2A4FB9;
+  border-radius: 32px;
+}
+
+.outputsend{
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  left: 860px;
+  top: 680px;
+  background: #D75024;
+  box-shadow: 0px 1.66581px 1.11054px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.mic {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  left: 241px;
+  top: 208px;
+
+  /* ORG */
+
+  background: #D75024;
+  box-shadow: 0px 1.66581px 1.11054px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.send{
+  position: absolute;
+  width: 96px;
+  height: 16px;
+  left: 852px;
+  top: 768px;
+
+  /* ヒラギノ丸ゴCaption */
+
+  font-family: 'Hiragino Maru Gothic Pro';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  /* ボックスの高さと同一、または133% */
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  /* BLK */
+
+  color: #182222;
+
+}
+
 table {
   border-collapse: collapse;
-  border: solid 2px black;
+  border: solid 2px rgb(18, 3, 101);
 }
 
-table th,
+table th{
+  border: solid 1px black;
+text-align: center;
+background: #D1D1D1;
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+}
+
 table td {
   border: solid 1px black;
+text-align: center;
+background-color: white;
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+}
+
+.sendmsg {
+  width: 424px;
+height: auto;
+background: #FFFFFF;
+border-radius: 4px;
+flex: none;
+order: 1;
+flex-grow: 0;
+font-family: 'Hiragino Maru Gothic Pro';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 24px;
+}
+
+@media screen and (max-width: 480px) {
+	/* 480px以下に適用されるCSS（スマホ用） */
+ .sendmsg{ width: 286px;
+height: 160px;
+background: #FFFFFF;
+border-radius: 4px;
+flex: none;
+order: 0;
+flex-grow: 0;
+ }
+}
+
+
+.msgblueback {
+  display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 32px 48px;
+gap: 24px;
+
+position: absolute;
+width: 520px;
+height: auto;
+left: 640px;
+top: 144px;
+
+/* BLU */
+
+background: #2A4FB9;
+border-radius: 32px;
+}
+
+
+@media screen and (max-width: 480px) {
+	/* 480px以下に適用されるCSS（スマホ用） */
+  .msgblueback{
+    display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 32px 20px;
+gap: 24px;
+
+position: absolute;
+width: 350px;
+height: auto;
+left: 20px;
+top: 184px;
+
+/* BLU */
+
+background: #2A4FB9;
+border-radius: 32px;
+  }
+}
+
+
+.parent-left {
+  position: absolute;
+  width: 288px;
+  height: 982px;
+  left: 0px;
+  top: 0px;
+
+  background: #E3DCD9;
+}
+
+.adminHome {
+  position: absolute;
+width: 42px;
+height: 24px;
+left: 40px;
+top: 156px;
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 24px;
+/* ボックスの高さと同一、または171% */
+
+display: flex;
+align-items: center;
+
+/* BLK */
+
+color: #182222;
+}
+
+.adminCentermypage {
+  position: absolute;
+  width: 84px;
+  height: 24px;
+  left: 40px;
+  top: 236px;
+  
+  font-family: 'Hiragino Maru Gothic Std';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 24px;
+  /* ボックスの高さと同一、または171% */
+  
+  display: flex;
+  align-items: center;
+  
+  /* BLK */
+  
+  color: #182222;
+}
+
+.adminstaffmypage {
+  position: absolute;
+width: 56px;
+height: 24px;
+left: 40px;
+top: 292px;
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 24px;
+/* ボックスの高さと同一、または171% */
+
+display: flex;
+align-items: center;
+
+/* BLK */
+
+color: #182222;
+}
+
+.adminurlmypage {
+  position: absolute;
+width: 30px;
+height: 24px;
+left: 40px;
+top: 348px;
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 24px;
+/* ボックスの高さと同一、または171% */
+
+display: flex;
+align-items: center;
+
+/* BLK */
+
+color: #182222;
+}
+
+.adminnewmypage{
+  position: absolute;
+  width: 84px;
+  height: 24px;
+  left: 40px;
+  top: 404px;
+  
+  font-family: 'Hiragino Maru Gothic Std';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  /* ボックスの高さと同一、または171% */
+  
+  display: flex;
+  align-items: center;
+  
+  /* BLK */
+  
+  color: #182222; 
+}
+
+.center {
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.admintoday{
+  position: absolute;
+  width: 140px;
+  height: 24px;
+  left: 0px;
+  top: 688px;
+
+  font-family: 'Hiragino Maru Gothic Std';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  /* ボックスの高さとpx同一、または171% */
+
+  text-align: right;
+
+  /* Black/90 */
+
+  color: #252525;
 
 }
+
+
+.urlback1 {
+  display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 32px 48px 40px;
+gap: 16px;
+position: absolute;
+width: 960px;
+height: 239px;
+left: 420px;
+top: 72px;
+background: #2A4FB9;
+border-radius: 32px;
+}
+
+.urlback2 {
+  display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 32px 48px 40px;
+gap: 16px;
+position: absolute;
+width: 960px;
+height: auto;
+left: 420px;
+top: 352px;
+background: #2A4FB9;
+border-radius: 32px;
+}
+
+.urlback3 {
+  display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 32px 48px 40px;
+gap: 16px;
+position: absolute;
+width: 960px;
+height: auto;
+left: 420px;
+top: 704px;
+background: #2A4FB9;
+border-radius: 32px;
+}
+
+.adminleft {
+  position: fixed;
+  width: 288px;
+  height: 982px;
+  left: 0px;
+  top: 0px;
+  background: rgba(227, 220, 217, 0.98); 
+}
+
+
+@media screen and (max-width: 480px) {
+	/* 480px以下に適用されるCSS（スマホ用） */
+  .adminleft{
+    display: none;
+  }
+}
+
+.adminhomeborder {
+  position: absolute;
+  width: 240px;
+  height: 0px;
+  left: 24px;
+  top: 196px;
+  border: 1px solid #828282;
+}
+
+.parenthome {
+  position: absolute;
+width: 42px;
+height: 24px;
+left: 40px;
+top: 116px;
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 24px;
+/* ボックスの高さと同一、または171% */
+
+display: flex;
+align-items: center;
+
+/* BLK */
+
+color: #182222;
+
+}
+
+.parenthomedaily {
+  position: absolute;
+width: 98px;
+height: 24px;
+left: 40px;
+top: 196px;
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 24px;
+/* ボックスの高さと同一、または171% */
+
+display: flex;
+align-items: center;
+
+/* BLK */
+
+color: #182222;
+}
+
+.parenthomecenter {
+  position: absolute;
+width: 140px;
+height: 24px;
+left: 40px;
+top: 252px;
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 14px;
+line-height: 24px;
+/* ボックスの高さと同一、または171% */
+
+display: flex;
+align-items: center;
+
+/* BLK */
+
+color: #182222;
+
+}
+
+.parenthomeborder {
+  position: absolute;
+width: 240px;
+height: 0px;
+left: 24px;
+top: 156px;
+
+/* Gray 3 */
+
+border: 1px solid #828282;
+}
+
+.buttonp1 {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  left: 684px;
+  top: 136px;
+  
+  /* ORG */
+  
+  background: #D75024;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+}
+.buttonp2 {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  left: 972px;
+  top: 136px;
+  
+  /* ORG */
+  
+  background: #D75024;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+}
+
+.pp1 {
+  position: absolute;
+width: 140px;
+height: 32px;
+left: 694px;
+top: 304px;
+
+/* ヒラギノ丸ゴH2 */
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 32px;
+/* ボックスの高さと同一、または160% */
+
+display: flex;
+align-items: center;
+
+/* Gray 1 */
+
+color: #333333;
+}
+
+.pp2 {
+  position: absolute;
+width: 200px;
+height: 32px;
+left: 952px;
+top: 304px;
+
+/* ヒラギノ丸ゴH2 */
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 32px;
+/* ボックスの高さと同一、または160% */
+
+display: flex;
+align-items: center;
+
+color: #182222;
+}
+
+.buttona1 {
+  position: absolute;
+width: 160px;
+height: 160px;
+left: 484px;
+top: 146px;
+
+background: #D35027;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+border-radius: 16px;
+}
+
+.buttona2 {
+  position: absolute;
+width: 160px;
+height: 160px;
+left: 708px;
+top: 146px;
+
+background: #D35027;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+border-radius: 16px;
+}
+
+.buttona3 {
+  position: absolute;
+width: 160px;
+height: 160px;
+left: 932px;
+top: 146px;
+
+background: #D35027;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+border-radius: 16px;
+}
+
+.buttona4 {
+  position: absolute;
+width: 160px;
+height: 160px;
+left: 1156px;
+top: 146px;
+
+background: #D35027;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+border-radius: 16px;
+}
+
+.pa1 {
+  position: absolute;
+width: 120px;
+height: 32px;
+left: 504px;
+top: 314px;
+
+/* ヒラギノ丸ゴH2 */
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 32px;
+/* ボックスの高さと同一、または160% */
+
+display: flex;
+align-items: center;
+text-align: center;
+
+/* Gray 1 */
+
+color: #333333;
+}
+
+.pa2 {
+  position: absolute;
+  width: 120px;
+  height: 32px;
+  left: 748px;
+  top: 314px;
+  
+  /* ヒラギノ丸ゴH2 */
+  
+  font-family: 'Hiragino Maru Gothic Std';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 32px;
+  /* ボックスの高さと同一、または160% */
+  
+  display: flex;
+  align-items: center;
+  text-align: center;
+  
+  /* Gray 1 */
+  
+  color: #333333; 
+}
+
+.pa3 {
+  position: absolute;
+  width: 43px;
+  height: 32px;
+  left: 987px;
+  top: 314px;
+  
+  /* ヒラギノ丸ゴH2 */
+  
+  font-family: 'Hiragino Maru Gothic Std';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 32px;
+  /* ボックスの高さと同一、または160% */
+  
+  display: flex;
+  align-items: center;
+  text-align: center;
+  
+  color: #182222; 
+}
+
+.pa4 {
+  position: absolute;
+width: 120px;
+height: 32px;
+left: 1176px;
+top: 314px;
+
+/* ヒラギノ丸ゴH2 */
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 32px;
+/* ボックスの高さと同一、または160% */
+
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #182222;
+}
+
+.bluebackat {
+  display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 32px 40px 48px 48px;
+gap: 8px;
+
+position: absolute;
+width: 896px;
+height: auto;
+left: 452px;
+top: 145px;
+
+/* BLU */
+
+background: #2A4FB9;
+border-radius: 32px;
+}
+
+.bluebackat2 {
+  display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 32px 48px;
+gap: 8px;
+
+position: absolute;
+width: 896px;
+height: auto;
+left: 452px;
+top: 353px;
+
+/* BLU */
+
+background: #2A4FB9;
+border-radius: 32px;
+}
+
+.sisetsu {
+  color: #FFFFFF;
+}
+
+.bluebackat3 {
+  display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 32px 48px 40px;
+gap: 8px;
+
+position: absolute;
+width: 576px;
+height: 256px;
+left: 612px;
+top: 145px;
+
+/* BLU */
+
+background: #2A4FB9;
+border-radius: 32px;
+}
+
+.bluebackat4 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 48px 40px;
+  gap: 8px;
+
+  position: absolute;
+  width: 576px;
+  height: auto;
+  left: 612px;
+  top: 145px;
+
+  /* BLU */
+
+  background: #2A4FB9;
+  border-radius: 32px;
+}
+
+.bluebackpd {
+  display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 32px 48px 40px;
+gap: 24px;
+
+position: absolute;
+width: 384px;
+height: auto;
+left: 708px;
+top: 104px;
+
+/* BLU */
+
+background: #2A4FB9;
+border-radius: 32px;
+}
+
+.buttonpdsub{
+position: absolute;
+width: 80px;
+height: 80px;
+left: 860px;
+top: 496px;
+background: #D75024;
+box-shadow: 0px 1.66581px 1.11054px rgba(0, 0, 0, 0.1);
+border-radius: 8px;
+}
+
+.pdsub {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  left: 884px;
+  top: 568px;
+  
+  /* ヒラギノ丸ゴCaption */
+  
+  font-family: 'Hiragino Maru Gothic Pro';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 32px;
+  /* ボックスの高さと同一、または133% */
+  
+  display: flex;
+  align-items: center;
+  text-align: center;
+  
+  /* BLK */
+  
+  color: #182222;
+}
+
+
+.buttonpdlog {
+  position: absolute;
+  width: 80px;
+  height: 32px;
+  left: 160px;
+  top: 676px;
+  background: #f2f6fb;
+  box-shadow: 0px 1.66581px 1.11054px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.myname {
+
+  position: absolute;
+  width: 80px;
+  height: 32px;
+  left: 160px;
+  top: 676px;
+}
+
+.App {
+  text-align: center;
+}
+
+.centerblack {
+  color: black;
+  text-align: center;
+}
+
+.centerblack2 {
+  color: black;
+  text-align: center;
+  position: absolute;
+  width: 552px;
+  height: auto;
+  left: 480px;
+  top: 128px;
+  background: #F2F2F2;
+  border-radius: 32px;
+}
+
+.centerblack22 {
+  color: black;
+  text-align: center;
+  position: absolute;
+  width: 552px;
+  height: auto;
+  left: 480px;
+  top: 128px;
+  background: #F2F2F2;
+  border-radius: 32px;
+}
+
+.youkoso1 {
+  position: absolute;
+width: 349px;
+height: 32px;
+left: 582px;
+top: 48px;
+font-family: 'Hiragino Maru Gothic Pro';
+font-style: normal;
+font-weight: 400;
+font-size: 24px;
+line-height: 32px;
+display: flex;
+align-items: center;
+text-align: center;
+color: #000000;
+}
+
+.youkoso101 {
+  position: absolute;
+width: 349px;
+height: 32px;
+left: 582px;
+top: 48px;
+font-family: 'Hiragino Maru Gothic Pro';
+font-style: normal;
+font-weight: 400;
+font-size: 24px;
+line-height: 32px;
+display: flex;
+align-items: center;
+text-align: center;
+color: #000000;
+}
+
+
+.youkoso111 {
+  position: absolute;
+width: 349px;
+height: 32px;
+left: 582px;
+top: 48px;
+font-family: 'Hiragino Maru Gothic Pro';
+font-style: normal;
+font-weight: 400;
+font-size: 24px;
+line-height: 32px;
+display: flex;
+align-items: center;
+text-align: center;
+color: #000000;
+}
+
+
+.youkoso2 {
+  position: absolute;
+width: 349px;
+height: 32px;
+left: 582px;
+top: 48px;
+font-family: 'Hiragino Maru Gothic Pro';
+font-style: normal;
+font-weight: 400;
+font-size: 24px;
+line-height: 32px;
+display: flex;
+align-items: center;
+text-align: center;
+color: #000000;
+}
+
+
+.parentloginback {
+  position: absolute;
+width: 448px;
+height: auto;
+left: 532px;
+top: 160px;
+
+/* Gray 6 */
+
+background: #F2F2F2;
+border-radius: 32px;
+text-align: center;
+}
+
+.teacherloginback {
+  position: absolute;
+width: 448px;
+height: auto;
+left: 532px;
+top: 160px;
+
+/* Gray 6 */
+
+background: #F2F2F2;
+border-radius: 32px;
+text-align: center;
+}
+
+
+.tosend {
+  position: absolute;
+width: 690px;
+height: auto;
+left: 555px;
+top: 144px;
+
+/* BLU */
+
+background: #2A4FB9;
+border-radius: 32px;
+}
+
+.recording {
+  position: absolute;
+width: 690px;
+height: auto;
+left: 555px;
+top: 288px;
+
+/* BLU */
+
+background: #2A4FB9;
+border-radius: 32px;
+}
+
+.sendmsgbutton {
+  position: absolute;
+width: 80px;
+height: 80px;
+left: 860px;
+top: 536px;
+
+/* ORG */
+
+background: #D75024;
+box-shadow: 0px 1.66581px 1.11054px rgba(0, 0, 0, 0.1);
+border-radius: 8px;
+}
+
+.mikebutton {
+  width: 80px;
+  height: 80px;
+  background: #D75024;
+box-shadow: 0px 1.66581px 1.11054px rgba(0, 0, 0, 0.1);
+border-radius: 8px;
+}
+
+.fromcentertitle {
+  display: none;
+}
+
+
+@media screen and (max-width: 480px) {
+	/* 480px以下に適用されるCSS（スマホ用） */
+  .fromcentertitle {
+    position: absolute;
+    width: 140px;
+    height: 24px;
+    left: 125px;
+    top: 128px;
+    font-family: 'Hiragino Maru Gothic Std';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #182222;
+  }
+  .smagakusumaho{
+position: absolute;
+left: 27.69%;
+right: 27.44%;
+top: 7.32%;
+bottom: 89.02%;
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 600;
+font-size: 20px;
+line-height: 32px;
+/* ボックスの高さと同一、または160% */
+
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #000000;
+
+  }
+  .bluebackpd{
+    display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 32px 20px 40px;
+gap: 24px;
+
+position: absolute;
+width: 350px;
+height: auto;
+left: 20px;
+top: 184px;
+
+/* BLU */
+
+background: #2A4FB9;
+border-radius: 32px;
+  }
+  .buttonpdsub{
+    position: absolute;
+width: 80px;
+height: 80px;
+left: 152px;
+top: 572px;
+
+/* ORG */
+
+background: #D75024;
+box-shadow: 0px 1.66581px 1.11054px rgba(0, 0, 0, 0.1);
+border-radius: 8px;
+  }
+  .buttonpdlog{
+    display: none;
+  }
+  .pdsub{
+    position: absolute;
+width: 24px;
+height: 16px;
+left: 180px;
+top: 660px;
+
+/* ヒラギノ丸ゴCaption */
+
+font-family: 'Hiragino Maru Gothic Pro';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 16px;
+/* ボックスの高さと同一、または133% */
+
+display: flex;
+align-items: center;
+text-align: center;
+
+/* BLK */
+
+color: #182222;
+  }
+  .buttonp1{
+    position: absolute;
+width: 120px;
+height: 120px;
+left: 42px;
+top: 184px;
+
+/* ORG */
+
+background: #D75024;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+border-radius: 16px;
+  }
+  .pp1{
+    position: absolute;
+width: 112px;
+height: 32px;
+left: 46px;
+top: 320px;
+
+/* ヒラギノ丸ゴH3 */
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 32px;
+/* ボックスの高さと同一、または200% */
+
+display: flex;
+align-items: center;
+
+/* Gray 1 */
+
+color: #333333;
+  }
+  .buttonp2{
+    position: absolute;
+width: 120px;
+height: 120px;
+left: 228px;
+top: 184px;
+
+/* ORG */
+
+background: #D75024;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+border-radius: 16px;
+  }
+  .pp2{
+    position: absolute;
+width: 160px;
+height: 32px;
+left: 208px;
+top: 320px;
+
+/* ヒラギノ丸ゴH3 */
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 32px;
+/* ボックスの高さと同一、または200% */
+
+display: flex;
+align-items: center;
+
+color: #182222;
+  }
+  .parentmypagetitle{
+    position: absolute;
+width: 48px;
+height: 24px;
+top: 128px;
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 24px;
+display: flex;
+align-items: center;
+color: #182222;
+  }
+  .youkoso1{
+  width: 291px;
+  height: 32px;
+  top:56px;
+  left: 50px;
+  font-family: 'Hiragino Maru Gothic Pro';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 32px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #000000;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  }
+  .youkoso2{
+    width: 291px;
+height: 32px;
+top:64px;
+left: 50px;
+font-family: 'Hiragino Maru Gothic Pro';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 32px;
+/* ボックスの高さと同一、または160% */
+
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #000000;
+
+
+/* オートレイアウト内部 */
+
+flex: none;
+order: 0;
+flex-grow: 0;
+  }
+  .parentloginback{
+    position: absolute;
+width: 350px;
+height: auto;
+left: 20px;
+top: 215px;
+
+/* Gray 6 */
+
+background: #F2F2F2;
+border-radius: 32px;
+  }
+  .centerblack2{
+position: absolute;
+width: 350px;
+height: auto;
+left: 20px;
+top: 128px;
+background: #F2F2F2;
+border-radius: 32px;
+  }
+}
+
+.parentmypagetitle {
+  display: none
+}
+
+.youkoso11{
+  display: none;
+}
+
+@media screen and (max-width: 959px) {
+	/* 959px以下に適用されるCSS（タブレット用） */
+  .centerblack22 {
+    position: absolute;
+    width: 552px;
+    height: auto;
+    left: 141px;
+    top: 249px;
+    background: #F2F2F2;
+    border-radius: 32px;
+  }
+  .youkoso111{
+    position: absolute;
+    width: 349px;
+    height: 32px;
+    left: 250px;
+    top: 169px;
+    font-family: 'Hiragino Maru Gothic Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 32px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #000000;
+    }
+  .teacherloginback{
+    position: absolute;
+    width: 448px;
+    height: auto;
+    left: 193px;
+    top: 401px;
+    
+    /* Gray 6 */
+    
+    background: #F2F2F2;
+    border-radius: 32px;
+  }
+  .youkoso101{
+    position: absolute;
+width: 349px;
+height: 32px;
+left: 242px;
+top: 321px;
+
+font-family: 'Hiragino Maru Gothic Pro';
+font-style: normal;
+font-weight: 400;
+font-size: 24px;
+line-height: 32px;
+/* ボックスの高さと同一、または133% */
+
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #000000;
+
+  }
+  .adminleft{
+    display: none;
+  }
+  .button{
+    position: absolute;
+width: 120px;
+height: 120px;
+left: 166px;
+top: 212px;
+
+/* ORG */
+
+background: #D75024;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+border-radius: 16px;
+  }
+  .button2{
+position: absolute;
+width: 120px;
+height: 120px;
+left: 166px;
+top: 412px;
+
+/* ORG */
+
+background: #D75024;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+border-radius: 16px;
+  }
+  .button3{
+    position: absolute;
+width: 120px;
+height: 120px;
+left: 353px;
+top: 212px;
+
+/* ORG */
+
+background: #D75024;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+border-radius: 16px;
+  }
+  .button4{
+    position: absolute;
+width: 120px;
+height: 120px;
+left: 353px;
+top: 412px;
+
+/* ORG */
+
+background: #D75024;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+border-radius: 16px;
+  }
+  .button5{
+    position: absolute;
+width: 120px;
+height: 120px;
+left: 540px;
+top: 212px;
+
+/* ORG */
+
+background: #D75024;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+border-radius: 16px;
+  }
+  .button6{
+    position: absolute;
+width: 120px;
+height: 120px;
+left: 540px;
+top: 412px;
+
+/* ORG */
+
+background: #D75024;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+border-radius: 16px;
+  }
+  .p1{
+    position: absolute;
+width: 160px;
+height: 32px;
+left: 146px;
+top: 340px;
+
+/* ヒラギノ丸ゴH3 */
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 32px;
+/* ボックスの高さと同一、または200% */
+
+display: flex;
+align-items: center;
+text-align: center;
+
+/* Gray 1 */
+
+color: #333333;
+  }
+  .p2{
+    position: absolute;
+width: 144px;
+height: 32px;
+left: 154px;
+top: 540px;
+
+/* ヒラギノ丸ゴH3 */
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 32px;
+/* ボックスの高さと同一、または200% */
+
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #4C4C4C;
+  }
+  .p3{
+    position: absolute;
+width: 128px;
+height: 32px;
+left: 349px;
+top: 340px;
+
+/* ヒラギノ丸ゴH3 */
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 32px;
+/* ボックスの高さと同一、または200% */
+
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #182222;
+  }
+  .p4{
+    position: absolute;
+width: 128px;
+height: 32px;
+left: 349px;
+top: 540px;
+
+/* ヒラギノ丸ゴH3 */
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 32px;
+/* または200% */
+
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #182222;
+  }
+  .p5{
+    position: absolute;
+width: 176px;
+height: 32px;
+left: 512px;
+top: 340px;
+
+/* ヒラギノ丸ゴH3 */
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 32px;
+/* ボックスの高さと同一、または200% */
+
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #182222;
+  }
+  .p6{
+    position: absolute;
+    width: 176px;
+    height: 32px;
+    left: 512px;
+    top: 540px;
+    
+    /* ヒラギノ丸ゴH3 */
+    
+    font-family: 'Hiragino Maru Gothic Std';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 32px;
+    /* ボックスの高さと同一、または200% */
+    
+    display: flex;
+    align-items: center;
+    text-align: center;
+    
+    color: #182222;
+    
+  }
+  .teachermypagetitle{
+    position: absolute;
+left: 46.4%;
+right: 46.4%;
+top: 112px;
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 64px;
+/* ボックスの高さと同一、または160% */
+
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #000000;
+  }
+  .sumagakuipad{
+    position: absolute;
+left: 37.41%;
+right: 37.41%;
+top: 5.7%;
+bottom: 91.62%;
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 600;
+font-size: 24px;
+line-height: 32px;
+/* ボックスの高さと同一、または133% */
+
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #000000;
+  }
+  .tosend{
+    position: absolute;
+width: 690px;
+height: auto;
+left: 72px;
+top: 212px;
+background: #2A4FB9;
+border-radius: 32px;
+  }
+  .recording{
+    position: absolute;
+width: 690px;
+height: auto;
+left: 72px;
+top: 328px;
+background: #2A4FB9;
+border-radius: 32px;
+  }
+  .sendmsgbutton{
+    position: absolute;
+width: 80px;
+height: 80px;
+left: 377px;
+top: 568px;
+background: #D75024;
+box-shadow: 0px 1.66581px 1.11054px rgba(0, 0, 0, 0.1);
+border-radius: 8px;
+  }
+  .centername{
+    display: none
+  }
+  .blueback2{
+
+
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: flex-start;
+padding: 32px 48px;
+gap: 8px;
+
+position: absolute;
+width: 738px;
+height: auto;
+left: 48px;
+top: 212px;
+
+/* BLU */
+
+background: #2A4FB9;
+box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.05);
+border-radius: 32px;
+  }
+  .blueback{
+    display: flex;
+flex-direction: column;
+justify-content: space-between;
+align-items: flex-start;
+padding: 32px 48px 40px;
+gap: 16px;
+
+position: absolute;
+width: 738px;
+height: auto;
+left: 48px;
+top: 212px;
+
+/* BLU */
+
+background: #2A4FB9;
+border-radius: 32px;
+  }
+  .msgblueback{
+    display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 32px 48px;
+gap: 24px;
+
+position: absolute;
+width: 520px;
+height: auto;
+left: 157px;
+top: 212px;
+
+/* BLU */
+
+background: #2A4FB9;
+border-radius: 32px;
+  }
+  .inoutstaffname{
+    display: none;
+  }
+  .inoutblueback{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 32px 48px;
+    gap: 8px;
+    
+    position: absolute;
+    width: 640px;
+    height: auto;
+    left: 128px;
+    top: 212px;
+    background: #2A4FB9;
+    border-radius: 32px;
+  }
+  .inoutsearchblueback{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 32px 48px;
+    gap: 8px;
+    position: absolute;
+    width: 640px;
+    height: auto;
+    left: 128px;
+    top: 512px;
+    background: #2A4FB9;
+    border-radius: 32px;
+  }
+  .inoutoutput{
+    display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 48px;
+  gap: 8px;
+  position: absolute;
+  width: 640px;
+  height: auto;
+  left: 128px;
+  top: 700px;
+  background: #2A4FB9;
+  border-radius: 32px;
+  }
+}
+
+/* .teachermypagetitle{
+  display: none
+} */
+
+/* .smagakusumaho{
+  display: none;
+} */

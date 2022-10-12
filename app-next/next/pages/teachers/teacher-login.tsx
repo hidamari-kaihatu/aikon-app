@@ -31,7 +31,7 @@ const Login: FC = () => {
         console.log(error);
       });
 
-      router.push('/parents/teacher-mypage')
+      router.push('/teachers/teacher-mypage')
 
     } catch (err) {
        alert("メールアドレスまたはパスワードが間違っています")
@@ -41,31 +41,44 @@ const Login: FC = () => {
 
   return (
     <div>
-      hitomi@hitomi.com
+{/*       hitomi@hitomi.com */}
       <form onSubmit={logIn}>
         <div>
+        <p className="youkoso101">ようこそ！スマートGAKUDOへ</p>
+        <div className='teacherloginback'>
+        <h3>ログイン</h3>
+        <div>
+        <br></br>
           <label htmlFor="email">
-            Email:{' '}
+            メールアドレス:{' '}
           </label>
+          <br></br>
           <input
             id="email"
             type="email"
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
+        <br></br>
         <div>
           <label htmlFor="password">
-            Password:{' '}
+            パスワード:{' '}
           </label>
+          <br></br>
           <input
             id="password"
             type="password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit">
-          Login
+        <br></br>
+        <button type="submit" className='orangebutton'>
+          ログイン
         </button>
+        <br></br>
+        <br></br>
+        </div>
+        </div>
       </form>
     </div>
   )

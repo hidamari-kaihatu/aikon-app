@@ -5,6 +5,7 @@ import axios from "axios";
 import { Axios } from '../../lib/api';
 // staffテーブル情報Get
 export async function getServerSideProps() {
+  // APIの変更(staffsGet→getAllstaffs)
     const res = await axios.get(`${process.env.API}/staffsGet`, {
     });
     const data = await res.data;
@@ -55,7 +56,7 @@ function confirm({data}:any) {
 
     return (
         <div>
-           <p>登録が完了しました！</p> 
+           <p>{staffName}さんの登録が完了しました！</p> 
            <p>ログイン画面へお進みください</p>
            <button onClick={() => Router.push('/teachers/teacher-login', '/teachers/teacher-login', { shallow: true})}>ログイン画面へ進む</button> 
         </div>
