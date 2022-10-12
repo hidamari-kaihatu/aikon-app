@@ -24,21 +24,21 @@ export default function mypage({ data, students }: any) {
     <>
       <Layout>
         {/*         <h2>学童からの連絡一覧</h2> */}
-        <p className='fromcentertitle'>学童からの連絡を見る</p>
+{/*         <p className='fromcentertitle'>学童からの連絡を見る</p> */}
         <div className='msgblueback'>
           {data.reverse().map((d) => (
             <div className='sendmsg'>
               <ul key={d.Id}>
-                日付: {d.Datetime}<br /><br />メッセージ: {d.Message}<br /><br />
+              <p className='pmn'>日付: {d.Datetime}</p><p className='pmn'>メッセージ: {d.Message}</p>
               </ul>
             </div>
           ))}
         </div>
-        <div className='myname'>
+{/*         <div className='myname1'>
                   {students[0].CenterName}
                   <br></br>
                   {students[0].Name}
-                </div>
+                </div> */}
       </Layout>
     </>
   );
