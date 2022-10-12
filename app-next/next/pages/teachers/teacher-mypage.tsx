@@ -45,7 +45,7 @@ const Mypage: NextPage = (staffs:staffObj) => {
 
     return (
       <Layout>
- {/*        <div>
+        <div className='teachername'>
             {staffs.staffs.map((s:any, i:number) => {
                 return (
                     <div key={i}>
@@ -55,9 +55,9 @@ const Mypage: NextPage = (staffs:staffObj) => {
                     </div>
                 )
                 })}
-        </div> */}
+        </div> 
         <div>
-         <p className='teachermypagetitle'>ホーム</p> 
+{/*          <p className='teachermypagetitle'>ホーム</p>  */}
         <div>
           <button className='button' onClick={() => Router.push('/teachers/teacher-todayKids', '/teachers/teacher-todayKids', { shallow: true})}><FaceTwoToneIcon style={{ color: "white", fontSize: 64  }}/></button>
           <p className='p1'>今日の児童一覧を見る</p>
