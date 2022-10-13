@@ -11,7 +11,7 @@ export default function Header() {
   return (
     <>
         <div className='adminleft'>
-    <p className='smagaku'>スマートGAKUDO</p>
+    {/* <p className='smagaku00'>スマートGAKUDO</p> */}
       <ul>
         <Link href="/parents/parent-mypage">
           <a className='parenthome'>ホーム</a>
