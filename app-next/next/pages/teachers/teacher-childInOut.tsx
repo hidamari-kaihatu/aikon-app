@@ -14,7 +14,7 @@ export default function Mypage({students, staffs}:any) {
       <div className='center'>
 {/*       <h2 className='center'>子どもの入退室</h2> */}
 <div className='inoutblueback'>
-      <p className='kensaku'>検索</p><input className='inputnewer' type="text" value={searchWord} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchWord(e.currentTarget.value)}/></div>
+      <p className='kensaku'>検索</p><input className='inputnewer88' type="text" value={searchWord} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchWord(e.currentTarget.value)}/></div>
       <div className='inoutsearchblueback'><p className='kensaku' >検索結果</p>
       {
         inOutData.map(data => {

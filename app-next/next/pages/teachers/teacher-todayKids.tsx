@@ -54,6 +54,7 @@ function chanteAttendType(int: number) {
   return "出席"
 }
 return (
+  <>
 <Layout>
 <div  className="blueback2">
     <table className='list-table'>
@@ -94,6 +95,7 @@ return (
       <br></br>
     {staffs[0].Name} */}
     </Layout>
+    </>
     )
   }
   
