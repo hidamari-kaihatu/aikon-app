@@ -77,7 +77,7 @@ export default function dailyReportPost(students:any) {
 {/*          <h2>日々の出欠報告</h2> */}
             <br></br>
             <label className="sisetsu">出欠</label>            <br></br>
-            <select                 className="inputnewer" value={attend} onChange={(e) => setattend(e.target.value)}>
+            <select                 className="inputnewerpl" value={attend} onChange={(e) => setattend(e.target.value)}>
                 <option value="A">出欠</option>
                 <option value={1}>学童に行きます</option>
                 <option value={0}>学童に行きません</option>
@@ -85,15 +85,15 @@ export default function dailyReportPost(students:any) {
             <br></br>
             <br></br>
             <label className="sisetsu">体温</label>            <br></br>
-            <input  className="inputnewer" type="text" value={temperature} onChange={(e: React.ChangeEvent<HTMLInputElement>) => settemperature(e.currentTarget.value)}/>
+            <input  className="inputnewerpl" type="text" value={temperature} onChange={(e: React.ChangeEvent<HTMLInputElement>) => settemperature(e.currentTarget.value)}/>
             <br></br>
             <br></br>
             <label className="sisetsu">お迎えの人</label>            <br></br>
-            <input className="inputnewer" type="text" value={someToPickup} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setsomeToPickup(e.currentTarget.value)}/>
+            <input className="inputnewerpl" type="text" value={someToPickup} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setsomeToPickup(e.currentTarget.value)}/>
             <br></br>
             <br></br>
             <label className="sisetsu">帰り時間</label>            <br></br>
-            <select className="inputnewer" value={timeToPickup} onChange={(e) => settimeToPickup(e.target.value)}>
+            <select className="inputnewerpl" value={timeToPickup} onChange={(e) => settimeToPickup(e.target.value)}>
                 <option value="A">時間</option>
                 <option value={"16:00"}>16:00</option>
                 <option value={"16:30"}>16:30</option>
@@ -106,7 +106,7 @@ export default function dailyReportPost(students:any) {
             <br></br>
             <br></br>
             <label className="sisetsu">メッセージ</label>            <br></br>
-            <input className="inputnewer" type="text" value={message} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setmessage(e.currentTarget.value)}/>
+            <input className="inputnewerpl" type="text" value={message} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setmessage(e.currentTarget.value)}/>
             <br></br>
             <br></br>
 {/*             <button className="btn" onClick={logOut}>Logout</button> */}

@@ -29,11 +29,12 @@ export default function mypage({data, staffs}:any) {
     return (
       <>
       <Layout>
-        <div className='msgblueback'>
+        <div className='msgblueback2'>
 
-        {info.map((i) => (
-                <div className='sendmsg'>
+        {info.reverse().map((i) => (
+                <div className='sendmsg2'>
         <ul key={i.Id}>
+        <br></br>
             日付: {i.Datetime}<br/><br/>宛先：{i.Student_name}<br/><br/>メッセージ: {i.Message}<br/><br/>
         </ul>
               </div>

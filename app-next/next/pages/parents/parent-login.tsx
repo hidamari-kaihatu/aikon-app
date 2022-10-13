@@ -53,7 +53,7 @@ const Login: FC = () => {
             <p className='leftname2'>メールアドレス</p>
           </label>
           <input
-                className="inputnewer"
+                className="inputnewerpl"
             id="email"
             type="email"
             onChange={(e) => setEmail(e.target.value)}
@@ -65,7 +65,7 @@ const Login: FC = () => {
           <p className='leftname2'>パスワード</p>
           </label>
           <input
-                className="inputnewer"
+                className="inputnewerpl"
             id="password"
             type="password"
             onChange={(e) => setPassword(e.target.value)}

@@ -14,8 +14,8 @@ export default function Mypage({students, staffs}:any) {
       <div className='center'>
 {/*       <h2 className='center'>子どもの入退室</h2> */}
 <div className='inoutblueback'>
-      <h3>検索</h3><input type="text" value={searchWord} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchWord(e.currentTarget.value)}/></div>
-      <div className='inoutsearchblueback'><h3 >検索結果</h3>
+      <p className='kensaku'>検索</p><input className='inputnewer' type="text" value={searchWord} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchWord(e.currentTarget.value)}/></div>
+      <div className='inoutsearchblueback'><p className='kensaku' >検索結果</p>
       {
         inOutData.map(data => {
           if(searchWord === ""){
@@ -46,11 +46,11 @@ export default function Mypage({students, staffs}:any) {
             )
           })}
                   </div>
-          <div className='inoutstaffname'>
+{/*           <div className='inoutstaffname'>
             {staffs[0].CenterName}
             <br></br>
             {staffs[0].Name}
-          </div>
+          </div> */}
         </Layout>
       </>
     );
