@@ -46,14 +46,14 @@ const Login: FC = () => {
         <div>
         <p className="youkoso101">ようこそ！スマートGAKUDOへ</p>
         <div className='teacherloginback'>
-        <h3>ログイン</h3>
+        <p className='roguinname55'>ログイン</p>
         <div>
         <br></br>
           <label htmlFor="email">
-            メールアドレス:{' '}
+            <p className='leftname3'>メールアドレス</p>
           </label>
-          <br></br>
           <input
+                     className="inputnewer333"
             id="email"
             type="email"
             onChange={(e) => setEmail(e.target.value)}
@@ -62,18 +62,18 @@ const Login: FC = () => {
         <br></br>
         <div>
           <label htmlFor="password">
-            パスワード:{' '}
+          <p className='leftname33'>パスワード</p>
           </label>
-          <br></br>
           <input
+                     className="inputnewer444"
             id="password"
             type="password"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <br></br>
-        <button type="submit" className='orangebutton'>
-          ログイン
+        <button type="submit" className='orangebuttonx'>
+          送信
         </button>
         <br></br>
         <br></br>

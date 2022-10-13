@@ -2074,6 +2074,30 @@ border: 1px solid rgb(197, 196, 196);
     border: solid 1px; 
     padding: 8px;
   }
+  .roguinname55{
+    position: absolute;
+width: 135px;
+height: 32px;
+left: 177px;
+top: 48px;
+
+/* ヒラギノ丸ゴH1 */
+
+font-family: 'Hiragino Maru Gothic Std';
+font-style: normal;
+font-weight: 400;
+font-size: 24px;
+line-height: 32px;
+/* ボックスの高さと同一、または133% */
+
+display: flex;
+align-items: center;
+text-align: center;
+
+/* BLK */
+
+color: #182222;
+  }
   .support{
     color: white;
     background-color: #e16630;
@@ -2120,8 +2144,8 @@ border-radius: 16px;
 position: absolute;
 width: 594px;
 height: 40px;
-top:80px;
-
+top:110px;
+margin-bbo:;
 /* White */
 
 background: #FFFFFF;
@@ -2140,6 +2164,7 @@ border-radius: 4px;
     border-radius: 32px;
   }
   .kensaku{
+    position:relative;;
     text-align: center;
     font-family: 'Hiragino Maru Gothic Std';
   }
@@ -2193,13 +2218,76 @@ color: #182222;
 
   }
   .leftname3{
-    margin-left:80px;
+    position: absolute;
+    width: 120px;
+    height: 24px;
+    left: 80px;
+    top: 100px;
+    
     font-family: 'Hiragino Maru Gothic Pro';
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 24px;
+    /* ボックスの高さと同一、または171% */
+    
+    
+    /* BLK */
+    
     color: #182222;
+  }
+  .leftname33{
+    position: absolute;
+    width: 120px;
+    height: 24px;
+    left: 80px;
+    top: 200px;
+    
+    font-family: 'Hiragino Maru Gothic Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    /* ボックスの高さと同一、または171% */
+    
+    
+    /* BLK */
+    
+    color: #182222;
+  }
+  .inputnewer444{
+    box-sizing: border-box;
+
+position: absolute;
+width: 288px;
+height: 40px;
+left: calc(50% - 288px/2);
+top: 140px;
+
+/* White */
+
+background: #FFFFFF;
+/* Black/30 */
+
+border: 1px solid #D5D5D5;
+border-radius: 4px;
+  }
+  .inputnewer333{
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 288px;
+    height: 40px;
+    left: calc(50% - 288px/2);
+    top: 240px;
+    
+    /* White */
+    
+    background: #FFFFFF;
+    /* Black/30 */
+    
+    border: 1px solid #D5D5D5;
+    border-radius: 4px;
   }
   .youkoso111{
     position: absolute;
@@ -2627,16 +2715,10 @@ border-radius: 32px;
     display: none;
   }
   .inoutblueback{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 32px 48px;
-    gap: 8px;
     
     position: absolute;
     width: 640px;
-    height: auto;
+    height: 175px;
     left: 108px;
     top: 212px;
     background: #905845;
