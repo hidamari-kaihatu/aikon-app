@@ -620,6 +620,7 @@ func getStaffs(w http.ResponseWriter, r *http.Request) {
 }
 
 func getRowsAllSta(db *sql.DB) *sql.Rows { 
+    log.Printf("getRowsAllSta")
     rows, err := db.Query("SELECT * FROM staffs")
     if err != nil {
         fmt.Println("Err2 a")
@@ -628,6 +629,7 @@ func getRowsAllSta(db *sql.DB) *sql.Rows {
     return rows
 }
 func getAllStaffs(w http.ResponseWriter, r *http.Request) {
+    log.Printf("getAllStaffs")
     db := connectionDB()
     defer db.Close()
     rows := getRowsAllSta(db) 
@@ -1132,7 +1134,7 @@ func CreateToken(studentID string) (string) {
     }
 
     // 署名
-    var secretKey = "secret" // 任意の文字列
+    var secretKey = "secret" 
     tokenString, err := token.SignedString([]byte(secretKey)) 
     if err != nil {
         log.Printf("signiture error") //return "", err
@@ -1356,36 +1358,36 @@ func main() {
     colog.Register()
     log.Printf("trace: this is a trace log test.")
     http.HandleFunc("/", helloHandler)
-    http.HandleFunc("/dailyReportGet", getDailyReport) 
+    http.HandleFunc("/getDailyReport", getDailyReport) 
     http.HandleFunc("/dailyReportPost", postDailyReport)
-    http.HandleFunc("/middleGet", getMiddle)
-    http.HandleFunc("/middlePost", postMiddle)
-    http.HandleFunc("/teacherMessageGet", getTeacherMessage)
-    http.HandleFunc("/teacherMessagePost", postTeacherMessage)
+    http.HandleFunc("/getMiddle", getMiddle)
+    http.HandleFunc("/postMiddle", postMiddle)
+    http.HandleFunc("/getTeacherMessage", getTeacherMessage)
+    http.HandleFunc("/postTeacherMessage", postTeacherMessage)
 	http.HandleFunc("/centerGet", getCenter)
-    http.HandleFunc("/centerPost", postCenter)
-    http.HandleFunc("/centerPut", putCenterStatus)
-    http.HandleFunc("/centerProductIdPut", putCenterProductId)
-    http.HandleFunc("/studentsGet", getStudents)
-    http.HandleFunc("/studentPost", postStudent)
-    http.HandleFunc("/stuStatustPut", putStuStatus)
+    http.HandleFunc("/postCenter", postCenter)
+    http.HandleFunc("/putCenterStatus", putCenterStatus)
+    http.HandleFunc("/putCenterProductId", putCenterProductId)
+    http.HandleFunc("/getStudents", getStudents)
+    http.HandleFunc("/postStudent", postStudent)
+    http.HandleFunc("/putStuStatus", putStuStatus)
     http.HandleFunc("/stuRfidPut", putStuRfid)
     http.HandleFunc("/staffsGet", getStaffs)
     http.HandleFunc("/staffPost", postStaff)
-    http.HandleFunc("/staStatustPut", putStaStatus)
-    http.HandleFunc("/staRfidPut", putStaRfid)
-    http.HandleFunc("/sensorsGet", getSensors)
-    http.HandleFunc("/sensorPost", postSensor)
-    http.HandleFunc("/inAndOutGet", getInAndOut)
-    http.HandleFunc("/inAndOutPost", postInAndOut)
-    http.HandleFunc("/stuInAndOutSensorsGet", getStuInAndOutSensors)
+    http.HandleFunc("/getAllStaffs", getAllStaffs)
+    http.HandleFunc("/putStaStatus", putStaStatus)
+    http.HandleFunc("/putStaRfid", putStaRfid)
+    http.HandleFunc("/getSensors", getSensors)
+    http.HandleFunc("/postSensor", postSensor)
+    http.HandleFunc("/getInAndOut", getInAndOut)
+    http.HandleFunc("/postInAndOut", postInAndOut)
+    http.HandleFunc("/getStuInAndOutSensors", getStuInAndOutSensors)
     http.HandleFunc("/parentIsLogin", parentIsLogin)
     http.HandleFunc("/staffIsLogin", staffIsLogin)
     http.HandleFunc("/getStaffAndMiddleAndCenter", getStaffAndMiddleAndCenter)
     http.HandleFunc("/getAllStudents", getAllStudents)
     http.HandleFunc("/getStudentInAndOut", getStudentInAndOut)
     http.HandleFunc("/getTeacherMessageForTeacher", getTeacherMessageForTeacher)
-    http.HandleFunc("/getAllStaffs", getAllStaffs)
     
     http.ListenAndServe(":8080", nil)
     

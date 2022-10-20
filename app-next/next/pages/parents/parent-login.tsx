@@ -44,7 +44,7 @@ const Login: FC = () => {
     <div>
 {/*       ayaka@ayaka.com */}
       <form onSubmit={logIn}>
-      <p className="youkoso2">ようこそ！スマートGAKUDOへ</p>
+      <p className="youkoso2">ようこそ!スマートGAKUDOへ</p>
       <div>
         <div className='parentloginback'>
         <p className='palog'>ログイン</p>
