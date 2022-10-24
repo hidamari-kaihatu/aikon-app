@@ -3,7 +3,7 @@ import React,{ useState } from "react";
 import Layout from './teacher-layout';
 
 export async function getServerSideProps() {
-  const res = await axios.get(`${process.env.API}/dailyReportGet`, {
+  const res = await axios.get(`${process.env.API}/getDailyReport`, {
   });
   const data = await res.data;
 

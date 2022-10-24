@@ -3,10 +3,10 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 
 export async function getServerSideProps() {
-  const res = await axios.get(`${process.env.API}/teacherMessageGet`, {
+  const res = await axios.get(`${process.env.API}/getTeacherMessage`, {
   });
   const data = await res.data;
-  const stuRes = await axios.get(`${process.env.API}/studentsGet`, {
+  const stuRes = await axios.get(`${process.env.API}/getStudents`, {
   });
   const students = await stuRes.data;
 
@@ -20,6 +20,7 @@ export async function getServerSideProps() {
 //ここに絞り込みの.filter(取得したteacher messageのうち、自分（保護者）の子供のstudent_idのものだけを抜き出す処理。)を書く。
 
 export default function mypage({ data, students }: any) {
+  {console.log(data)}
   return (
     <>
       <Layout>
@@ -48,7 +49,7 @@ export default function mypage({ data, students }: any) {
 // import axios from 'axios';
 
 // export async function getServerSideProps() {
-//   const res = await axios.get(`${process.env.API}/teacherMessageGet`, {
+//   const res = await axios.get(`${process.env.API}/getTeacherMessage`, {
 //   });
 //   const data = await res.data;
 

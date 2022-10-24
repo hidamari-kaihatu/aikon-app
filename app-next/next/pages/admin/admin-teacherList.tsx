@@ -21,21 +21,22 @@ import React,{ useState } from "react";
 export async function getServerSideProps() {
   const res = await axios.get(`${process.env.API}/staffsGet`, {});
   const resCenter = await axios.get(`${process.env.API}/centerGet`, {});
-  const resMiddle = await axios.get(`${process.env.API}/middleGet`, {});
+  const resMiddle = await axios.get(`${process.env.API}/getMiddle`, {});
+  const resAbout = await axios.get(`${process.env.API}/getAllStaffs`, {});
+  
   //単なるdataは、staffData。名前を変えるとエラーになるので、現状dataのまま
   // console.log("test1");
   const data = await res.data;
-  // console.log("data: ", data);
   const centerData = await resCenter.data
-  // console.log("centerData: ", centerData);
   const middleData = await resMiddle.data
-  // console.log("middleData: ", middleData);
+  const resAboutstaffs = resAbout.data
 
   return { 
       props: {
         data: data,
         centerData: centerData,
-        middleData: middleData
+        middleData: middleData,
+        resAboutstaffs: resAboutstaffs
       },
   };
 }
@@ -53,11 +54,12 @@ interface SearchFormProps {
   //   centerData: typeof data,
   //   middleData: typeof data
   // }) => {  
+const allRestult = {};
 
-    export default function TeacherGet ({data,centerData,middleData,onChangeCenter}:SearchFormProps) {
-      // const {data} = props
-      // const {centerData} = props
-      // const {middleData} = props
+    export default function TeacherGet ({data,centerData,middleData,resAboutstaffs,onChangeCenter}:SearchFormProps) {
+  console.log("data: ", data);
+  console.log("centerData: ", centerData);
+  console.log("middleData: ", middleData);
       // console.log("test2");
       const [newStaffDatas, setNewStaffDatas] = useState([]);
       
@@ -76,22 +78,35 @@ interface SearchFormProps {
         });
         console.log("newmiddleData: ",newMiddleData);//OK
         //sfatt_idでdata(staffData)の絞り込み
-        console.log("data: ", data);
+        console.log("data: ", data);//管理者に関する情報
         console.log("data type:", typeof data[0].Id);//number
         const result:any = [];
-        for(const key in newMiddleData){
-            console.log(newMiddleData[key]);
+        for(const key of newMiddleData){ //in から　of に変更
+          console.log("key:", key)//オブジェクトの中のデータ
+            //console.log(newMiddleData[key]);
             const newStaffData = data.filter((obj:any) => {
-            if(obj.Id === newMiddleData[key]["Staff_id"] && obj.Status === 1) {
-              result.push(obj);
-              setNewStaffDatas(result);
-              return obj;
+            // if(obj.Id === newMiddleData[key]["Staff_id"] && obj.Status === 1) { //通ってない！
+            //   console.log("test")
+            //   result.push(obj);
+            //   setNewStaffDatas(result);
+            //   return obj;
+            // }
+            console.log(resAboutstaffs)
+            result.push(key.Staff_id)
+            console.log(key.Staff_id)//1,5,9
+            for(let i =0; i<result.length; i++){
+              resAboutstaffs.map((staff =>{
+                if(staff.Id === result[i]){
+                  allRestult[result[i]] = staff.Name
+                  console.log(allRestult)
+                  console.log(Object.values(allRestult))
+                }
+              }))
             }
           });
           console.log("newStaffData : ", newStaffData);//1つのobjが入った配列
         }
         console.log("newStaffDatas : ", newStaffDatas);//該当するstaffのobjが全て入った配列
-
        }
 
 let n = 1;
@@ -114,7 +129,7 @@ const liftButton = (e:any,Id:any) => {
   window.alert('本当に除籍しますか？この職員の情報はこの画面から削除され、この職員がサービスにアクセスできなくなります。')
   const teacher = {Id: Id};
   console.log("teacher: ", teacher);
-  Axios.put(`api/proxy/staStatustPut`, teacher)
+  Axios.put(`api/proxy/putStaStatus`, teacher)
   .then((res) => {
     console.log("res : ",res);
     window.alert('除籍しました。再度施設を選択し、確認してください')
@@ -150,7 +165,7 @@ const showTable = newStaffDatas.map((item:any, i:number) => {
 //       // e.preventDefault();
 //       const teacher = {id: id};
 //       console.log("teacher: ", teacher);
-//       Axios.put(`api/proxy/staStatustPut`, teacher)
+//       Axios.put(`api/proxy/putStaStatus`, teacher)
 //       .then((res) => {
 //         console.log("res : ",res);
 //       })
@@ -174,17 +189,20 @@ return (
         <tr>
           <th>No.</th>
           <th>職員名</th>
-          <th>Email</th>
+          {/* <th>Email</th> */}
           <th>除籍</th>
         </tr>
       </thead>
       <tbody>
-        {showTable}
-      </tbody>
+      {/* {showTable} */}
+      {/* {(Object.values(allRestult)).forEach(data =>{
+        <p>{data}</p>
+      })} */}
+
+     </tbody>
     </table>
     </div>
+    {data[0].Name}
   </Layout>
     )
   }
-  
-  
