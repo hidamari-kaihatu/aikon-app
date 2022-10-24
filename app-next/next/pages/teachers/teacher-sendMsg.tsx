@@ -66,7 +66,7 @@ function Output({data, staffs}:any) {
       "Message":transcript,
       "Student_id":Number(toPerson),
   }
-  Axios.post(`api/proxy/teacherMessagePost`, data)
+  Axios.post(`api/proxy/postTeacherMessage`, data)
   .then((res) => {
     console.log(res);
   })

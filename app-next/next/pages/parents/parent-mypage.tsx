@@ -29,10 +29,10 @@ interface inOut {
 }
 
 export async function getServerSideProps() { //ssg
-  const res = await axios.get(`${process.env.API}/studentsGet`, {
+  const res = await axios.get(`${process.env.API}/getStudents`, {
   });
   const students = await res.data;
-  const inOutRes = await axios.get(`${process.env.API}/stuInAndOutSensorsGet`, {
+  const inOutRes = await axios.get(`${process.env.API}/getStuInAndOutSensors`, {
   });
   const inOut = await inOutRes.data;
 
@@ -75,11 +75,11 @@ const List: NextPage = (students: studentObj) => {
 
   return (
     <>
-    <div className='nyusitsu'>
+    {/* <div className='nyusitsu'>
       入室：{checkStudentIn()}
       <br></br>
       退室：{checkStudentOut()}
-    </div>
+    </div> */}
     <Layout>
     <p className='parentmypagetitle'>ホーム</p>
       <div className='myname'>

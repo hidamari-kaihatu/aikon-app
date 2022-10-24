@@ -11,7 +11,7 @@ export default function addCenter() {
       const data = {
           "Name":newCenter,
       }
-      Axios.post(`api/proxy/centerPost`, data)
+      Axios.post(`api/proxy/postCenter`, data)
       .then((res) => {
         console.log(res);
       })

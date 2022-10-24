@@ -27,7 +27,7 @@ const StudentGet = ({data, staffs}:any) => {
 //現状2回ダブルクリックしないと、変更が反映されない
 function liftButton (Id:any) {
   const student = {Id: Id};
-  Axios.put(`api/proxy/stuStatustPut`, student)
+  Axios.put(`api/proxy/putStuStatus`, student)
   .then((res) => {
   })
   .catch((error) => {
