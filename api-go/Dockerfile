@@ -11,7 +11,6 @@ COPY . .
 
 VOLUME /go/src/api-go
 EXPOSE 8080
-ENV GOOGLE_APPLICATION_CREDENTIALS aikon-570be-firebase-adminsdk-bh8yt-73dc8a9673.json
 
 # RUN go mod tidy
 # GoApp起動
