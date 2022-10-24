@@ -1,5 +1,5 @@
 ## スマートGAKUDO
-スマートGAKUDOは、学童のICT化を進めて学童職員の負担を減らすための学童運営効率化アプリです。コツコツとリファクタリング中。。。
+スマートGAKUDOは、学童のICT化を進めて学童職員の負担を減らすための学童運営効率化アプリです。
 #### 【ひだまり開発が初めて開発したアプリ】
 <img width="678" alt="スクリーンショット 2022-10-24 10 19 31" src="https://user-images.githubusercontent.com/94016735/197431411-614ad0dc-acbf-4939-bbae-2dcb03d655ab.png">
 
@@ -27,7 +27,7 @@
 - 児童の入退室時刻の表示
 
 ### 使い方
-開発環境での使用方法
+##### 開発環境での使用方法
 1.リポジトリのクローン
 ```bash
 $ git clone  https://github.com/hidamari-kaihatu/aikon-app.git
@@ -70,6 +70,7 @@ http://localhost:3000/admin/admin-login
 - [AWS EC2,RDS,ECR,ECS,fargate](https://aws.amazon.com/jp/)
 
 #### ※ひだまり開発関係者用GitHub関係の注意事項※
+- 今後のリファクタリングにおいても以下の流れでいきましょう！
 - ファイルが未完成でコミットしておくときは、コード内に//TODO:として自分のやり残していることを書き記しておく。
 - リモートリポジトリのブランチについて
     - main（完成品の置き場）
