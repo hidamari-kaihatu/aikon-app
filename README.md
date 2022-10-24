@@ -1,7 +1,8 @@
 ## 学童運営効率化アプリ　スマートGAKUDO
 
 #### 私たちひだまり開発が初めて開発したアプリです。
-
+<img width="678" alt="スクリーンショット 2022-10-24 10 19 31" src="https://user-images.githubusercontent.com/94016735/197431411-614ad0dc-acbf-4939-bbae-2dcb03d655ab.png">
+<img width="669" alt="スクリーンショット 2022-10-24 10 22 00" src="https://user-images.githubusercontent.com/94016735/197431685-f5e26402-56e5-4d1d-a1c8-09b6e385127c.png">
 ##### 開発者用Dockre関係の注意事項
 
 ###### docker-compose.yml
