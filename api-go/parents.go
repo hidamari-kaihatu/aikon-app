@@ -42,7 +42,7 @@ func postDailyReport(w http.ResponseWriter, r *http.Request) {
     log.Printf("trace: this is studentID log.")
     fmt.Printf("%v\n", id) //作成されたjwt確認
 
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("Err1")
@@ -173,7 +173,7 @@ func getStudents(w http.ResponseWriter, r *http.Request) {
 }
 
 func postStudent(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")

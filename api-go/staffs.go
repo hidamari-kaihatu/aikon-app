@@ -16,7 +16,6 @@ import (
     "github.com/k-washi/jwt-decode/jwtdecode"
     "github.com/dgrijalva/jwt-go"
 
-
     _ "github.com/go-sql-driver/mysql"
 )
 
@@ -108,7 +107,7 @@ func getMiddle(w http.ResponseWriter, r *http.Request) {
 
 //teacher
 func postMiddle (w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("Err1")
@@ -130,7 +129,7 @@ func postMiddle (w http.ResponseWriter, r *http.Request) {
 
 //teacher
 func postTeacherMessage (w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("Err1")
@@ -200,7 +199,7 @@ func getCenter(w http.ResponseWriter, r *http.Request) {
 
 func postCenter(w http.ResponseWriter, r *http.Request) {
     log.Printf("trace: this is a trace log postCenter start.")
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("Err1")
@@ -226,7 +225,7 @@ func postCenter(w http.ResponseWriter, r *http.Request) {
 
 func putCenterStatus(w http.ResponseWriter, r *http.Request) {
     log.Printf("trace: this is a trace log putCenterStatus start.")
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -250,7 +249,7 @@ func putCenterStatus(w http.ResponseWriter, r *http.Request) {
     }
 }
 func putCenterProductId(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -276,7 +275,7 @@ func putCenterProductId(w http.ResponseWriter, r *http.Request) {
 
 //teacher
 func putStuStatus(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -301,7 +300,7 @@ func putStuStatus(w http.ResponseWriter, r *http.Request) {
 }
 
 func putStuRfid(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -333,59 +332,6 @@ type Staffs struct {
     Rfid *string `json:rfid`
 }
 
-//not used
-// func getRowsSta(db *sql.DB) *sql.Rows { 
-//     claims := jwt.MapClaims{}
-
-//     token, err := jwt.ParseWithClaims(setCookie, claims, func(token *jwt.Token) (interface{}, error) {
-//         return []byte("secret"), nil
-//     })
-//     fmt.Printf("%v\n", token)
-//     log.Printf(setCookie)
-
-// 	if err != nil {
-//         fmt.Println("verifyToken error")
-// 	}
-//     for key, val := range claims {
-//         log.Printf("Key: %v, value: %v\n", key, val)
-//         fmt.Printf("%T\n", val)
-//         log.Printf("Verified matchId val: %v\n", val)
-//     }
-//     id := claims["sutudent"]
-
-//     rows, err := db.Query("SELECT * FROM staffs where staffs.id = ?", id)
-//     if err != nil {
-//         fmt.Println("Err2 a")
-//         panic(err.Error())
-//     }
-//     return rows
-// }
-// func getStaffs(w http.ResponseWriter, r *http.Request) {
-//     db := connectionDB()
-//     defer db.Close()
-//     rows := getRowsSta(db) 
-//     staffs := Staffs{}
-//     var resultStaffs [] Staffs
-//     for rows.Next() {
-//         error := rows.Scan(&staffs.Id, &staffs.Name, &staffs.Email, &staffs.Status, &staffs.Rfid)
-//         if error != nil {
-//             fmt.Println("scan error")
-//         } else {
-//             resultStaffs = append(resultStaffs, staffs)
-//         }
-//     }
-//     var buf bytes.Buffer 
-//     enc := json.NewEncoder(&buf) 
-//     if err := enc.Encode(&resultStaffs); err != nil {
-//         log.Fatal(err)
-//     }
-//     fmt.Println(buf.String())
-
-//     _, err := fmt.Fprint(w, buf.String()) 
-//     if err != nil {
-//         return
-//     }
-// }
 
 //admin
 func getRowsAllSta(db *sql.DB) *sql.Rows { 
@@ -426,7 +372,7 @@ func getAllStaffs(w http.ResponseWriter, r *http.Request) {
 }
 
 func postStaff(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -451,7 +397,7 @@ func postStaff(w http.ResponseWriter, r *http.Request) {
 }
 
 func putStaStatus(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -476,7 +422,7 @@ func putStaStatus(w http.ResponseWriter, r *http.Request) {
 }
 
 func putStaRfid(w http.ResponseWriter, r *http.Request) {
-    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
+    dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
     db, err := sql.Open("mysql", dsn)
     if err != nil {
         fmt.Println("db connect error!")
@@ -500,173 +446,6 @@ func putStaRfid(w http.ResponseWriter, r *http.Request) {
     }
 }
 
-// type Sensors struct {
-//     Id int `json:id`
-//     Place string`json:place`
-//     SerialNumber string `json:serialNumber`
-//     Center_id int `json:center_id`
-// }
-// func getRowsSensors(db *sql.DB) *sql.Rows {
-//     rows, err := db.Query("SELECT * FROM sensors")
-//     if err != nil {
-//         fmt.Println("Err2")
-//         panic(err.Error())
-//     }
-//     return rows
-// }
-// func getSensors(w http.ResponseWriter, r *http.Request) {
-//     db := connectionDB()
-//     defer db.Close()
-//     rows := getRowsSensors(db) 
-//     sensors := Sensors{}
-//     var resultSensors [] Sensors
-//     for rows.Next() {
-//         error := rows.Scan(&sensors.Id, &sensors.Place, &sensors.SerialNumber, &sensors.Center_id)
-//         if error != nil {
-//             fmt.Println("scan error")
-//         } else {
-//             resultSensors = append(resultSensors, sensors)
-//         }
-//     }
-//     var buf bytes.Buffer 
-//     enc := json.NewEncoder(&buf) 
-//     if err := enc.Encode(&resultSensors); err != nil {
-//         log.Fatal(err)
-//     }
-//     fmt.Println(buf.String())
-
-//     _, err := fmt.Fprint(w, buf.String()) 
-//     if err != nil {
-//         return
-//     }
-// }
-
-// func postSensor(w http.ResponseWriter, r *http.Request) {
-//     dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
-//     db, err := sql.Open("mysql", dsn)
-//     if err != nil {
-//         fmt.Println("db connect error!")
-//     }
-//     defer db.Close()
-//     b, err := ioutil.ReadAll(r.Body)
-//     if err != nil {
-//         fmt.Println("io error")
-//         return
-//     }
-
-//     jsonBytes := ([]byte)(b)
-//     data := new(Sensors)
-//     if err := json.Unmarshal(jsonBytes, data); err != nil {
-//         fmt.Println("JSON Unmarshal error:", err)
-//         return
-//     }
-//     _, err = db.Exec("INSERT INTO sensors (place, serialNumber, center_id) VALUES (?, ?, ?)", data.Place, data.SerialNumber, data.Center_id)
-//     if err != nil {
-//         fmt.Println("insert error!")
-//     }
-// }
-
-//デモ時、手動実行
-// type InAndOut struct {
-//     Id int `json:id`
-//     Rfid string`json:rfid`
-//     Sensor_id int `json:sensor_id`
-//     Datetime string `json:datetime`
-// }
-// func getRowsInAndOut(db *sql.DB) *sql.Rows {
-//     rows, err := db.Query("SELECT * FROM inAndOut")
-//     if err != nil {
-//         fmt.Println("Err2")
-//         panic(err.Error())
-//     }
-//     return rows
-// }
-// func getInAndOut(w http.ResponseWriter, r *http.Request) {
-//     db := connectionDB()
-//     defer db.Close()
-//     rows := getRowsInAndOut(db) 
-//     inAndOut := InAndOut{}
-//     var resultInAndOut [] InAndOut
-//     for rows.Next() {
-//         error := rows.Scan(&inAndOut.Id, &inAndOut.Rfid, &inAndOut.Sensor_id, &inAndOut.Datetime)
-//         if error != nil {
-//             fmt.Println("scan error")
-//         } else {
-//             resultInAndOut = append(resultInAndOut, inAndOut)
-//         }
-//     }
-//     var buf bytes.Buffer 
-//     enc := json.NewEncoder(&buf) 
-//     if err := enc.Encode(&resultInAndOut); err != nil {
-//         log.Fatal(err)
-//     }
-//     fmt.Println(buf.String())
-
-//     _, err := fmt.Fprint(w, buf.String()) 
-//     if err != nil {
-//         return
-//     }
-// }
-
-// func postInAndOut(w http.ResponseWriter, r *http.Request) {
-//     dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB-HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
-//     db, err := sql.Open("mysql", dsn)
-//     if err != nil {
-//         fmt.Println("db connect error!")
-//     }
-//     defer db.Close()
-//     b, err := ioutil.ReadAll(r.Body)
-//     if err != nil {
-//         fmt.Println("io error")
-//         return
-//     }
-
-//     jsonBytes := ([]byte)(b)
-//     data := new(InAndOut)
-//     if err := json.Unmarshal(jsonBytes, data); err != nil {
-//         fmt.Println("JSON Unmarshal error:", err)
-//         return
-//     }
-//     _, err = db.Exec("INSERT INTO inAndOut (rfid, sensor_id, datetime) VALUES (?, ?, ?)", data.Rfid, data.Sensor_id, data.Datetime)
-//     if err != nil {
-//         fmt.Println("insert error!")
-//     }
-// }
-
-// type StuInAndOutSensors struct {
-//     Id int  `json:id`
-//     Datetime string  `json:datetime`
-//     Rfid string  `json:rfid`
-//     Sensor_id int  `json:sensor_id`
-//     Name string  `json:name`
-//     Place string  `json:place`
-// }
-
-// func getRowsStuInAndOutSensors(db *sql.DB) *sql.Rows {
-//     claims := jwt.MapClaims{}
-
-//     token, err := jwt.ParseWithClaims(setCookie, claims, func(token *jwt.Token) (interface{}, error) {
-//         return []byte("secret"), nil
-//     })
-//     fmt.Printf("%v\n", token)
-
-// 	if err != nil {
-//         fmt.Println("verifyToken error")
-// 	}
-//     for key, val := range claims {
-//         log.Printf("Key: %v, value: %v\n", key, val)
-//         fmt.Printf("%T\n", val)
-//         log.Printf("Verified matchId val: %v\n", val)
-//     }
-//     id := claims["sutudent"]
-
-//     rows, err := db.Query(`SELECT students.id, inAndOut.datetime, students.rfid, inAndOut.sensor_id, students.name, sensors.place FROM students INNER JOIN inAndOut ON students.rfid = inAndOut.rfid INNER JOIN sensors ON inAndOut.sensor_id = sensors.id WHERE students.id = ? AND inAndOut.datetime > CURDATE() AND sensors.place = "入口・出口"`,id)
-//     if err != nil {
-//         fmt.Println("Err2")
-//         panic(err.Error())
-//     }
-//     return rows
-// }
 
 //teacher
 type StaffAndMiddleAndCenter struct {
@@ -692,8 +471,6 @@ func getRowsStaffAndMiddleAndCenter(db *sql.DB) *sql.Rows {
         fmt.Println("verifyToken error")
 	}
     for _, val := range claims {
-        // log.Printf("Key: %v, value: %v\n", key, val)
-        // fmt.Printf("%T\n", val)
         log.Printf("Verified matchId val: %v\n", val)
     }
     id := claims["sutudent"]
