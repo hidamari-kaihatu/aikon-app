@@ -42,6 +42,7 @@ func main() {
     http.HandleFunc("/getAllStudents", getAllStudents)
     http.HandleFunc("/getStudentInAndOut", getStudentInAndOut)
     http.HandleFunc("/getTeacherMessageForTeacher", getTeacherMessageForTeacher)
+    http.HandleFunc("/getStaffs", getStaffs)
     http.ListenAndServe(":8080", nil)
     
 }

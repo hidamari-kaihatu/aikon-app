@@ -19,7 +19,7 @@ import React,{ useState } from "react";
 
 //職員情報と施設情報と中間情報をDBから取得
 export async function getServerSideProps() {
-  const res = await axios.get(`${process.env.API}/staffsGet`, {});
+  const res = await axios.get(`${process.env.API}/getStaffs`, {});
   const resCenter = await axios.get(`${process.env.API}/centerGet`, {});
   const resMiddle = await axios.get(`${process.env.API}/getMiddle`, {});
   const resAbout = await axios.get(`${process.env.API}/getAllStaffs`, {});
@@ -111,7 +111,6 @@ const allRestult = {};
 
 let n = 1;
 const counter = () => {
-  // console.log("test3");
   return n++;
 };
 //セレクトボタンでSatusがtrueの施設名だけを表示させる
