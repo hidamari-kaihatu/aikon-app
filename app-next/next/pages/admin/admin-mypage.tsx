@@ -19,7 +19,7 @@ interface Arr {
 }
 
 export async function getServerSideProps() {
-  const res = await axios.get(`${process.env.API}/staffsGet`, {
+  const res = await axios.get(`${process.env.API}/getStaffs`, {
   });
   const staffs = await res.data;
   {console.log(staffs)}
@@ -42,7 +42,7 @@ const adminHome: NextPage = (staffs: staffObj) => {
     })
   }, [])
 
-  console.log(staffs)
+  // console.log(staffs)
 
   return (
     <Layout>
