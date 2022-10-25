@@ -727,3 +727,56 @@ cookie := &http.Cookie{
 http.SetCookie(w, cookie)
 log.Printf("cookie: ", cookie) 
 }
+func getRowsSta(db *sql.DB) *sql.Rows { 
+    claims := jwt.MapClaims{}
+
+    token, err := jwt.ParseWithClaims(setCookie, claims, func(token *jwt.Token) (interface{}, error) {
+        return []byte("secret"), nil
+    })
+    fmt.Printf("%v\n", token)
+    log.Printf(setCookie)
+
+	if err != nil {
+        fmt.Println("verifyToken error")
+	}
+    for key, val := range claims {
+        log.Printf("Key: %v, value: %v\n", key, val)
+        fmt.Printf("%T\n", val)
+        log.Printf("Verified matchId val: %v\n", val)
+    }
+    id := claims["sutudent"]
+
+    rows, err := db.Query("SELECT * FROM staffs where staffs.id = ?", id)
+    if err != nil {
+        fmt.Println("Err2 a")
+        panic(err.Error())
+    }
+    return rows
+}
+
+func getStaffs(w http.ResponseWriter, r *http.Request) {
+    db := connectionDB()
+    defer db.Close()
+    rows := getRowsSta(db) 
+    staffs := Staffs{}
+    var resultStaffs [] Staffs
+    for rows.Next() {
+        error := rows.Scan(&staffs.Id, &staffs.Name, &staffs.Email, &staffs.Status, &staffs.Rfid)
+        if error != nil {
+            fmt.Println("scan error")
+        } else {
+            resultStaffs = append(resultStaffs, staffs)
+        }
+    }
+    var buf bytes.Buffer 
+    enc := json.NewEncoder(&buf) 
+    if err := enc.Encode(&resultStaffs); err != nil {
+        log.Fatal(err)
+    }
+    fmt.Println(buf.String())
+
+    _, err := fmt.Fprint(w, buf.String()) 
+    if err != nil {
+        return
+    }
+}
