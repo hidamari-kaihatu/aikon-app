@@ -30,11 +30,11 @@
 ##### 開発環境での使用方法
 1.リポジトリのクローン
 ```bash
-$ git clone  https://github.com/hidamari-kaihatu/aikon-app.git
+git clone  https://github.com/hidamari-kaihatu/aikon-app.git
 ```
 2.ルートディレクトリへ移動
 ```bash
-$ cd aikon-app
+cd aikon-app
 ```
 3.dockerコマンドを打つ
 ```docker-compose
