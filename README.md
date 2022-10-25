@@ -42,7 +42,7 @@ docker-compose run -w /usr/src/app/next --rm app-next npm install
 ```
 その後に
 ```docker-compose
-docker-compose up -d
+docker-compose up -d --build
 ```
 4.localhostで各リンクへ
 ```bash
@@ -53,6 +53,18 @@ http://localhost:3000/teachers/teacher-login
 ```
 ```bash
 http://localhost:3000/admin/admin-login
+```
+### 注意事項！！
+アプリを立ち上げる先にFirebaseに関するエラーが出ることがあります。その際は、以下の手順で解消してください。
+- ルートディレクトリのaikon-appで以下のコマンドを打つ。
+```bash
+docker-compose exec app-next bash
+```
+```bash
+npm uninstall firebase
+```
+```bash
+npm install firebase@9.10.0
 ```
 ### 使用技術
 <img width="669" alt="スクリーンショット 2022-10-24 10 22 00" src="https://user-images.githubusercontent.com/94016735/197431685-f5e26402-56e5-4d1d-a1c8-09b6e385127c.png">
