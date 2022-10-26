@@ -55,3 +55,22 @@ func CreateToken(studentID string) (string) {
     }
     return tokenString
 }
+
+func resolveJWT() interface{} {
+    claims := jwt.MapClaims{}
+
+    token, err := jwt.ParseWithClaims(setCookie, claims, func(token *jwt.Token) (interface{}, error) {
+        return []byte("secret"), nil
+    })
+     fmt.Printf("%v\n", token)
+
+	if err != nil {
+        fmt.Println("verifyToken error")
+	}
+    for key, val := range claims {
+         log.Printf("Key: %v, value: %v\n", key, val)
+        // fmt.Printf("%T\n", val)
+        log.Printf("Verified matchId val: %v\n", val)
+    }
+    return claims["sutudent"]
+}

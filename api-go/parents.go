@@ -14,32 +14,15 @@ import (
 
     "firebase.google.com/go/v4"
     "github.com/k-washi/jwt-decode/jwtdecode"
-    "github.com/dgrijalva/jwt-go"
+    // "github.com/dgrijalva/jwt-go"
     
     _ "github.com/go-sql-driver/mysql"
 )
 
-
 func postDailyReport(w http.ResponseWriter, r *http.Request) {
-    log.Printf("trace: this is a trace log postDailyReport start.")
     log.Printf("setCookie:",setCookie)
 
-    claims := jwt.MapClaims{}
-
-    token, err := jwt.ParseWithClaims(setCookie, claims, func(token *jwt.Token) (interface{}, error) {
-        return []byte("secret"), nil
-    })
-    fmt.Printf("%v\n", token)
-
-	if err != nil {
-        fmt.Println("verifyToken error")
-	}
-    for key, val := range claims {
-        fmt.Printf("Key: %v, value: %v\n", key, val)
-        fmt.Printf("%T\n", val)
-    }
-    id := claims["sutudent"]
-    log.Printf("trace: this is studentID log.")
+    id := resolveJWT()
     fmt.Printf("%v\n", id) //作成されたjwt確認
 
     dsn := fmt.Sprintf("%s:%s@%s(%s:%s)/%s", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PROTOCOL"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB"))
@@ -66,22 +49,7 @@ func postDailyReport(w http.ResponseWriter, r *http.Request) {
 }
 
 func getTeacherMessageRows(db *sql.DB) *sql.Rows { //保護者ページで使う用
-    claims := jwt.MapClaims{}
-
-    token, err := jwt.ParseWithClaims(setCookie, claims, func(token *jwt.Token) (interface{}, error) {
-        return []byte("secret"), nil
-    })
-    fmt.Printf("%v\n", token)
-
-	if err != nil {
-        fmt.Println("verifyToken error")
-	}
-    for key, val := range claims {
-        log.Printf("Key: %v, value: %v\n", key, val)
-        fmt.Printf("%T\n", val)
-        log.Printf("Verified matchId val: %v\n", val)
-    }
-    id := claims["sutudent"] 
+    id := resolveJWT()
 
     rows, err := db.Query("SELECT * FROM teacherMessage where teacherMessage.student_id = ?", id)
     if err != nil {
@@ -120,22 +88,23 @@ func getTeacherMessage(w http.ResponseWriter, r *http.Request) {
 
 
 func getRowsStu(db *sql.DB) *sql.Rows { 
-    claims := jwt.MapClaims{}
+    // claims := jwt.MapClaims{}
 
-    token, err := jwt.ParseWithClaims(setCookie, claims, func(token *jwt.Token) (interface{}, error) {
-        return []byte("secret"), nil
-    })
-    fmt.Printf("%v\n", token)
+    // token, err := jwt.ParseWithClaims(setCookie, claims, func(token *jwt.Token) (interface{}, error) {
+    //     return []byte("secret"), nil
+    // })
+    // fmt.Printf("%v\n", token)
 
-	if err != nil {
-        fmt.Println("verifyToken error")
-	}
-    for key, val := range claims {
-        log.Printf("Key: %v, value: %v\n", key, val)
-        fmt.Printf("%T\n", val)
-        log.Printf("Verified matchId val: %v\n", val)
-    }
-    id := claims["sutudent"]
+	// if err != nil {
+    //     fmt.Println("verifyToken error")
+	// }
+    // for key, val := range claims {
+    //     log.Printf("Key: %v, value: %v\n", key, val)
+    //     fmt.Printf("%T\n", val)
+    //     log.Printf("Verified matchId val: %v\n", val)
+    // }
+    // id := claims["sutudent"]
+    id := resolveJWT()
 
     rows, err := db.Query("SELECT students.id, students.center_id, students.name, students.contactTell, students.grade, students.email, students.status, students.rfid, centers.name from students INNER JOIN centers ON  students.center_id = centers.id WHERE students.id=?", id)
     if err != nil {
@@ -199,22 +168,7 @@ func postStudent(w http.ResponseWriter, r *http.Request) {
 
 
 func getRowsStuInAndOutSensors(db *sql.DB) *sql.Rows {
-    claims := jwt.MapClaims{}
-
-    token, err := jwt.ParseWithClaims(setCookie, claims, func(token *jwt.Token) (interface{}, error) {
-        return []byte("secret"), nil
-    })
-    fmt.Printf("%v\n", token)
-
-	if err != nil {
-        fmt.Println("verifyToken error")
-	}
-    for key, val := range claims {
-        log.Printf("Key: %v, value: %v\n", key, val)
-        fmt.Printf("%T\n", val)
-        log.Printf("Verified matchId val: %v\n", val)
-    }
-    id := claims["sutudent"]
+    id := resolveJWT()
 
     rows, err := db.Query(`SELECT students.id, inAndOut.datetime, students.rfid, inAndOut.sensor_id, students.name, sensors.place FROM students INNER JOIN inAndOut ON students.rfid = inAndOut.rfid INNER JOIN sensors ON inAndOut.sensor_id = sensors.id WHERE students.id = ? AND inAndOut.datetime > CURDATE() AND sensors.place = "入口・出口"`,id)
     if err != nil {
@@ -328,7 +282,6 @@ for rows.Next() {
 matchId := resultStuId[0].Id //トークンで取れたemailと同じアドレスの人のidを変数に入れた！
 log.Printf("Verified matchId: %v\n", matchId)
 toString := strconv.Itoa(matchId) //文字列に変換
-log.Printf("Verified matchId type: %T\n", toString)
 
 //jwtにのせる　認証情報が入ったJsonを加工（電子署名を加える等）し、JWTにしたのち、それを認証Tokenとしてクッキーに渡す
 afterAuthJwt := CreateToken(toString)
@@ -345,4 +298,3 @@ cookie := &http.Cookie{
 http.SetCookie(w, cookie)
 log.Printf("cookie: ", cookie) 
 }
-
