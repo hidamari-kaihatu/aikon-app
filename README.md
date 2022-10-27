@@ -28,6 +28,7 @@
 
 ### 使い方
 ##### 開発環境での使用方法
+※firebaseに関する各種設定はそれぞれで行なっていただく必要があります。（aikon-app/api-goディレクトリに認証に必要なファイル作成、aikon-app/api-go/Dockerfileへの環境変数の追記、aikon-app/app-next/next/.envファイルへの環境変数の追記）<br>
 1.リポジトリのクローン
 ```bash
 git clone  https://github.com/hidamari-kaihatu/aikon-app.git
