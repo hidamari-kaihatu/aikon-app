@@ -14,7 +14,7 @@ import (
 
     "firebase.google.com/go/v4"
     "github.com/k-washi/jwt-decode/jwtdecode"
-    "github.com/dgrijalva/jwt-go"
+    // "github.com/dgrijalva/jwt-go"
 
     _ "github.com/go-sql-driver/mysql"
 )
@@ -460,20 +460,7 @@ type StaffAndMiddleAndCenter struct {
 }
 
 func getRowsStaffAndMiddleAndCenter(db *sql.DB) *sql.Rows {
-    claims := jwt.MapClaims{}
-
-    token, err := jwt.ParseWithClaims(setCookie, claims, func(token *jwt.Token) (interface{}, error) {
-        return []byte("secret"), nil
-    })
-    fmt.Printf("%v\n", token)
-
-	if err != nil {
-        fmt.Println("verifyToken error")
-	}
-    for _, val := range claims {
-        log.Printf("Verified matchId val: %v\n", val)
-    }
-    id := claims["sutudent"]
+    id := resolveJWT()
 
     rows, err := db.Query(`SELECT staffs.id, staffs.name, staffs.email, staffs.status, staffs.rfid, middle.center_id, middle.role_id, centers.name from staffs INNER JOIN middle ON staffs.id = middle.staff_id INNER JOIN centers ON middle.center_id = centers.id WHERE staffs.id = ?`,id)
     if err != nil {
@@ -728,23 +715,7 @@ http.SetCookie(w, cookie)
 log.Printf("cookie: ", cookie) 
 }
 func getRowsSta(db *sql.DB) *sql.Rows { 
-    claims := jwt.MapClaims{}
-
-    token, err := jwt.ParseWithClaims(setCookie, claims, func(token *jwt.Token) (interface{}, error) {
-        return []byte("secret"), nil
-    })
-    fmt.Printf("%v\n", token)
-    log.Printf(setCookie)
-
-	if err != nil {
-        fmt.Println("verifyToken error")
-	}
-    for key, val := range claims {
-        log.Printf("Key: %v, value: %v\n", key, val)
-        fmt.Printf("%T\n", val)
-        log.Printf("Verified matchId val: %v\n", val)
-    }
-    id := claims["sutudent"]
+    id := resolveJWT()
 
     rows, err := db.Query("SELECT * FROM staffs where staffs.id = ?", id)
     if err != nil {
