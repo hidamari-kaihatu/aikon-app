@@ -48,7 +48,7 @@ func CreateToken(studentID string) (string) {
     }
 
     // 署名
-    var secretKey = "secret" 
+    var secretKey = "XXXXXXXX" 
     tokenString, err := token.SignedString([]byte(secretKey)) 
     if err != nil {
         log.Printf("signiture error") //return "", err
@@ -60,15 +60,15 @@ func resolveJWT() interface{} {
     claims := jwt.MapClaims{}
 
     token, err := jwt.ParseWithClaims(setCookie, claims, func(token *jwt.Token) (interface{}, error) {
-        return []byte("secret"), nil
+        return []byte("XXXXXXXX"), nil
     })
      fmt.Printf("%v\n", token)
 
 	if err != nil {
         fmt.Println("verifyToken error")
 	}
-    for key, val := range claims {
-         log.Printf("Key: %v, value: %v\n", key, val)
+    for _, val := range claims {
+        // log.Printf("Key: %v, value: %v\n", key, val)
         // fmt.Printf("%T\n", val)
         log.Printf("Verified matchId val: %v\n", val)
     }
